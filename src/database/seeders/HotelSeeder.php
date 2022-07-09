@@ -27,8 +27,8 @@ class HotelSeeder extends Seeder
                     По утрам в спа-отеле «Потоки Хауз» сервируют завтрак «шведский стол».
                     На территории работает оздоровительный центр с гидромассажной ванной. Гости могут поиграть в бильярд.
                     Кременчуг находится в 13 км от спа-отеля «Потоки Хауз, а Светловодск — в 24 км.',
-                'country_id' => 26,
-                'image' => 'images/MaTGIBayF96OkTRwdBM3UKD0QN6RLm0RyzPAtMzw.jpg',
+                'country_id' => 1,
+                'image' => 'images/отель1.jpg',
                 'created_at' => Carbon::parse(),],
             ['name' => 'Partner Guest House Baseina',
                 'address' => 'Бассейная ул.19, Киев, 01004',
@@ -43,8 +43,8 @@ class HotelSeeder extends Seeder
                     Бутики, рестораны и исторические здания на улице Крещатик также расположены всего в 1 км.
                     Поездка до аэропорта Киева займет 20 минут, а на стойке регистрации можно заказать услуги трансфера.
                     Это любимая часть города Киев среди наших гостей согласно независимым отзывам.',
-                'country_id' => 26,
-                'image' => 'images/VCJUWKMKom3kULx7iXvYHRHBXr20MWHJNSZuq8LF.jpg',
+                'country_id' => 1,
+                'image' => 'images/отель2.jpg',
                 'created_at' => Carbon::parse(),],
             ['name' => 'DayFlat Apartments Maidan Area',
                 'address' => 'Maidan Nezalezhnosti, Киев, 02000',
@@ -54,8 +54,8 @@ class HotelSeeder extends Seeder
                     В некоторых апартаментах имеется гостиная зона и/или балкон.
                     Расстояние до парка имени Тараса Шевченко составляет 2,1 км, а до Владимирского собора — 2,2 км.
                     Это любимая часть города Киев среди наших гостей согласно независимым отзывам.',
-                'country_id' => 26,
-                'image' => 'images/A2qDxAvmaCNbCeKgHlelFuGSwiYHWjI5ljhIrnMY.jpg',
+                'country_id' => 1,
+                'image' => 'images/отель3.jpg',
                 'created_at' => Carbon::parse(),],
             ['name' => 'ISG Sabiha Gökçen Airport hotel',
                 'address' => 'Istanbul Sabiha Gokcen Uluslararasi Havalimani Pendik, 34912 Стамбул',
@@ -70,8 +70,8 @@ class HotelSeeder extends Seeder
                     Посетителям уютного бара предложат большой выбор напитков.
                     Отель находится в 3,8 км от больниц Эмсей и Адатип.
                     Расстояние до больницы Эрсой составляет 3,2 км, до гоночной трассы «Истанбул Парк» — 13 км, а до зоопарка Дарыджа — 24 км.',
-                'country_id' => 26,
-                'image' => 'images/4Lndn1FD0NKpITa0metMHRzPu5ww7Gbpd4TNxgFj.jpg',
+                'country_id' => 2,
+                'image' => 'images/отель1.jpg',
                 'created_at' => Carbon::parse(),],
             ['name' => 'ISG Sabiha Gökçen Airport hotel',
                 'address' => 'Istanbul Sabiha Gokcen Uluslararasi Havalimani Pendik, 34912 Стамбул',
@@ -88,8 +88,8 @@ class HotelSeeder extends Seeder
                     Отель Swissotel The Bosphorus Istanbul славится стильными ресторанами, в которых предлагаются уникальные блюда интернациональной кухни.
                     В кафе Swiss, где по выходным проводятся бранчи, подают полезные блюда турецкой, швейцарской и интернациональной кухни.
                     Помимо этого, гости могут заказать напитки или коктейли и поужинать в баре-ресторане 16 ROOF на крыше, любуясь великолепным видом на пролив Босфор.',
-                'country_id' => 26,
-                'image' => 'images/vxpKvvB6jWgf3rAImwQhqyIfI6SeqJeu2tdhlJby.jpg',
+                'country_id' => 2,
+                'image' => 'images/отель2.jpg',
                 'created_at' => Carbon::parse(),],
         ]);
     }
