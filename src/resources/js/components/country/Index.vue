@@ -15,7 +15,7 @@
                                 <a href="" class="btn btn-sm btn-outline-secondary">edit</a>
                                 <a href="" class="btn btn-sm btn-outline-secondary">add</a>
                             </div>
-                            <button class="btn btn-sm btn-outline-danger" @click="deleteCountry(country.id)">Delete</button>
+                            <button class="btn btn-sm btn-outline-danger" @click="$store.dispatch('deleteCountry', country.id)">Delete</button>
                         </div>
                     </div>
                 </div>
@@ -33,29 +33,14 @@ export default {
         Welcome
     },
 
-    data() {
-        return {
-            countries: []
-        }
+    computed: {
+      countries() {
+          return this.$store.getters.countries
+      }
     },
 
     mounted() {
-        this.getCountries()
-    },
-
-    methods: {
-        getCountries() {
-            axios.get('/api/countries')
-                .then(res => {
-                    this.countries = res.data
-                })
-        },
-        deleteCountry(id) {
-            axios.delete(`/api/countries/${id}`)
-                .then(res => {
-                    this.getCountries()
-                })
-        }
+        this.$store.dispatch('getCountries')
     },
 
 }

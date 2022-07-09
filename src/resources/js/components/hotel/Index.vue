@@ -28,7 +28,7 @@ export default {
 
     data() {
         return {
-            hotels: null,
+            hotels: [],
         }
     },
     mounted() {

@@ -25,8 +25,12 @@ export default new VueRouter({
             props:true
         },
         {
-            path: '/show/:id', component: () => import('./components/hotel/Show'),
+            path: '/showHotel/:id', component: () => import('./components/hotel/Show'),
             name: 'hotel.show'
+        },
+        {
+            path: '/show/:id', component: () => import('./components/room/Show'),
+            name: 'room.show',
         }
     ]
 })
