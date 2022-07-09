@@ -3,7 +3,7 @@ import VueRouter from "vue-router";
 
 Vue.use(VueRouter)
 
-export default new VueRouter({
+const router = new VueRouter({
     mode: 'history',
 
     routes: [
@@ -31,6 +31,37 @@ export default new VueRouter({
         {
             path: '/show/:id', component: () => import('./components/room/Show'),
             name: 'room.show',
-        }
+        },
+        {
+            path: '/user/login', component: () => import('./components/auth/Login'),
+            name: 'user.login',
+        },
+        {
+            path: '/user/registration', component: () => import('./components/auth/Registration'),
+            name: 'user.registration',
+        },
     ]
 })
+router.beforeEach((to, from, next) => {
+    const token = localStorage.getItem('x_xsrf_token')
+
+    if(!token) {
+        if(to.name === 'user.login' || to.name === 'user.registration') {
+            return next()
+        } else {
+            return next({
+                name: 'user.login'
+            })
+        }
+    }
+
+    if(to.name === 'user.login' || to.name === 'user.registration' && token) {
+        return next({
+            name: 'country.index'
+        })
+    }
+
+    next()
+})
+
+export default router

@@ -12,9 +12,9 @@
                     <div class="col-sm-4 offset-md-1 py-4">
                         <h4 class="text-white">Contact</h4>
                         <ul class="list-unstyled">
-                            <li><a href="#" class="text-white">Follow on Twitter</a></li>
-                            <li><a href="#" class="text-white">Like on Facebook</a></li>
-                            <li><a href="#" class="text-white">Email me</a></li>
+                            <router-link v-if="!token" class="navbar-brand" :to="{ name: 'user.login' }">Login</router-link>
+                            <router-link v-if="!token" class="navbar-brand" :to="{ name: 'user.registration' }">Registration</router-link>
+                            <a v-if="token" @click.prevent="logout" href="#">Logout</a>
                         </ul>
                     </div>
                 </div>
@@ -35,7 +35,35 @@
 
 <script>
 export default {
-    name: "Layout"
+    name: "Layout",
+
+    data() {
+        return {
+            token: []
+        }
+    },
+
+    updated() {
+        this.getToken()
+    },
+
+    mounted() {
+        this.getToken()
+    },
+
+    methods: {
+        getToken() {
+            this.token = localStorage.getItem('x_xsrf_token')
+        },
+
+        logout() {
+            axios.post('/logout')
+                .then( res => {
+                    localStorage.removeItem('x_xsrf_token')
+                    this.$router.push({ name: 'user.login' })
+                })
+        }
+    }
 }
 </script>
 

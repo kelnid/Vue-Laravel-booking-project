@@ -43,29 +43,13 @@ __webpack_require__.r(__webpack_exports__);
   components: {
     Welcome: _layouts_Welcome__WEBPACK_IMPORTED_MODULE_0__["default"]
   },
-  data: function data() {
-    return {
-      countries: []
-    };
+  computed: {
+    countries: function countries() {
+      return this.$store.getters.countries;
+    }
   },
   mounted: function mounted() {
-    this.getCountries();
-  },
-  methods: {
-    getCountries: function getCountries() {
-      var _this = this;
-
-      axios.get('/api/countries').then(function (res) {
-        _this.countries = res.data;
-      });
-    },
-    deleteCountry: function deleteCountry(id) {
-      var _this2 = this;
-
-      axios["delete"]("/api/countries/".concat(id)).then(function (res) {
-        _this2.getCountries();
-      });
-    }
+    this.$store.dispatch('getCountries');
   }
 });
 
@@ -353,7 +337,10 @@ var render = function () {
                         staticClass: "btn btn-sm btn-outline-danger",
                         on: {
                           click: function ($event) {
-                            return _vm.deleteCountry(country.id)
+                            return _vm.$store.dispatch(
+                              "deleteCountry",
+                              country.id
+                            )
                           },
                         },
                       },

@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\CountryController;
 use App\Http\Controllers\HotelController;
+use App\Http\Controllers\RoomController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -23,6 +24,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 Route::group([
     'as' => 'countries.',
     'prefix' => 'countries',
+    'middleware' => 'auth:sanctum'
 ], function () {
     Route::get('/', [CountryController::class, 'index'])->name('index');
     Route::get('/create/test', [CountryController::class, 'create'])->name('create');
@@ -35,7 +37,6 @@ Route::group([
     'as' => 'hotels.',
     'prefix' => 'hotels',
 ], function () {
-    Route::get('/{country?}', [HotelController::class, 'index'])->name('index');
     Route::get('/{country?}/create', [HotelController::class, 'create'])->name('create');
     Route::post('/', [HotelController::class, 'store'])->name('store');
 
@@ -54,6 +55,16 @@ Route::prefix('countries/{id}')->group(function (){
     Route::get('/hotels', [HotelController::class, 'index']);
 });
 
-//Route::prefix('countries/{id}/hotels')->group(function (){
-//    Route::get('/{hotel}', [HotelController::class, 'index']);
-//});
+Route::group([
+    'as' => 'rooms.',
+    'prefix' => 'rooms',
+], function () {
+    Route::group([
+        'as' => 'show.',
+        'prefix' => 'show',
+    ], function () {
+        Route::get('/{room}', [RoomController::class, 'show']);
+    });
+});
+
+

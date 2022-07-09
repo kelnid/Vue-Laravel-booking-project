@@ -29,6 +29,23 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   name: "Show",
   data: function data() {
@@ -136,49 +153,100 @@ var render = function () {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c(
-    "div",
-    {
-      staticClass: "container",
-      staticStyle: { display: "flex", width: "1140px" },
-    },
-    [
+  return _c("div", { staticClass: "container" }, [
+    _c(
+      "div",
+      {
+        staticClass: "container",
+        staticStyle: { display: "flex", width: "1140px" },
+      },
+      [
+        _c(
+          "div",
+          {
+            staticClass: "card mb-3 mt-5",
+            staticStyle: { width: "1295px", height: "auto", margin: "0 auto" },
+          },
+          [
+            _c("img", {
+              attrs: { src: "../../../storage/" + _vm.hotel.image },
+            }),
+            _vm._v(" "),
+            _c("div", { staticClass: "card-body" }, [
+              _c("h5", { staticClass: "card-title" }, [
+                _vm._v(" " + _vm._s(_vm.hotel.name)),
+              ]),
+              _vm._v(" "),
+              _vm._m(0),
+              _vm._v(" "),
+              _c("p", { staticClass: "card-title" }, [
+                _vm._v(_vm._s(_vm.hotel.address)),
+              ]),
+              _vm._v(" "),
+              _c("p", { staticClass: "card-text" }, [
+                _vm._v(_vm._s(_vm.hotel.description)),
+              ]),
+              _vm._v(" "),
+              _c("button", { staticClass: "btn btn-outline-primary" }, [
+                _vm._v("Добавить номер"),
+              ]),
+              _vm._v(" "),
+              _c("button", { staticClass: "btn btn-outline-primary" }, [
+                _vm._v("Редактировать"),
+              ]),
+            ]),
+          ]
+        ),
+      ]
+    ),
+    _vm._v(" "),
+    _c("div", { staticClass: "container", staticStyle: { width: "1140px" } }, [
       _c(
         "div",
-        {
-          staticClass: "card mb-3 mt-5",
-          staticStyle: { width: "1295px", height: "auto", margin: "0 auto" },
-        },
-        [
-          _c("img", { attrs: { src: "../../../storage/" + _vm.hotel.image } }),
-          _vm._v(" "),
-          _c("div", { staticClass: "card-body" }, [
-            _c("h5", { staticClass: "card-title" }, [
-              _vm._v(" " + _vm._s(_vm.hotel.name)),
+        { staticClass: "row row-cols-1 row-cols-md-3 g-4" },
+        _vm._l(_vm.hotel.rooms, function (room, index) {
+          return _c("div", { staticClass: "col" }, [
+            _c("div", { staticClass: "card h-100" }, [
+              _c(
+                "div",
+                { staticClass: "card-body h-100" },
+                [
+                  _c("h5", { staticClass: "card-title" }, [
+                    _vm._v(_vm._s(room.name)),
+                  ]),
+                  _vm._v(" "),
+                  _c("h5", { staticClass: "card-title" }, [
+                    _vm._v(_vm._s(room.bed)),
+                  ]),
+                  _vm._v(" "),
+                  _c("p", { staticClass: "card-text" }, [
+                    _vm._v("Площадь: " + _vm._s(room.area) + " м²"),
+                  ]),
+                  _vm._v(" "),
+                  _c("p", { staticClass: "card-text" }, [
+                    _vm._v("Price: " + _vm._s(room.price) + " UAH"),
+                  ]),
+                  _vm._v(" "),
+                  _c(
+                    "router-link",
+                    {
+                      staticClass: "btn btn-outline-primary",
+                      attrs: {
+                        to: { name: "room.show", params: { id: room.id } },
+                      },
+                    },
+                    [_vm._v("Перейти")]
+                  ),
+                ],
+                1
+              ),
             ]),
-            _vm._v(" "),
-            _vm._m(0),
-            _vm._v(" "),
-            _c("p", { staticClass: "card-title" }, [
-              _vm._v(_vm._s(_vm.hotel.address)),
-            ]),
-            _vm._v(" "),
-            _c("p", { staticClass: "card-text" }, [
-              _vm._v(_vm._s(_vm.hotel.description)),
-            ]),
-            _vm._v(" "),
-            _c("button", { staticClass: "btn btn-outline-primary" }, [
-              _vm._v("Добавить номер"),
-            ]),
-            _vm._v(" "),
-            _c("button", { staticClass: "btn btn-outline-primary" }, [
-              _vm._v("Редактировать"),
-            ]),
-          ]),
-        ]
+          ])
+        }),
+        0
       ),
-    ]
-  )
+    ]),
+  ])
 }
 var staticRenderFns = [
   function () {

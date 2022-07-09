@@ -38,7 +38,7 @@ __webpack_require__.r(__webpack_exports__);
   },
   data: function data() {
     return {
-      hotels: null
+      hotels: []
     };
   },
   mounted: function mounted() {
