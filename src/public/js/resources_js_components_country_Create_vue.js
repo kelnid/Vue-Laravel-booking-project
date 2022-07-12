@@ -22,32 +22,18 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   name: "Create",
   data: function data() {
     return {
-      name: null
+      name: []
     };
-  },
-  methods: {
-    store: function store() {
-      var _this = this;
-
-      axios.post('/api/countries', {
-        name: this.name
-      }).then(function (res) {
-        _this.$router.push({
-          name: 'country.index'
-        }); //редирект через роутер
-
-      });
-    }
-  } // computed: {
-  //     isDisabled() {
-  //         return this.name && this.age && this.job
-  //     }
-  // }
-
+  }
 });
 
 /***/ }),
@@ -136,44 +122,54 @@ var render = function () {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", { staticClass: "w-25" }, [
-    _c("div", { staticClass: "mb-3" }, [
-      _c("input", {
-        directives: [
-          {
-            name: "model",
-            rawName: "v-model",
-            value: _vm.name,
-            expression: "name",
-          },
-        ],
-        staticClass: "form-control",
-        attrs: { type: "text", placeholder: "name" },
-        domProps: { value: _vm.name },
-        on: {
-          input: function ($event) {
-            if ($event.target.composing) {
-              return
-            }
-            _vm.name = $event.target.value
-          },
-        },
-      }),
-    ]),
-    _vm._v(" "),
-    _c("div", { staticClass: "mb-3" }, [
-      _c("input", {
-        staticClass: " btn btn-primary",
-        attrs: { type: "submit", value: "Add" },
-        on: {
-          click: function ($event) {
-            $event.preventDefault()
-            return _vm.store.apply(null, arguments)
-          },
-        },
-      }),
-    ]),
-  ])
+  return _c(
+    "div",
+    [
+      _c("v-header"),
+      _vm._v(" "),
+      _c("div", { staticClass: "container pt-5" }, [
+        _c("div", { staticClass: "w-25" }, [
+          _c("div", { staticClass: "mb-3" }, [
+            _c("input", {
+              directives: [
+                {
+                  name: "model",
+                  rawName: "v-model",
+                  value: _vm.name,
+                  expression: "name",
+                },
+              ],
+              staticClass: "form-control",
+              attrs: { type: "text", placeholder: "name" },
+              domProps: { value: _vm.name },
+              on: {
+                input: function ($event) {
+                  if ($event.target.composing) {
+                    return
+                  }
+                  _vm.name = $event.target.value
+                },
+              },
+            }),
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "mb-3" }, [
+            _c("input", {
+              staticClass: " btn btn-primary",
+              attrs: { type: "submit", value: "Add" },
+              on: {
+                click: function ($event) {
+                  $event.preventDefault()
+                  return _vm.$store.dispatch("store", { name: _vm.name })
+                },
+              },
+            }),
+          ]),
+        ]),
+      ]),
+    ],
+    1
+  )
 }
 var staticRenderFns = []
 render._withStripped = true

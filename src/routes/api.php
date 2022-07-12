@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\BookingController;
 use App\Http\Controllers\CountryController;
 use App\Http\Controllers\HotelController;
 use App\Http\Controllers\RoomController;
@@ -24,13 +25,11 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 Route::group([
     'as' => 'countries.',
     'prefix' => 'countries',
-    'middleware' => 'auth:sanctum'
 ], function () {
     Route::get('/', [CountryController::class, 'index'])->name('index');
-    Route::get('/create/test', [CountryController::class, 'create'])->name('create');
     Route::post('/', [CountryController::class, 'store'])->name('store');
     Route::put('/{country}', [CountryController::class, 'update'])->name('update');
-    Route::delete('{country}', [CountryController::class, 'destroy'])->name('destroy');
+    Route::delete('{country}', [CountryController::class, 'destroy']);
 });
 
 Route::group([
@@ -39,16 +38,19 @@ Route::group([
 ], function () {
     Route::get('/{country?}/create', [HotelController::class, 'create'])->name('create');
     Route::post('/', [HotelController::class, 'store'])->name('store');
-
     Route::group([
         'as' => 'show.',
         'prefix' => 'show',
     ], function () {
         Route::get('/{hotel}', [HotelController::class, 'show']);
     });
-
+    Route::group([
+        'as' => 'delete.',
+        'prefix' => 'delete',
+    ], function () {
+        Route::delete('/{hotel}', [HotelController::class, 'destroy'])->name('destroy');
+    });
     Route::put('/{hotel}', [HotelController::class, 'update'])->name('update');
-    Route::delete('/{hotel}', [HotelController::class, 'destroy'])->name('destroy');
 });
 
 Route::prefix('countries/{id}')->group(function (){
@@ -67,4 +69,28 @@ Route::group([
     });
 });
 
-
+Route::group([
+    'as' => 'bookings.',
+    'prefix' => 'bookings',
+    'middleware' => 'auth:sanctum'
+], function () {
+    Route::group([
+        'as' => 'store.',
+        'prefix' => 'store',
+    ], function () {
+        Route::post('/', [BookingController::class, 'store']);
+    });
+    Route::group([
+        'as' => 'index.',
+        'prefix' => 'index',
+    ], function () {
+        Route::get('/', [BookingController::class, 'index']);
+    });
+    Route::group([
+        'as' => 'bookings.',
+        'prefix' => 'bookings',
+    ], function () {
+        Route::get('/{id}', [BookingController::class, 'bookings']);
+    });
+        Route::delete('{booking}', [BookingController::class, 'destroy']);
+});

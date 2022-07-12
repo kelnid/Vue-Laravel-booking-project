@@ -14,6 +14,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var vue_hotel_datepicker__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue-hotel-datepicker */ "./node_modules/vue-hotel-datepicker/dist/vueHotelDatepicker.common.js");
 /* harmony import */ var vue_hotel_datepicker__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(vue_hotel_datepicker__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var vue_hotel_datepicker_dist_vueHotelDatepicker_css__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vue-hotel-datepicker/dist/vueHotelDatepicker.css */ "./node_modules/vue-hotel-datepicker/dist/vueHotelDatepicker.css");
+/* harmony import */ var _router__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../router */ "./resources/js/router.js");
 //
 //
 //
@@ -35,6 +36,26 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
 
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
@@ -45,27 +66,58 @@ __webpack_require__.r(__webpack_exports__);
   data: function data() {
     return {
       room: [],
-      settings: {
-        night: 'Ночь',
-        nights: 'Ночи',
-        'day-names': ['Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб', 'Вс'],
-        'check-in': 'Заезд',
-        'check-out': 'Выселение',
-        'month-names': ['Январь', 'Февраль', 'Март', 'Апрель', 'Май', 'Июнь', 'Июль', 'Август', 'Сентябрь', 'Октябрь', 'Ноябрь', 'Декабрь']
-      }
+      room_id: [],
+      startDate: null,
+      endDate: null,
+      token: [],
+      bookings: [],
+      error: []
     };
   },
   mounted: function mounted() {
     this.getRoom();
+    this.getToken();
+    this.getBookings();
   },
   methods: {
     getRoom: function getRoom() {
       var _this = this;
 
       axios.get("/api/rooms/show/".concat(this.$route.params.id)).then(function (res) {
-        console.log(res.data);
         _this.room = res.data;
       });
+    },
+    booking: function booking() {
+      var _this2 = this;
+
+      axios.post('/api/bookings/store', {
+        startDate: this.startDate,
+        endDate: this.endDate,
+        room_id: this.room_id
+      }).then(function (res) {
+        console.log(res); // this.$router.push({ name: 'booking.index' })
+
+        _this2.getRoom();
+      });
+    },
+    getToken: function getToken() {
+      this.token = localStorage.getItem('x_xsrf_token');
+    },
+    getBookings: function getBookings() {
+      var _this3 = this;
+
+      axios.get("/api/bookings/bookings/".concat(this.$route.params.id)).then(function (res) {
+        console.log(res.data);
+        _this3.bookings = res.data;
+      })["catch"](function (err) {
+        _this3.error = err;
+      });
+    },
+    updateCheckIn: function updateCheckIn(date) {
+      this.startDate = date.toLocaleDateString(); // console.log(date.toLocaleDateString());
+    },
+    updateCheckOut: function updateCheckOut(date) {
+      this.endDate = date.toLocaleDateString(); // console.log(date.toLocaleDateString());
     }
   }
 });
@@ -9952,92 +10004,142 @@ var render = function () {
   var _c = _vm._self._c || _h
   return _c(
     "div",
-    { staticClass: "container", staticStyle: { display: "flex" } },
     [
+      _c("v-header"),
+      _vm._v(" "),
       _c(
         "div",
-        {
-          staticClass: "row row-cols-3",
-          staticStyle: { "padding-top": "200px", "padding-right": "20px" },
-        },
+        { staticClass: "container", staticStyle: { display: "flex" } },
         [
-          _c("div", { staticClass: "col" }, [
-            _c(
-              "div",
-              { staticClass: "card", staticStyle: { width: "300px" } },
-              [
+          _vm.error
+            ? _c("div", [
+                _vm._v("\n            " + _vm._s(_vm.error) + "\n        "),
+              ])
+            : _vm._e(),
+          _vm._v(" "),
+          _c(
+            "div",
+            {
+              staticClass: "row row-cols-3",
+              staticStyle: { "padding-top": "200px", "padding-right": "20px" },
+            },
+            [
+              _c("div", { staticClass: "col" }, [
                 _c(
                   "div",
-                  { staticClass: "card-body" },
+                  { staticClass: "card", staticStyle: { width: "300px" } },
                   [
-                    _c(
-                      "strong",
-                      {
-                        staticClass: "card-title",
-                        staticStyle: { color: "black" },
-                      },
-                      [_vm._v(_vm._s(_vm.room.name))]
-                    ),
-                    _vm._v(" "),
-                    _c(
-                      "p",
-                      {
-                        staticClass: "card-text",
-                        staticStyle: { color: "black" },
-                      },
-                      [_vm._v("Площадь: " + _vm._s(_vm.room.area) + " м²")]
-                    ),
-                    _vm._v(" "),
-                    _c(
-                      "p",
-                      {
-                        staticClass: "card-text",
-                        staticStyle: { color: "black" },
-                      },
-                      [_vm._v("Цена: " + _vm._s(_vm.room.price) + " UAH")]
-                    ),
-                    _vm._v(" "),
-                    _c(
-                      "p",
-                      {
-                        staticClass: "card-text",
-                        staticStyle: { color: "black" },
-                      },
-                      [_vm._v(_vm._s(_vm.room.bed))]
-                    ),
-                    _vm._v(" "),
-                    _c("HotelDatePicker", { attrs: { i18n: _vm.settings } }, [
-                      _vm._v(
-                        " :disabledDates=\"['2022-07-08', '2022-07-09', '2022-07-10' ]\">>"
+                    _c("div", { staticClass: "card-body" }, [
+                      _c(
+                        "strong",
+                        {
+                          staticClass: "card-title",
+                          staticStyle: { color: "black" },
+                        },
+                        [_vm._v(_vm._s(_vm.room.name))]
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "p",
+                        {
+                          staticClass: "card-text",
+                          staticStyle: { color: "black" },
+                        },
+                        [_vm._v("Площадь: " + _vm._s(_vm.room.area) + " м²")]
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "p",
+                        {
+                          staticClass: "card-text",
+                          staticStyle: { color: "black" },
+                        },
+                        [_vm._v("Цена: " + _vm._s(_vm.room.price) + " UAH")]
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "p",
+                        {
+                          staticClass: "card-text",
+                          staticStyle: { color: "black" },
+                        },
+                        [_vm._v(_vm._s(_vm.room.bed))]
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "div",
+                        { staticClass: "pt-5" },
+                        [
+                          _c("hotel-date-picker", {
+                            attrs: {
+                              format: "DD.MM.YYYY",
+                              halfDay: false,
+                              disabledDates: _vm.bookings.unavailable_dates,
+                              maxNights: 10,
+                              minNights: 2,
+                            },
+                            on: {
+                              "check-in-changed": _vm.updateCheckIn,
+                              "check-out-changed": _vm.updateCheckOut,
+                            },
+                          }),
+                          _vm._v(" "),
+                          _c("div", { staticClass: "mb-3" }, [
+                            _c("input", {
+                              directives: [
+                                {
+                                  name: "model",
+                                  rawName: "v-model",
+                                  value: (_vm.room_id = _vm.room.id),
+                                  expression: "room_id = room.id",
+                                },
+                              ],
+                              staticClass: "form-control",
+                              attrs: { type: "hidden" },
+                              domProps: { value: (_vm.room_id = _vm.room.id) },
+                              on: {
+                                input: function ($event) {
+                                  if ($event.target.composing) {
+                                    return
+                                  }
+                                  _vm.$set(
+                                    (_vm.room_id = _vm.room),
+                                    "id",
+                                    $event.target.value
+                                  )
+                                },
+                              },
+                            }),
+                          ]),
+                          _vm._v(" "),
+                          _c("div", { staticClass: "pt-2" }, [
+                            _c("input", {
+                              staticClass: " btn btn-primary",
+                              attrs: { type: "submit", value: "Add" },
+                              on: {
+                                click: function ($event) {
+                                  $event.preventDefault()
+                                  return _vm.booking.apply(null, arguments)
+                                },
+                              },
+                            }),
+                          ]),
+                        ],
+                        1
                       ),
                     ]),
-                    _vm._v(" "),
-                    _vm._m(0),
-                  ],
-                  1
+                  ]
                 ),
-              ]
-            ),
-          ]),
+              ]),
+            ]
+          ),
         ]
       ),
-    ]
+    ],
+    1
   )
 }
-var staticRenderFns = [
-  function () {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "pt-2" }, [
-      _c(
-        "button",
-        { staticClass: "btn btn-primary", attrs: { type: "submit" } },
-        [_vm._v("Забронировать")]
-      ),
-    ])
-  },
-]
+var staticRenderFns = []
 render._withStripped = true
 
 

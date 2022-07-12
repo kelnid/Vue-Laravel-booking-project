@@ -29,6 +29,10 @@ const router = new VueRouter({
             name: 'hotel.show'
         },
         {
+            path: '/hotel-create', component: () => import('./components/hotel/Create'),
+            name: 'hotel.create'
+        },
+        {
             path: '/show/:id', component: () => import('./components/room/Show'),
             name: 'room.show',
         },
@@ -40,28 +44,32 @@ const router = new VueRouter({
             path: '/user/registration', component: () => import('./components/auth/Registration'),
             name: 'user.registration',
         },
+        {
+            path: '/my-bookings', component: () => import('./components/booking/Index'),
+            name: 'booking.index'
+        },
     ]
 })
-router.beforeEach((to, from, next) => {
-    const token = localStorage.getItem('x_xsrf_token')
-
-    if(!token) {
-        if(to.name === 'user.login' || to.name === 'user.registration') {
-            return next()
-        } else {
-            return next({
-                name: 'user.login'
-            })
-        }
-    }
-
-    if(to.name === 'user.login' || to.name === 'user.registration' && token) {
-        return next({
-            name: 'country.index'
-        })
-    }
-
-    next()
-})
+// router.beforeEach((to, from, next) => {
+//     const token = localStorage.getItem('x_xsrf_token')
+//
+//     if(!token) {
+//         if(to.name === 'user.login' || to.name === 'user.registration') {
+//             return next()
+//         } else {
+//             return next({
+//                 name: 'user.login'
+//             })
+//         }
+//     }
+//
+//     if(to.name === 'user.login' || to.name === 'user.registration' && token) {
+//         return next({
+//             name: 'country.index'
+//         })
+//     }
+//
+//     next()
+// })
 
 export default router

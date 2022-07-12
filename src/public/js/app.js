@@ -5272,9 +5272,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   name: "App"
 });
@@ -5292,6 +5289,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
+//
 //
 //
 //
@@ -5495,6 +5493,12 @@ var router = new vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]({
     },
     name: 'hotel.show'
   }, {
+    path: '/hotel-create',
+    component: function component() {
+      return __webpack_require__.e(/*! import() */ "resources_js_components_hotel_Create_vue").then(__webpack_require__.bind(__webpack_require__, /*! ./components/hotel/Create */ "./resources/js/components/hotel/Create.vue"));
+    },
+    name: 'hotel.create'
+  }, {
     path: '/show/:id',
     component: function component() {
       return __webpack_require__.e(/*! import() */ "resources_js_components_room_Show_vue").then(__webpack_require__.bind(__webpack_require__, /*! ./components/room/Show */ "./resources/js/components/room/Show.vue"));
@@ -5512,29 +5516,35 @@ var router = new vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]({
       return __webpack_require__.e(/*! import() */ "resources_js_components_auth_Registration_vue").then(__webpack_require__.bind(__webpack_require__, /*! ./components/auth/Registration */ "./resources/js/components/auth/Registration.vue"));
     },
     name: 'user.registration'
+  }, {
+    path: '/my-bookings',
+    component: function component() {
+      return __webpack_require__.e(/*! import() */ "resources_js_components_booking_Index_vue").then(__webpack_require__.bind(__webpack_require__, /*! ./components/booking/Index */ "./resources/js/components/booking/Index.vue"));
+    },
+    name: 'booking.index'
   }]
-});
-router.beforeEach(function (to, from, next) {
-  var token = localStorage.getItem('x_xsrf_token');
+}); // router.beforeEach((to, from, next) => {
+//     const token = localStorage.getItem('x_xsrf_token')
+//
+//     if(!token) {
+//         if(to.name === 'user.login' || to.name === 'user.registration') {
+//             return next()
+//         } else {
+//             return next({
+//                 name: 'user.login'
+//             })
+//         }
+//     }
+//
+//     if(to.name === 'user.login' || to.name === 'user.registration' && token) {
+//         return next({
+//             name: 'country.index'
+//         })
+//     }
+//
+//     next()
+// })
 
-  if (!token) {
-    if (to.name === 'user.login' || to.name === 'user.registration') {
-      return next();
-    } else {
-      return next({
-        name: 'user.login'
-      });
-    }
-  }
-
-  if (to.name === 'user.login' || to.name === 'user.registration' && token) {
-    return next({
-      name: 'country.index'
-    });
-  }
-
-  next();
-});
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (router);
 
 /***/ }),
@@ -5576,6 +5586,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
+/* harmony import */ var _router__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../../router */ "./resources/js/router.js");
+function _objectDestructuringEmpty(obj) { if (obj == null) throw new TypeError("Cannot destructure undefined"); }
+
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   getCountries: function getCountries(_ref) {
     var commit = _ref.commit;
@@ -5588,8 +5601,20 @@ __webpack_require__.r(__webpack_exports__);
     axios["delete"]("/api/countries/".concat(id)).then(function (res) {
       dispatch('getCountries');
     });
+  },
+  store: function store(_ref3, data) {
+    _objectDestructuringEmpty(_ref3);
+
+    axios.post('/api/countries', {
+      name: data.name
+    }).then(function (res) {
+      _router__WEBPACK_IMPORTED_MODULE_0__["default"].push({
+        name: 'country.index'
+      });
+    });
   }
 });
+
 
 /***/ }),
 
@@ -28265,15 +28290,7 @@ var render = function () {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c(
-    "div",
-    [
-      _c("v-header"),
-      _vm._v(" "),
-      _c("div", { staticClass: "container pt-5" }, [_c("router-view")], 1),
-    ],
-    1
-  )
+  return _c("div", [_c("router-view")], 1)
 }
 var staticRenderFns = []
 render._withStripped = true
@@ -28373,6 +28390,17 @@ var render = function () {
             },
             [_c("strong", [_vm._v("Travelmore.com")])]
           ),
+          _vm._v(" "),
+          _vm.token
+            ? _c(
+                "router-link",
+                {
+                  staticClass: "navbar-brand d-flex align-items-center",
+                  attrs: { to: { name: "booking.index" } },
+                },
+                [_c("strong", [_vm._v("Мои бронирования")])]
+              )
+            : _vm._e(),
           _vm._v(" "),
           _vm._m(1),
         ],
@@ -45131,7 +45159,7 @@ module.exports = JSON.parse('{"_from":"axios@^0.21","_id":"axios@0.21.4","_inBun
 /******/ 		// This function allow to reference async chunks
 /******/ 		__webpack_require__.u = (chunkId) => {
 /******/ 			// return url for filenames not based on template
-/******/ 			if ({"resources_js_components_country_Index_vue":1,"resources_js_components_country_Create_vue":1,"resources_js_components_country_Edit_vue":1,"resources_js_components_hotel_Index_vue":1,"resources_js_components_hotel_Show_vue":1,"resources_js_components_room_Show_vue":1,"resources_js_components_auth_Login_vue":1,"resources_js_components_auth_Registration_vue":1}[chunkId]) return "js/" + chunkId + ".js";
+/******/ 			if ({"resources_js_components_country_Index_vue":1,"resources_js_components_country_Create_vue":1,"resources_js_components_country_Edit_vue":1,"resources_js_components_hotel_Index_vue":1,"resources_js_components_hotel_Show_vue":1,"resources_js_components_hotel_Create_vue":1,"resources_js_components_room_Show_vue":1,"resources_js_components_auth_Login_vue":1,"resources_js_components_auth_Registration_vue":1,"resources_js_components_booking_Index_vue":1}[chunkId]) return "js/" + chunkId + ".js";
 /******/ 			// return url for filenames based on template
 /******/ 			return undefined;
 /******/ 		};

@@ -10,5 +10,12 @@ export default {
             .then(res => {
                 dispatch('getCountries')
             })
-    }
+    },
+    store({}, data) {
+        axios.post('/api/countries', { name: data.name })
+            .then(res => {
+                router.push({ name: 'country.index' })
+            })
+    },
 }
+import router from "../../../router";

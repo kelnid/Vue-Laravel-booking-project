@@ -9,8 +9,6 @@ class Country extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['name','image'];
-
     protected $guarded = false;
 
     public function hotels()

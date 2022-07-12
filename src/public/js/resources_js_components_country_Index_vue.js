@@ -38,6 +38,9 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   components: {
@@ -245,115 +248,124 @@ var render = function () {
   return _c(
     "div",
     [
+      _c("v-header"),
+      _vm._v(" "),
       _c("welcome"),
       _vm._v(" "),
-      _c(
-        "div",
-        { staticClass: "row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3" },
-        _vm._l(_vm.countries, function (country) {
-          return _c("div", { staticClass: "col" }, [
-            _c("div", { staticClass: "card shadow-sm" }, [
-              _c(
-                "div",
-                {
-                  staticStyle: {
-                    position: "relative",
-                    "text-align": "center",
-                    color: "black",
-                    "font-size": "larger",
-                  },
-                },
-                [
-                  _c("img", {
-                    staticStyle: { width: "420px", height: "237px" },
-                    attrs: { src: "storage/" + country.image },
-                  }),
-                  _vm._v(" "),
-                  _c(
-                    "div",
-                    {
-                      staticClass: "top-left",
-                      staticStyle: {
-                        position: "absolute",
-                        top: "8px",
-                        left: "16px",
-                      },
-                    },
-                    [_vm._v(_vm._s(country.name))]
-                  ),
-                ]
-              ),
-              _vm._v(" "),
-              _c("div", { staticClass: "card-body" }, [
+      _c("div", { staticClass: "container" }, [
+        _c(
+          "div",
+          { staticClass: "row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3" },
+          _vm._l(_vm.countries, function (country) {
+            return _c("div", { staticClass: "col" }, [
+              _c("div", { staticClass: "card shadow-sm" }, [
                 _c(
                   "div",
                   {
-                    staticClass:
-                      "d-flex justify-content-between align-items-center",
+                    staticStyle: {
+                      position: "relative",
+                      "text-align": "center",
+                      color: "black",
+                      "font-size": "larger",
+                    },
                   },
                   [
-                    _c(
-                      "div",
-                      { staticClass: "btn-group" },
-                      [
-                        _c(
-                          "router-link",
-                          {
-                            staticClass: "btn btn-sm btn-outline-secondary",
-                            attrs: {
-                              to: {
-                                name: "hotel.index",
-                                params: { id: country.id },
-                              },
-                            },
-                          },
-                          [_c("strong", [_vm._v("View")])]
-                        ),
-                        _vm._v(" "),
-                        _c(
-                          "a",
-                          {
-                            staticClass: "btn btn-sm btn-outline-secondary",
-                            attrs: { href: "" },
-                          },
-                          [_vm._v("edit")]
-                        ),
-                        _vm._v(" "),
-                        _c(
-                          "a",
-                          {
-                            staticClass: "btn btn-sm btn-outline-secondary",
-                            attrs: { href: "" },
-                          },
-                          [_vm._v("add")]
-                        ),
-                      ],
-                      1
-                    ),
+                    _c("img", {
+                      staticStyle: { width: "420px", height: "237px" },
+                      attrs: { src: "storage/" + country.image },
+                    }),
                     _vm._v(" "),
                     _c(
-                      "button",
+                      "div",
                       {
-                        staticClass: "btn btn-sm btn-outline-danger",
-                        on: {
-                          click: function ($event) {
-                            return _vm.$store.dispatch(
-                              "deleteCountry",
-                              country.id
-                            )
-                          },
+                        staticClass: "top-left",
+                        staticStyle: {
+                          position: "absolute",
+                          top: "8px",
+                          left: "16px",
                         },
                       },
-                      [_vm._v("Delete")]
+                      [_vm._v(_vm._s(country.name))]
                     ),
                   ]
                 ),
+                _vm._v(" "),
+                _c("div", { staticClass: "card-body" }, [
+                  _c(
+                    "div",
+                    {
+                      staticClass:
+                        "d-flex justify-content-between align-items-center",
+                    },
+                    [
+                      _c(
+                        "div",
+                        { staticClass: "btn-group" },
+                        [
+                          _c(
+                            "router-link",
+                            {
+                              staticClass: "btn btn-sm btn-outline-secondary",
+                              attrs: {
+                                to: {
+                                  name: "hotel.index",
+                                  params: { id: country.id },
+                                },
+                              },
+                            },
+                            [_c("strong", [_vm._v("View")])]
+                          ),
+                          _vm._v(" "),
+                          _c(
+                            "a",
+                            {
+                              staticClass: "btn btn-sm btn-outline-secondary",
+                              attrs: { href: "" },
+                            },
+                            [_vm._v("edit")]
+                          ),
+                          _vm._v(" "),
+                          _c(
+                            "router-link",
+                            {
+                              staticClass: "btn btn-sm btn-outline-secondary",
+                              attrs: {
+                                to: {
+                                  name: "hotel.create",
+                                  params: { id: country.id },
+                                },
+                              },
+                            },
+                            [_vm._v("add")]
+                          ),
+                        ],
+                        1
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "button",
+                        {
+                          staticClass: "btn btn-sm btn-outline-danger",
+                          on: {
+                            click: function ($event) {
+                              return _vm.$store.dispatch(
+                                "deleteCountry",
+                                country.id
+                              )
+                            },
+                          },
+                        },
+                        [_vm._v("Delete")]
+                      ),
+                    ]
+                  ),
+                ]),
               ]),
-            ]),
-          ])
-        }),
-        0
-      ),
+            ])
+          }),
+          0
+        ),
+      ]),
     ],
     1
   )

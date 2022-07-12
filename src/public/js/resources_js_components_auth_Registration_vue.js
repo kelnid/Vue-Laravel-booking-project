@@ -21,6 +21,9 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   name: "Registration",
   data: function data() {
@@ -139,106 +142,114 @@ var render = function () {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", { staticClass: "w-25" }, [
-    _c("input", {
-      directives: [
-        {
-          name: "model",
-          rawName: "v-model",
-          value: _vm.name,
-          expression: "name",
-        },
-      ],
-      staticClass: "form-control mb-3",
-      attrs: { type: "text", placeholder: "name" },
-      domProps: { value: _vm.name },
-      on: {
-        input: function ($event) {
-          if ($event.target.composing) {
-            return
-          }
-          _vm.name = $event.target.value
-        },
-      },
-    }),
-    _vm._v(" "),
-    _c("input", {
-      directives: [
-        {
-          name: "model",
-          rawName: "v-model",
-          value: _vm.email,
-          expression: "email",
-        },
-      ],
-      staticClass: "form-control mb-3",
-      attrs: { type: "email", placeholder: "email" },
-      domProps: { value: _vm.email },
-      on: {
-        input: function ($event) {
-          if ($event.target.composing) {
-            return
-          }
-          _vm.email = $event.target.value
-        },
-      },
-    }),
-    _vm._v(" "),
-    _c("input", {
-      directives: [
-        {
-          name: "model",
-          rawName: "v-model",
-          value: _vm.password,
-          expression: "password",
-        },
-      ],
-      staticClass: "form-control mb-3",
-      attrs: { type: "password", placeholder: "password" },
-      domProps: { value: _vm.password },
-      on: {
-        input: function ($event) {
-          if ($event.target.composing) {
-            return
-          }
-          _vm.password = $event.target.value
-        },
-      },
-    }),
-    _vm._v(" "),
-    _c("input", {
-      directives: [
-        {
-          name: "model",
-          rawName: "v-model",
-          value: _vm.password_confirmation,
-          expression: "password_confirmation",
-        },
-      ],
-      staticClass: "form-control mb-3",
-      attrs: { type: "password", placeholder: "password_confirmation" },
-      domProps: { value: _vm.password_confirmation },
-      on: {
-        input: function ($event) {
-          if ($event.target.composing) {
-            return
-          }
-          _vm.password_confirmation = $event.target.value
-        },
-      },
-    }),
-    _vm._v(" "),
-    _c("input", {
-      staticClass: "btn-outline-primary",
-      attrs: { type: "submit", value: "registration" },
-      on: {
-        click: function ($event) {
-          $event.preventDefault()
-          return _vm.registration.apply(null, arguments)
-        },
-      },
-    }),
-  ])
+  return _c(
+    "div",
+    [
+      _c("v-header"),
+      _vm._v(" "),
+      _c("div", { staticClass: "pt-5 container w-25" }, [
+        _c("input", {
+          directives: [
+            {
+              name: "model",
+              rawName: "v-model",
+              value: _vm.name,
+              expression: "name",
+            },
+          ],
+          staticClass: "form-control mb-3",
+          attrs: { type: "text", placeholder: "name" },
+          domProps: { value: _vm.name },
+          on: {
+            input: function ($event) {
+              if ($event.target.composing) {
+                return
+              }
+              _vm.name = $event.target.value
+            },
+          },
+        }),
+        _vm._v(" "),
+        _c("input", {
+          directives: [
+            {
+              name: "model",
+              rawName: "v-model",
+              value: _vm.email,
+              expression: "email",
+            },
+          ],
+          staticClass: "form-control mb-3",
+          attrs: { type: "email", placeholder: "email" },
+          domProps: { value: _vm.email },
+          on: {
+            input: function ($event) {
+              if ($event.target.composing) {
+                return
+              }
+              _vm.email = $event.target.value
+            },
+          },
+        }),
+        _vm._v(" "),
+        _c("input", {
+          directives: [
+            {
+              name: "model",
+              rawName: "v-model",
+              value: _vm.password,
+              expression: "password",
+            },
+          ],
+          staticClass: "form-control mb-3",
+          attrs: { type: "password", placeholder: "password" },
+          domProps: { value: _vm.password },
+          on: {
+            input: function ($event) {
+              if ($event.target.composing) {
+                return
+              }
+              _vm.password = $event.target.value
+            },
+          },
+        }),
+        _vm._v(" "),
+        _c("input", {
+          directives: [
+            {
+              name: "model",
+              rawName: "v-model",
+              value: _vm.password_confirmation,
+              expression: "password_confirmation",
+            },
+          ],
+          staticClass: "form-control mb-3",
+          attrs: { type: "password", placeholder: "password_confirmation" },
+          domProps: { value: _vm.password_confirmation },
+          on: {
+            input: function ($event) {
+              if ($event.target.composing) {
+                return
+              }
+              _vm.password_confirmation = $event.target.value
+            },
+          },
+        }),
+        _vm._v(" "),
+        _c("input", {
+          staticClass: "btn-outline-primary",
+          attrs: { type: "submit", value: "registration" },
+          on: {
+            click: function ($event) {
+              $event.preventDefault()
+              return _vm.registration.apply(null, arguments)
+            },
+          },
+        }),
+      ]),
+    ],
+    1
+  )
 }
 var staticRenderFns = []
 render._withStripped = true

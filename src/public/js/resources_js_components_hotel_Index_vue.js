@@ -29,6 +29,9 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   name: "Index",
   props: {
@@ -50,6 +53,13 @@ __webpack_require__.r(__webpack_exports__);
 
       axios.get("/api/countries/".concat(this.id, "/hotels")).then(function (res) {
         _this.hotels = res.data;
+      });
+    },
+    deleteHotel: function deleteHotel(id) {
+      var _this2 = this;
+
+      axios["delete"]("/api/hotels/delete/".concat(id)).then(function (res) {
+        _this2.getHotels();
       });
     }
   }
@@ -141,53 +151,70 @@ var render = function () {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", { staticClass: "container" }, [
-    _c(
-      "div",
-      { staticClass: "row row-cols-1 row-cols-md-3 g-4" },
-      _vm._l(_vm.hotels, function (hotel) {
-        return _c("div", { staticClass: "col" }, [
-          _c("div", { staticClass: "card h-100" }, [
-            _c("img", {
-              staticStyle: { height: "238px" },
-              attrs: { src: "../../../storage/" + hotel.image },
-            }),
-            _vm._v(" "),
-            _c(
-              "div",
-              { staticClass: "card-body" },
-              [
-                _c("p", { staticClass: "card-title" }, [
-                  _vm._v(_vm._s(hotel.name)),
-                ]),
-                _vm._v(" "),
-                _c("p", { staticClass: "card-title" }, [
-                  _vm._v(_vm._s(hotel.address)),
-                ]),
+  return _c(
+    "div",
+    [
+      _c("v-header"),
+      _vm._v(" "),
+      _c("div", { staticClass: "container pt-5" }, [
+        _c(
+          "div",
+          { staticClass: "row row-cols-1 row-cols-md-3 g-4" },
+          _vm._l(_vm.hotels, function (hotel) {
+            return _c("div", { staticClass: "col" }, [
+              _c("div", { staticClass: "card h-100" }, [
+                _c("img", {
+                  staticStyle: { height: "238px" },
+                  attrs: { src: "../../../storage/" + hotel.image },
+                }),
                 _vm._v(" "),
                 _c(
-                  "router-link",
-                  {
-                    staticClass: "btn btn-outline-primary",
-                    attrs: {
-                      to: { name: "hotel.show", params: { id: hotel.id } },
-                    },
-                  },
-                  [_vm._v("Перейти")]
+                  "div",
+                  { staticClass: "card-body" },
+                  [
+                    _c("p", { staticClass: "card-title" }, [
+                      _vm._v(_vm._s(hotel.name)),
+                    ]),
+                    _vm._v(" "),
+                    _c("p", { staticClass: "card-title" }, [
+                      _vm._v(_vm._s(hotel.address)),
+                    ]),
+                    _vm._v(" "),
+                    _c(
+                      "router-link",
+                      {
+                        staticClass: "btn btn-outline-primary",
+                        attrs: {
+                          to: { name: "hotel.show", params: { id: hotel.id } },
+                        },
+                      },
+                      [_vm._v("Перейти")]
+                    ),
+                    _vm._v(" "),
+                    _c(
+                      "button",
+                      {
+                        staticClass: "btn btn-outline-danger",
+                        on: {
+                          click: function ($event) {
+                            return _vm.deleteHotel(hotel.id)
+                          },
+                        },
+                      },
+                      [_vm._v("Удалить")]
+                    ),
+                  ],
+                  1
                 ),
-                _vm._v(" "),
-                _c("button", { staticClass: "btn btn-outline-danger" }, [
-                  _vm._v("Удалить"),
-                ]),
-              ],
-              1
-            ),
-          ]),
-        ])
-      }),
-      0
-    ),
-  ])
+              ]),
+            ])
+          }),
+          0
+        ),
+      ]),
+    ],
+    1
+  )
 }
 var staticRenderFns = []
 render._withStripped = true

@@ -9,12 +9,14 @@ class Room extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['name', 'bed', 'area', 'hotel_id', 'price'];
-
     protected $guarded = false;
 
     public function hotel()
     {
         return $this->belongsTo(Hotel::class);
+    }
+    public function users()
+    {
+        return $this->belongsToMany(User::class)->using(RoomUser::class)->withPivot('startDate', 'endDate');
     }
 }

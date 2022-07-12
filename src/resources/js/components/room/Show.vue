@@ -1,16 +1,35 @@
 <template>
-    <div class="container" style="display: flex">
-        <div class="row row-cols-3" style="padding-top: 200px; padding-right: 20px">
-            <div class="col">
-                <div class="card" style="width: 300px;">
-                    <div class="card-body">
-                        <strong class="card-title" style="color: black">{{ room.name }}</strong>
-                        <p class="card-text" style="color: black">Площадь: {{ room.area }} м²</p>
-                        <p class="card-text" style="color: black">Цена: {{ room.price }} UAH</p>
-                        <p class="card-text" style="color: black">{{ room.bed }}</p>
-                        <HotelDatePicker :i18n="settings"> :disabledDates="['2022-07-08', '2022-07-09', '2022-07-10' ]">></HotelDatePicker>
-                        <div class="pt-2">
-                            <button type="submit" class="btn btn-primary">Забронировать</button>
+    <div>
+        <v-header></v-header>
+        <div class="container" style="display: flex">
+            <div v-if="error">
+                {{ error }}
+            </div>
+            <div class="row row-cols-3" style="padding-top: 200px; padding-right: 20px">
+                <div class="col">
+                    <div class="card" style="width: 300px;">
+                        <div class="card-body">
+                            <strong class="card-title" style="color: black">{{ room.name }}</strong>
+                            <p class="card-text" style="color: black">Площадь: {{ room.area }} м²</p>
+                            <p class="card-text" style="color: black">Цена: {{ room.price }} UAH</p>
+                            <p class="card-text" style="color: black">{{ room.bed }}</p>
+                            <div class="pt-5">
+                                <hotel-date-picker
+                                    @check-in-changed="updateCheckIn"
+                                    @check-out-changed="updateCheckOut"
+                                    format="DD.MM.YYYY"
+                                    :halfDay="false"
+                                    :disabledDates="bookings.unavailable_dates"
+                                    :maxNights="10"
+                                    :minNights="2">
+                                </hotel-date-picker>
+                                <div class="mb-3">
+                                    <input type="hidden" v-model="room_id = room.id" class="form-control">
+                                </div>
+                                <div class="pt-2">
+                                    <input @click.prevent="booking" type="submit" value="Add" class=" btn btn-primary">
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -23,6 +42,7 @@
 
 import HotelDatePicker from 'vue-hotel-datepicker'
 import 'vue-hotel-datepicker/dist/vueHotelDatepicker.css';
+import router from "../../router";
 
 export default {
     components: {
@@ -32,27 +52,60 @@ export default {
     data() {
         return {
             room: [],
-            settings: {
-                night: 'Ночь',
-                nights: 'Ночи',
-                'day-names': ['Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб', 'Вс'],
-                'check-in': 'Заезд',
-                'check-out': 'Выселение',
-                'month-names': ['Январь', 'Февраль', 'Март', 'Апрель', 'Май', 'Июнь', 'Июль', 'Август', 'Сентябрь', 'Октябрь', 'Ноябрь', 'Декабрь'],
-            }
+            room_id: [],
+            startDate: null,
+            endDate: null,
+            token: [],
+            bookings: [],
+            error: []
         }
     },
     mounted() {
         this.getRoom()
+        this.getToken()
+        this.getBookings()
     },
     methods: {
         getRoom() {
             axios.get(`/api/rooms/show/${this.$route.params.id}`)
                 .then(res => {
-                    console.log(res.data);
                     this.room = res.data
                 })
-        }
+        },
+        booking() {
+            axios.post('/api/bookings/store', {
+                startDate: this.startDate,
+                endDate: this.endDate,
+                room_id: this.room_id,
+            })
+                .then(res => {
+                    console.log(res);
+                    // this.$router.push({ name: 'booking.index' })
+                    this.getRoom()
+                })
+        },
+        getToken() {
+            this.token = localStorage.getItem('x_xsrf_token')
+        },
+        getBookings() {
+            axios.get(`/api/bookings/bookings/${this.$route.params.id}`)
+                .then(res => {
+                    console.log(res.data);
+                    this.bookings = res.data
+                })
+                .catch(err=>{
+                    this.error = err
+                })
+        },
+        updateCheckIn(date) {
+            this.startDate = date.toLocaleDateString();
+            // console.log(date.toLocaleDateString());
+        },
+
+        updateCheckOut(date) {
+            this.endDate = date.toLocaleDateString();
+            // console.log(date.toLocaleDateString());
+        },
     }
 }
 </script>

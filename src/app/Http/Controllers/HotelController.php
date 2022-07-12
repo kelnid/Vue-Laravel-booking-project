@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Resources\Hotel\HotelResource;
+use App\Models\Country;
 use App\Models\Hotel;
 use Illuminate\Http\Request;
 
@@ -16,7 +17,9 @@ class HotelController extends Controller
 
     public function store(Request $request)
     {
-        //
+        $data = $request->except('_token');
+        Hotel::create($data);
+        return response()->json();
     }
 
     public function show($id)
@@ -31,8 +34,9 @@ class HotelController extends Controller
         //
     }
 
-    public function destroy($id)
+    public function destroy(Hotel $hotel)
     {
-        //
+        $hotel->delete();
+        return response([]);
     }
 }
