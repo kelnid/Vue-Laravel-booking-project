@@ -19,9 +19,7 @@
                                     @check-out-changed="updateCheckOut"
                                     format="DD.MM.YYYY"
                                     :halfDay="false"
-                                    :disabledDates="bookings.unavailable_dates"
-                                    :maxNights="10"
-                                    :minNights="2">
+                                    :disabledDates="bookings.unavailable_dates">
                                 </hotel-date-picker>
                                 <div class="mb-3">
                                     <input type="hidden" v-model="room_id = room.id" class="form-control">
@@ -57,7 +55,7 @@ export default {
             endDate: null,
             token: [],
             bookings: [],
-            error: []
+            error: null
         }
     },
     mounted() {
@@ -80,8 +78,8 @@ export default {
             })
                 .then(res => {
                     console.log(res);
-                    // this.$router.push({ name: 'booking.index' })
-                    this.getRoom()
+                    this.$router.push({ name: 'booking.index' })
+                    // document.location.reload()
                 })
         },
         getToken() {
@@ -90,21 +88,26 @@ export default {
         getBookings() {
             axios.get(`/api/bookings/bookings/${this.$route.params.id}`)
                 .then(res => {
-                    console.log(res.data);
                     this.bookings = res.data
                 })
-                .catch(err=>{
-                    this.error = err
+                .catch(err => {
+                    console.log(err.message);
                 })
         },
         updateCheckIn(date) {
-            this.startDate = date.toLocaleDateString();
-            // console.log(date.toLocaleDateString());
+            if(date) {
+                this.startDate = date.getFullYear() + '-' + (date.getMonth()+1) +'-'+date.getDate()
+            } else {
+                this.startDate = null
+            }
         },
 
         updateCheckOut(date) {
-            this.endDate = date.toLocaleDateString();
-            // console.log(date.toLocaleDateString());
+            if (date) {
+                this.endDate = date.getFullYear() + '-' + (date.getMonth()+1) +'-'+date.getDate()
+            } else {
+                this.endDate = null
+            }
         },
     }
 }

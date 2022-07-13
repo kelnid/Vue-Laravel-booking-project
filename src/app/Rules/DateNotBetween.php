@@ -30,14 +30,16 @@ class DateNotBetween implements Rule, DataAwareRule
     public function passes($attribute, $value)
     {
         $firstPartOfTheRequest = RoomUser::where('room_id',$this->data['room_id'])
-            ->whereBetween('startDate',[$this->data['startDate'],$this->data['endDate']])
-            ->orWhereBetween('endDate',[$this->data['startDate'],$this->data['endDate']])
+            ->whereDate('endDate', '>=', $this->data['startDate'])
+            ->whereDate('endDate', '<=', $this->data['endDate'])->
+            orWhereDate('startDate', '>=', $this->data['startDate'])
+            ->whereDate('startDate', '<=', $this->data['endDate'])
             ->where('room_id',$this->data['room_id'])
             ->count();
 
         $secondPartOfTheRequest = RoomUser::where('room_id',$this->data['room_id'])
-            ->where('startDate','<=',$this->data['startDate'])
-            ->where('endDate','>=',$this->data['startDate'])
+            ->whereDate('startDate','<=',$this->data['startDate'])
+            ->whereDate('endDate','>=',$this->data['startDate'])
             ->count();
 
         $firstPartOfTheRequest += $secondPartOfTheRequest;

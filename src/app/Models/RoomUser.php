@@ -14,4 +14,8 @@ class RoomUser extends Pivot
 
     protected $table = 'room_user';
 
+    protected $casts = [
+        'startDate' => 'date:Y-m-j',
+        'endDate' => 'date:Y-m-j',
+    ];
 }

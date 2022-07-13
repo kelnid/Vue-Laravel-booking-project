@@ -28,7 +28,7 @@ class BookingController extends Controller
             $period = CarbonPeriod::create($date->startDate, $date->endDate);
 
             foreach ($period as $per) {
-                $datesRange[] = $per->format('Y.m.j');
+                $datesRange[] = $per->format('Y-m-j');
             }
         }
 
@@ -40,9 +40,7 @@ class BookingController extends Controller
 
         $data['user_id'] = auth()->user()->id;
 
-        RoomUser::create($data);
-
-        $booking = RoomUser::all()->where('user_id', auth()->user()->id)->first();
+        $booking = RoomUser::create($data);
 
         return response()->json($booking);
     }

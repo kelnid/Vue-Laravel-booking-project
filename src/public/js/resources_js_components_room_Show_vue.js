@@ -53,8 +53,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
 
 
 
@@ -71,7 +69,7 @@ __webpack_require__.r(__webpack_exports__);
       endDate: null,
       token: [],
       bookings: [],
-      error: []
+      error: null
     };
   },
   mounted: function mounted() {
@@ -95,9 +93,12 @@ __webpack_require__.r(__webpack_exports__);
         endDate: this.endDate,
         room_id: this.room_id
       }).then(function (res) {
-        console.log(res); // this.$router.push({ name: 'booking.index' })
+        console.log(res);
 
-        _this2.getRoom();
+        _this2.$router.push({
+          name: 'booking.index'
+        }); // document.location.reload()
+
       });
     },
     getToken: function getToken() {
@@ -107,17 +108,24 @@ __webpack_require__.r(__webpack_exports__);
       var _this3 = this;
 
       axios.get("/api/bookings/bookings/".concat(this.$route.params.id)).then(function (res) {
-        console.log(res.data);
         _this3.bookings = res.data;
       })["catch"](function (err) {
-        _this3.error = err;
+        console.log(err.message);
       });
     },
     updateCheckIn: function updateCheckIn(date) {
-      this.startDate = date.toLocaleDateString(); // console.log(date.toLocaleDateString());
+      if (date) {
+        this.startDate = date.getFullYear() + '-' + (date.getMonth() + 1) + '-' + date.getDate();
+      } else {
+        this.startDate = null;
+      }
     },
     updateCheckOut: function updateCheckOut(date) {
-      this.endDate = date.toLocaleDateString(); // console.log(date.toLocaleDateString());
+      if (date) {
+        this.endDate = date.getFullYear() + '-' + (date.getMonth() + 1) + '-' + date.getDate();
+      } else {
+        this.endDate = null;
+      }
     }
   }
 });
@@ -10075,8 +10083,6 @@ var render = function () {
                               format: "DD.MM.YYYY",
                               halfDay: false,
                               disabledDates: _vm.bookings.unavailable_dates,
-                              maxNights: 10,
-                              minNights: 2,
                             },
                             on: {
                               "check-in-changed": _vm.updateCheckIn,
