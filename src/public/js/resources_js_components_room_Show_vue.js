@@ -53,6 +53,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 
 
 
@@ -10080,8 +10081,9 @@ var render = function () {
                         [
                           _c("hotel-date-picker", {
                             attrs: {
-                              format: "DD.MM.YYYY",
                               halfDay: false,
+                              minNights: 5,
+                              maxNights: 10,
                               disabledDates: _vm.bookings.unavailable_dates,
                             },
                             on: {

@@ -27,7 +27,14 @@ Route::group([
     'prefix' => 'countries',
 ], function () {
     Route::get('/', [CountryController::class, 'index'])->name('index');
-    Route::post('/', [CountryController::class, 'store'])->name('store');
+
+    Route::group([
+        'as' => 'store.',
+        'prefix' => 'store',
+    ], function () {
+        Route::post('/', [CountryController::class, 'store'])->name('store');
+    });
+
     Route::put('/{country}', [CountryController::class, 'update'])->name('update');
     Route::delete('{country}', [CountryController::class, 'destroy']);
 });

@@ -5325,28 +5325,37 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   name: "Layout",
   data: function data() {
     return {
-      token: []
+      token: [],
+      role_id: null
     };
   },
+  computed: {},
   updated: function updated() {
     this.getToken();
   },
   mounted: function mounted() {
     this.getToken();
+    this.getUser();
   },
   methods: {
     getToken: function getToken() {
       this.token = localStorage.getItem('x_xsrf_token');
+    },
+    getUser: function getUser() {
+      this.role_id = JSON.parse(localStorage.getItem('role_id'));
     },
     logout: function logout() {
       var _this = this;
 
       axios.post('/logout').then(function (res) {
         localStorage.removeItem('x_xsrf_token');
+        localStorage.removeItem('role_id');
 
         _this.$router.push({
           name: 'user.login'
@@ -5560,18 +5569,136 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm.js");
-/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
+/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm.js");
+/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
 /* harmony import */ var _modules_country_index__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./modules/country/index */ "./resources/js/store/modules/country/index.js");
+/* harmony import */ var _modules_auth_index__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./modules/auth/index */ "./resources/js/store/modules/auth/index.js");
 
 
 
-vue__WEBPACK_IMPORTED_MODULE_1__["default"].use(vuex__WEBPACK_IMPORTED_MODULE_2__["default"]);
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (new vuex__WEBPACK_IMPORTED_MODULE_2__["default"].Store({
+
+vue__WEBPACK_IMPORTED_MODULE_2__["default"].use(vuex__WEBPACK_IMPORTED_MODULE_3__["default"]);
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (new vuex__WEBPACK_IMPORTED_MODULE_3__["default"].Store({
   modules: {
-    Country: _modules_country_index__WEBPACK_IMPORTED_MODULE_0__["default"]
+    Country: _modules_country_index__WEBPACK_IMPORTED_MODULE_0__["default"],
+    Auth: _modules_auth_index__WEBPACK_IMPORTED_MODULE_1__["default"]
   }
 }));
+
+/***/ }),
+
+/***/ "./resources/js/store/modules/auth/actions.js":
+/*!****************************************************!*\
+  !*** ./resources/js/store/modules/auth/actions.js ***!
+  \****************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _router__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../../router */ "./resources/js/router.js");
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  getUserData: function getUserData(_ref) {
+    var commit = _ref.commit;
+    axios.get('/sanctum/csrf-cookie').then(function (res) {
+      commit('setUserData', res.data);
+      localStorage.setItem('x_xsrf_token', res.config.headers['X-XSRF-TOKEN']);
+    });
+  },
+  Login: function Login(_ref2, data) {
+    var commit = _ref2.commit;
+    return axios.post('/login', data).then(function (res) {
+      commit("setUserData", res.data);
+      commit("x_xsrf_token", res.data.token);
+      localStorage.setItem('x_xsrf_token', res.config.headers['X-XSRF-TOKEN']);
+      localStorage.setItem('role_id', JSON.stringify(res.data.role_id));
+      _router__WEBPACK_IMPORTED_MODULE_0__["default"].push({
+        name: 'country.index'
+      });
+    })["catch"](function (err) {
+      console.log(err);
+    });
+  }
+});
+
+
+/***/ }),
+
+/***/ "./resources/js/store/modules/auth/getters.js":
+/*!****************************************************!*\
+  !*** ./resources/js/store/modules/auth/getters.js ***!
+  \****************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  user: function user(state) {
+    return state.userData;
+  },
+  x_xsrf_token: function x_xsrf_token(state) {
+    return state.x_xsrf_token;
+  }
+});
+
+/***/ }),
+
+/***/ "./resources/js/store/modules/auth/index.js":
+/*!**************************************************!*\
+  !*** ./resources/js/store/modules/auth/index.js ***!
+  \**************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _getters__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./getters */ "./resources/js/store/modules/auth/getters.js");
+/* harmony import */ var _actions__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./actions */ "./resources/js/store/modules/auth/actions.js");
+/* harmony import */ var _mutations__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./mutations */ "./resources/js/store/modules/auth/mutations.js");
+
+
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  namespaced: true,
+  state: function state() {
+    return {
+      userData: null,
+      x_xsrf_token: ''
+    };
+  },
+  getters: _getters__WEBPACK_IMPORTED_MODULE_0__["default"],
+  mutations: _mutations__WEBPACK_IMPORTED_MODULE_2__["default"],
+  actions: _actions__WEBPACK_IMPORTED_MODULE_1__["default"]
+});
+
+/***/ }),
+
+/***/ "./resources/js/store/modules/auth/mutations.js":
+/*!******************************************************!*\
+  !*** ./resources/js/store/modules/auth/mutations.js ***!
+  \******************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  setUserData: function setUserData(state, user) {
+    return state.userData = user;
+  },
+  x_xsrf_token: function x_xsrf_token(state, token) {
+    return state.x_xsrf_token = token;
+  }
+});
 
 /***/ }),
 
@@ -5587,8 +5714,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
 /* harmony import */ var _router__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../../router */ "./resources/js/router.js");
-function _objectDestructuringEmpty(obj) { if (obj == null) throw new TypeError("Cannot destructure undefined"); }
-
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   getCountries: function getCountries(_ref) {
     var commit = _ref.commit;
@@ -5601,18 +5726,13 @@ function _objectDestructuringEmpty(obj) { if (obj == null) throw new TypeError("
     axios["delete"]("/api/countries/".concat(id)).then(function (res) {
       dispatch('getCountries');
     });
-  },
-  store: function store(_ref3, data) {
-    _objectDestructuringEmpty(_ref3);
+  } // store({}, data) {
+  //     axios.post('/api/countries', { name: data.name })
+  //         .then(res => {
+  //             router.push({ name: 'country.index' })
+  //         })
+  // },
 
-    axios.post('/api/countries', {
-      name: data.name
-    }).then(function (res) {
-      _router__WEBPACK_IMPORTED_MODULE_0__["default"].push({
-        name: 'country.index'
-      });
-    });
-  }
 });
 
 
@@ -28391,20 +28511,22 @@ var render = function () {
             [_c("strong", [_vm._v("Travelmore.com")])]
           ),
           _vm._v(" "),
-          _vm.token
-            ? _c(
-                "router-link",
-                {
-                  staticClass: "navbar-brand d-flex align-items-center",
-                  attrs: { to: { name: "booking.index" } },
-                },
-                [_c("strong", [_vm._v("Мои бронирования")])]
-              )
+          _vm.role_id === 1
+            ? [
+                _c(
+                  "router-link",
+                  {
+                    staticClass: "navbar-brand d-flex align-items-center",
+                    attrs: { to: { name: "booking.index" } },
+                  },
+                  [_c("strong", [_vm._v("Мои бронирования")])]
+                ),
+              ]
             : _vm._e(),
           _vm._v(" "),
           _vm._m(1),
         ],
-        1
+        2
       ),
     ]),
   ])

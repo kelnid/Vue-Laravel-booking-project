@@ -41,10 +41,42 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   components: {
     Welcome: _layouts_Welcome__WEBPACK_IMPORTED_MODULE_0__["default"]
+  },
+  data: function data() {
+    return {
+      role_id: null
+    };
+  },
+  methods: {
+    getUser: function getUser() {
+      this.role_id = JSON.parse(localStorage.getItem('role_id'));
+    }
   },
   computed: {
     countries: function countries() {
@@ -53,6 +85,7 @@ __webpack_require__.r(__webpack_exports__);
   },
   mounted: function mounted() {
     this.$store.dispatch('getCountries');
+    this.getUser();
   }
 });
 
@@ -86,8 +119,36 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
-  name: "Welcome"
+  name: "Welcome",
+  data: function data() {
+    return {
+      role_id: null
+    };
+  },
+  mounted: function mounted() {
+    this.getUser();
+  },
+  methods: {
+    getUser: function getUser() {
+      this.role_id = JSON.parse(localStorage.getItem('role_id'));
+    }
+  }
 });
 
 /***/ }),
@@ -252,122 +313,199 @@ var render = function () {
       _vm._v(" "),
       _c("welcome"),
       _vm._v(" "),
-      _c("div", { staticClass: "container" }, [
-        _c(
-          "div",
-          { staticClass: "row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3" },
-          _vm._l(_vm.countries, function (country) {
-            return _c("div", { staticClass: "col" }, [
-              _c("div", { staticClass: "card shadow-sm" }, [
-                _c(
-                  "div",
-                  {
-                    staticStyle: {
-                      position: "relative",
-                      "text-align": "center",
-                      color: "black",
-                      "font-size": "larger",
-                    },
-                  },
-                  [
-                    _c("img", {
-                      staticStyle: { width: "420px", height: "237px" },
-                      attrs: { src: "storage/" + country.image },
-                    }),
-                    _vm._v(" "),
-                    _c(
-                      "div",
-                      {
-                        staticClass: "top-left",
-                        staticStyle: {
-                          position: "absolute",
-                          top: "8px",
-                          left: "16px",
-                        },
-                      },
-                      [_vm._v(_vm._s(country.name))]
-                    ),
-                  ]
-                ),
-                _vm._v(" "),
-                _c("div", { staticClass: "card-body" }, [
-                  _c(
-                    "div",
-                    {
-                      staticClass:
-                        "d-flex justify-content-between align-items-center",
-                    },
-                    [
+      _vm.role_id === 2
+        ? [
+            _c("div", { staticClass: "container" }, [
+              _c(
+                "div",
+                {
+                  staticClass: "row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3",
+                },
+                _vm._l(_vm.countries, function (country) {
+                  return _c("div", { staticClass: "col" }, [
+                    _c("div", { staticClass: "card shadow-sm" }, [
                       _c(
                         "div",
-                        { staticClass: "btn-group" },
-                        [
-                          _c(
-                            "router-link",
-                            {
-                              staticClass: "btn btn-sm btn-outline-secondary",
-                              attrs: {
-                                to: {
-                                  name: "hotel.index",
-                                  params: { id: country.id },
-                                },
-                              },
-                            },
-                            [_c("strong", [_vm._v("View")])]
-                          ),
-                          _vm._v(" "),
-                          _c(
-                            "a",
-                            {
-                              staticClass: "btn btn-sm btn-outline-secondary",
-                              attrs: { href: "" },
-                            },
-                            [_vm._v("edit")]
-                          ),
-                          _vm._v(" "),
-                          _c(
-                            "router-link",
-                            {
-                              staticClass: "btn btn-sm btn-outline-secondary",
-                              attrs: {
-                                to: {
-                                  name: "hotel.create",
-                                  params: { id: country.id },
-                                },
-                              },
-                            },
-                            [_vm._v("add")]
-                          ),
-                        ],
-                        1
-                      ),
-                      _vm._v(" "),
-                      _c(
-                        "button",
                         {
-                          staticClass: "btn btn-sm btn-outline-danger",
-                          on: {
-                            click: function ($event) {
-                              return _vm.$store.dispatch(
-                                "deleteCountry",
-                                country.id
-                              )
-                            },
+                          staticStyle: {
+                            position: "relative",
+                            "text-align": "center",
+                            color: "black",
+                            "font-size": "larger",
                           },
                         },
-                        [_vm._v("Delete")]
+                        [
+                          _c("img", {
+                            staticStyle: { width: "420px", height: "237px" },
+                            attrs: { src: "storage/" + country.image },
+                          }),
+                          _vm._v(" "),
+                          _c(
+                            "div",
+                            {
+                              staticClass: "top-left",
+                              staticStyle: {
+                                position: "absolute",
+                                top: "8px",
+                                left: "16px",
+                              },
+                            },
+                            [_vm._v(_vm._s(country.name))]
+                          ),
+                        ]
                       ),
-                    ]
-                  ),
-                ]),
-              ]),
-            ])
-          }),
-          0
-        ),
-      ]),
+                      _vm._v(" "),
+                      _c("div", { staticClass: "card-body" }, [
+                        _c(
+                          "div",
+                          {
+                            staticClass:
+                              "d-flex justify-content-between align-items-center",
+                          },
+                          [
+                            _c(
+                              "div",
+                              { staticClass: "btn-group" },
+                              [
+                                _c(
+                                  "router-link",
+                                  {
+                                    staticClass:
+                                      "btn btn-sm btn-outline-secondary",
+                                    attrs: {
+                                      to: {
+                                        name: "hotel.index",
+                                        params: { id: country.id },
+                                      },
+                                    },
+                                  },
+                                  [_c("strong", [_vm._v("View")])]
+                                ),
+                                _vm._v(" "),
+                                _c(
+                                  "a",
+                                  {
+                                    staticClass:
+                                      "btn btn-sm btn-outline-secondary",
+                                    attrs: { href: "" },
+                                  },
+                                  [_vm._v("edit")]
+                                ),
+                              ],
+                              1
+                            ),
+                            _vm._v(" "),
+                            _c(
+                              "button",
+                              {
+                                staticClass: "btn btn-sm btn-outline-danger",
+                                on: {
+                                  click: function ($event) {
+                                    return _vm.$store.dispatch(
+                                      "deleteCountry",
+                                      country.id
+                                    )
+                                  },
+                                },
+                              },
+                              [_vm._v("Delete")]
+                            ),
+                          ]
+                        ),
+                      ]),
+                    ]),
+                  ])
+                }),
+                0
+              ),
+            ]),
+          ]
+        : _vm._e(),
+      _vm._v(" "),
+      _vm.role_id === 1
+        ? [
+            _c("div", { staticClass: "container" }, [
+              _c(
+                "div",
+                {
+                  staticClass: "row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3",
+                },
+                _vm._l(_vm.countries, function (country) {
+                  return _c("div", { staticClass: "col" }, [
+                    _c("div", { staticClass: "card shadow-sm" }, [
+                      _c(
+                        "div",
+                        {
+                          staticStyle: {
+                            position: "relative",
+                            "text-align": "center",
+                            color: "black",
+                            "font-size": "larger",
+                          },
+                        },
+                        [
+                          _c("img", {
+                            staticStyle: { width: "420px", height: "237px" },
+                            attrs: { src: "storage/" + country.image },
+                          }),
+                          _vm._v(" "),
+                          _c(
+                            "div",
+                            {
+                              staticClass: "top-left",
+                              staticStyle: {
+                                position: "absolute",
+                                top: "8px",
+                                left: "16px",
+                              },
+                            },
+                            [_vm._v(_vm._s(country.name))]
+                          ),
+                        ]
+                      ),
+                      _vm._v(" "),
+                      _c("div", { staticClass: "card-body" }, [
+                        _c(
+                          "div",
+                          {
+                            staticClass:
+                              "d-flex justify-content-between align-items-center",
+                          },
+                          [
+                            _c(
+                              "div",
+                              { staticClass: "btn-group" },
+                              [
+                                _c(
+                                  "router-link",
+                                  {
+                                    staticClass:
+                                      "btn btn-sm btn-outline-secondary",
+                                    attrs: {
+                                      to: {
+                                        name: "hotel.index",
+                                        params: { id: country.id },
+                                      },
+                                    },
+                                  },
+                                  [_c("strong", [_vm._v("View")])]
+                                ),
+                              ],
+                              1
+                            ),
+                          ]
+                        ),
+                      ]),
+                    ]),
+                  ])
+                }),
+                0
+              ),
+            ]),
+          ]
+        : _vm._e(),
     ],
-    1
+    2
   )
 }
 var staticRenderFns = []
@@ -392,38 +530,78 @@ var render = function () {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", [
-    _c("section", { staticClass: "py-5 text-center container" }, [
+  return _c(
+    "div",
+    [
+      _vm.role_id === 2
+        ? [
+            _c("div", { staticClass: "py-5 text-center container" }, [
+              _c("div", { staticClass: "row py-lg-5" }, [
+                _c("div", { staticClass: "col-lg-6 col-md-8 mx-auto" }, [
+                  _c("h1", { staticClass: "fw-light" }, [
+                    _vm._v("Добро пожаловать!"),
+                  ]),
+                  _vm._v(" "),
+                  _c("p", { staticClass: "lead text-muted" }, [
+                    _vm._v(
+                      "Хороший отель залог хорошего путешествия.\n                        Выберите страну и забронируйте жилье с бесплатной отменой прямо сейчас!\n                    "
+                    ),
+                  ]),
+                  _vm._v(" "),
+                  _c(
+                    "p",
+                    [
+                      _c(
+                        "router-link",
+                        {
+                          staticClass: "btn btn-outline-primary",
+                          attrs: { to: { name: "country.create" } },
+                        },
+                        [_vm._v("Добавить страну")]
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "router-link",
+                        {
+                          staticClass: "btn btn-outline-primary",
+                          attrs: { to: { name: "hotel.create" } },
+                        },
+                        [_vm._v("Добавить отель")]
+                      ),
+                    ],
+                    1
+                  ),
+                ]),
+              ]),
+            ]),
+          ]
+        : _vm._e(),
+      _vm._v(" "),
+      _vm.role_id === 1 ? [_vm._m(0)] : _vm._e(),
+    ],
+    2
+  )
+}
+var staticRenderFns = [
+  function () {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "py-5 text-center container" }, [
       _c("div", { staticClass: "row py-lg-5" }, [
         _c("div", { staticClass: "col-lg-6 col-md-8 mx-auto" }, [
           _c("h1", { staticClass: "fw-light" }, [_vm._v("Добро пожаловать!")]),
           _vm._v(" "),
           _c("p", { staticClass: "lead text-muted" }, [
             _vm._v(
-              "Хороший отель залог хорошего путешествия.\n                    Выберите страну и забронируйте жилье с бесплатной отменой прямо сейчас!\n                "
+              "Хороший отель залог хорошего путешествия.\n                        Выберите страну и забронируйте жилье с бесплатной отменой прямо сейчас!\n                    "
             ),
           ]),
-          _vm._v(" "),
-          _c(
-            "p",
-            [
-              _c(
-                "router-link",
-                {
-                  staticClass: "btn btn-outline-primary",
-                  attrs: { to: { name: "country.create" } },
-                },
-                [_vm._v("Добавить страну")]
-              ),
-            ],
-            1
-          ),
         ]),
       ]),
-    ]),
-  ])
-}
-var staticRenderFns = []
+    ])
+  },
+]
 render._withStripped = true
 
 

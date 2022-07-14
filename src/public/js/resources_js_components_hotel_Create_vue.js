@@ -43,7 +43,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   name: "Create",
@@ -61,6 +60,9 @@ __webpack_require__.r(__webpack_exports__);
   computed: {
     countries: function countries() {
       return this.$store.getters.countries;
+    },
+    isDisabled: function isDisabled() {
+      return this.name && this.address && this.description && this.country_id;
     }
   },
   methods: {
@@ -71,7 +73,9 @@ __webpack_require__.r(__webpack_exports__);
         description: this.description,
         country_id: this.country_id
       }).then(function (res) {
-        console.log(res); // router.push({ name: 'country.index' })
+        _router__WEBPACK_IMPORTED_MODULE_0__["default"].push({
+          name: 'country.index'
+        });
       });
     }
   }
@@ -289,16 +293,20 @@ var render = function () {
           ]),
           _vm._v(" "),
           _c("div", { staticClass: "mb-3" }, [
-            _c("input", {
-              staticClass: " btn btn-primary",
-              attrs: { type: "submit", value: "Add" },
-              on: {
-                click: function ($event) {
-                  $event.preventDefault()
-                  return _vm.store.apply(null, arguments)
+            _c(
+              "button",
+              {
+                staticClass: " btn btn-primary",
+                attrs: { disabled: !_vm.isDisabled },
+                on: {
+                  click: function ($event) {
+                    $event.preventDefault()
+                    return _vm.store.apply(null, arguments)
+                  },
                 },
               },
-            }),
+              [_vm._v("Добавить отель")]
+            ),
           ]),
         ]),
       ]),

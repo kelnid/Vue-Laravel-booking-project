@@ -11,6 +11,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
+/* harmony import */ var _router__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../router */ "./resources/js/router.js");
 //
 //
 //
@@ -27,12 +28,38 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   name: "Create",
   data: function data() {
     return {
-      name: []
+      name: null,
+      image: null
     };
+  },
+  computed: {
+    isDisabled: function isDisabled() {
+      return this.name && this.image;
+    }
+  },
+  methods: {
+    addCountry: function addCountry() {
+      var formData = new FormData();
+      formData.append('name', this.name);
+      formData.append('image', this.image);
+      axios.post('/api/countries/store', formData).then(function (res) {
+        console.log(res.data.message);
+        _router__WEBPACK_IMPORTED_MODULE_0__["default"].push({
+          name: 'country.index'
+        });
+      });
+    },
+    addFile: function addFile(event) {
+      this.image = event.target.files[0];
+    }
   }
 });
 
@@ -128,7 +155,7 @@ var render = function () {
       _c("v-header"),
       _vm._v(" "),
       _c("div", { staticClass: "container pt-5" }, [
-        _c("div", { staticClass: "w-25" }, [
+        _c("div", { staticClass: "container w-25" }, [
           _c("div", { staticClass: "mb-3" }, [
             _c("input", {
               directives: [
@@ -155,15 +182,22 @@ var render = function () {
           _vm._v(" "),
           _c("div", { staticClass: "mb-3" }, [
             _c("input", {
-              staticClass: " btn btn-primary",
-              attrs: { type: "submit", value: "Add" },
-              on: {
-                click: function ($event) {
-                  $event.preventDefault()
-                  return _vm.$store.dispatch("store", { name: _vm.name })
-                },
-              },
+              staticClass: "form-control",
+              attrs: { type: "file", id: "image" },
+              on: { change: _vm.addFile },
             }),
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "mb-3" }, [
+            _c(
+              "button",
+              {
+                staticClass: " btn btn-primary",
+                attrs: { disabled: !_vm.isDisabled },
+                on: { click: _vm.addCountry },
+              },
+              [_vm._v("Добавить страну")]
+            ),
           ]),
         ]),
       ]),

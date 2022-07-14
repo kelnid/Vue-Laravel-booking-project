@@ -21,9 +21,8 @@
                         </template>
                     </select>
                 </div>
-
                 <div class="mb-3">
-                    <input @click.prevent="store" type="submit" value="Add" class=" btn btn-primary">
+                    <button :disabled="!isDisabled" @click.prevent="store" class=" btn btn-primary">Добавить отель</button>
                 </div>
             </div>
         </div>
@@ -43,20 +42,23 @@ export default {
             country_id: null,
         }
     },
+
     mounted() {
         this.$store.dispatch('getCountries')
     },
     computed: {
         countries() {
             return this.$store.getters.countries
+        },
+        isDisabled() {
+            return this.name && this.address && this.description && this.country_id
         }
     },
     methods: {
         store() {
             axios.post('/api/hotels', { name: this.name, address: this.address, description: this.description,country_id: this.country_id,  })
                 .then(res => {
-                    console.log(res);
-                    // router.push({ name: 'country.index' })
+                    router.push({ name: 'country.index' })
                 })
         },
     }

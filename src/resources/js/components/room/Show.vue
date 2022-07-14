@@ -17,8 +17,9 @@
                                 <hotel-date-picker
                                     @check-in-changed="updateCheckIn"
                                     @check-out-changed="updateCheckOut"
-                                    format="DD.MM.YYYY"
                                     :halfDay="false"
+                                    :minNights="5"
+                                    :maxNights="10"
                                     :disabledDates="bookings.unavailable_dates">
                                 </hotel-date-picker>
                                 <div class="mb-3">
