@@ -16,6 +16,7 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'role_id'
     ];
     protected $hidden = [
         'password',
@@ -27,5 +28,9 @@ class User extends Authenticatable
     public function rooms()
     {
         return $this->belongsToMany(Room::class)->withPivot('startDate', 'endDate', 'id');
+    }
+    public function role()
+    {
+        return $this->belongsTo(Role::class);
     }
 }
