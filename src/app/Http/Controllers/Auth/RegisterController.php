@@ -75,4 +75,10 @@ class RegisterController extends Controller
             'role_id' => Role::where('name', 'user')->first()->id,
         ]);
     }
+    protected function registered(Request $request, $user)
+    {
+        $user = auth()->user();
+        return response()->json($user);
+    }
+
 }

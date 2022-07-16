@@ -46,6 +46,9 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   name: "Create",
@@ -54,7 +57,7 @@ __webpack_require__.r(__webpack_exports__);
       name: null,
       address: null,
       description: null,
-      country_id: null
+      country_id: 0
     };
   },
   mounted: function mounted() {
@@ -292,6 +295,12 @@ var render = function () {
                 },
               },
               [
+                _c("option", { attrs: { disabled: "", value: "0" } }, [
+                  _vm._v(
+                    "\n                        Выберите шото\n                    "
+                  ),
+                ]),
+                _vm._v(" "),
                 _vm._l(_vm.countries, function (country) {
                   return [
                     _c("option", { domProps: { value: country.id } }, [
@@ -317,7 +326,7 @@ var render = function () {
                 on: {
                   click: function ($event) {
                     $event.preventDefault()
-                    return _vm.addHotel.apply(null, arguments)
+                    return _vm.addHotel($event)
                   },
                 },
               },

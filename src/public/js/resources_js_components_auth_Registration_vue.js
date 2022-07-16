@@ -47,8 +47,9 @@ __webpack_require__.r(__webpack_exports__);
           role_id: _this.role_id,
           password_confirmation: _this.password_confirmation
         }).then(function (res) {
-          // console.log(JSON.stringify(res.config.data));
-          localStorage.setItem('x_xsrf_token', res.config.headers['X-XSRF-TOKEN']); // localStorage.setItem('role_id', JSON.stringify(res.config.data))
+          localStorage.setItem('x_xsrf_token', res.config.headers['X-XSRF-TOKEN']);
+          localStorage.setItem('role_id', JSON.stringify(res.data.role_id));
+          localStorage.setItem('user_id', JSON.stringify(res.data.id));
 
           _this.$router.push({
             name: 'country.index'
@@ -245,7 +246,7 @@ var render = function () {
           on: {
             click: function ($event) {
               $event.preventDefault()
-              return _vm.registration.apply(null, arguments)
+              return _vm.registration($event)
             },
           },
         }),

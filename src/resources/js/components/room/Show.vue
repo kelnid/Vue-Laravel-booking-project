@@ -1,19 +1,47 @@
 <template>
     <div>
         <v-header></v-header>
-        <div class="container" style="display: flex">
-            <div v-if="error">
-                {{ error }}
-            </div>
-            <div class="row row-cols-3" style="padding-top: 200px; padding-right: 20px">
-                <div class="col">
-                    <div class="card" style="width: 300px;">
+        <div class="container pt-5 pl-5">
+            <div class="row align-item-start">
+                <div class="mb-3 mb-lg-0 col-lg-7">
+                    <div class="card shadow">
                         <div class="card-body">
-                            <strong class="card-title" style="color: black">{{ room.name }}</strong>
-                            <p class="card-text" style="color: black">Площадь: {{ room.area }} м²</p>
-                            <p class="card-text" style="color: black">Цена: {{ room.price }} UAH</p>
-                            <p class="card-text" style="color: black">{{ room.bed }}</p>
-                            <div class="pt-5">
+                            <h1 class="mb-3">{{ room.name }}</h1>
+                            <hr>
+                            <img :src="`../../../storage/${room.image}`" style="width: 710px; height: 484px">
+                            <hr>
+                            <div class="d-flex flex-wrap gap-1 mb-3 flex-1">
+                                <div><i class="mr-1 text-primary fas fa-swimming-pool"></i><span class="text-muted"> Бассейн </span>
+                                </div>
+                                <div><i class="mr-1 text-primary fas fa-dumbbell"></i><span class="text-muted"> Тренажерный зал </span></div>
+                                <div><i class="mr-1 text-primary fas fa-utensils"></i><span class="text-muted"> Ресторан </span>
+                                </div>
+                                <div><i class="mr-1 text-primary fas fa-bread-slice"></i><span class="text-muted"> Завтрак </span>
+                                </div>
+                                <div><i class="mr-1 text-primary fas fa-concierge-bell"></i><span
+                                    class="text-muted"> Обслуживание комнаты </span></div>
+                                <div><i class="mr-1 text-primary fas fa-glass-martini-alt"></i><span class="text-muted"> Бар </span>
+                                </div>
+                                <div><span class="text-muted"> Wi-fi </span></div>
+                                <div><i class="mr-1 text-primary fab fa-accessible-icon"></i><span
+                                    class="text-muted"> Доступный </span></div>
+                                <div><i class="mr-1 text-primary fas fa-smoking-ban"></i><span class="text-muted"> Курение запрещено </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="sticky col-lg-4" style="padding-left: 50px">
+                    <div class="card shadow">
+                        <div class="card-body">
+                            <div class="d-flex justify-content-between align-items-end flex-wrap"><h2 class="mb-0">
+                                Бронирование</h2></div>
+                            <hr>
+                            <p><strong>Площадь комнаты: {{ room.area }} м²</strong></p>
+                            <p><strong>Кровать: {{ room.bed }} </strong></p>
+                            <p><strong>Цена за ночь: {{ room.price }} UAH</strong></p>
+                            <p>Выберите дату заезда и выселения</p>
+                            <form class="pt-2">
                                 <hotel-date-picker
                                     @check-in-changed="updateCheckIn"
                                     @check-out-changed="updateCheckOut"
@@ -25,9 +53,9 @@
                                 <div class="mb-3">
                                     <input type="hidden" v-model="room_id = room.id" class="form-control">
                                 </div>
-                                <div class="pt-2">
-                                    <input @click.prevent="booking" type="submit" value="Add" class=" btn btn-primary">
-                                </div>
+                            </form>
+                            <div>
+                                <button @click.prevent="booking" type="submit" class="btn btn-primary shadow">Забронировать</button>
                             </div>
                         </div>
                     </div>
@@ -79,7 +107,7 @@ export default {
             })
                 .then(res => {
                     console.log(res);
-                    this.$router.push({ name: 'booking.index' })
+                    this.$router.push({name: 'booking.index'})
                     // document.location.reload()
                 })
         },
@@ -96,16 +124,15 @@ export default {
                 })
         },
         updateCheckIn(date) {
-            if(date) {
-                this.startDate = date.getFullYear() + '-' + (date.getMonth()+1) +'-'+date.getDate()
+            if (date) {
+                this.startDate = date.getFullYear() + '-' + (date.getMonth() + 1) + '-' + date.getDate()
             } else {
                 this.startDate = null
             }
         },
-
         updateCheckOut(date) {
             if (date) {
-                this.endDate = date.getFullYear() + '-' + (date.getMonth()+1) +'-'+date.getDate()
+                this.endDate = date.getFullYear() + '-' + (date.getMonth() + 1) + '-' + date.getDate()
             } else {
                 this.endDate = null
             }

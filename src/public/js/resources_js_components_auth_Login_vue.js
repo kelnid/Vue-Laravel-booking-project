@@ -157,7 +157,7 @@ var render = function () {
           on: {
             submit: function ($event) {
               $event.preventDefault()
-              return _vm.sendCredentials.apply(null, arguments)
+              return _vm.sendCredentials($event)
             },
           },
         },

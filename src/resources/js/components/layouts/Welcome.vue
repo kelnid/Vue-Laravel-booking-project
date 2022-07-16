@@ -9,9 +9,9 @@
                             Выберите страну и забронируйте жилье с бесплатной отменой прямо сейчас!
                         </p>
                         <p>
-                            <router-link class="btn btn-outline-primary" :to="{ name: 'country.create' }">Добавить страну</router-link>
-                            <router-link class="btn btn-outline-primary" :to="{ name: 'hotel.create' }">Добавить отель</router-link>
-                            <router-link class="btn btn-outline-primary" :to="{ name: 'room.create' }">Добавить номер</router-link>
+                            <router-link class="btn btn-outline-primary shadow" :to="{ name: 'country.create' }">Добавить страну</router-link>
+                            <router-link class="btn btn-outline-primary shadow" :to="{ name: 'hotel.create' }">Добавить отель</router-link>
+                            <router-link class="btn btn-outline-primary shadow" :to="{ name: 'room.create' }">Добавить номер</router-link>
                         </p>
                     </div>
                 </div>

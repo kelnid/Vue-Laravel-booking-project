@@ -17,6 +17,9 @@
                 </div>
                 <div class="mb-3">
                     <select v-model="country_id" name="county_id">
+                        <option disabled value="0">
+                            Выберите шото
+                        </option>
                         <template v-for="country in countries">
                             <option :value="country.id">
                                 {{ country.name }}
@@ -42,7 +45,7 @@ export default {
             name: null,
             address: null,
             description: null,
-            country_id: null,
+            country_id: 0,
         }
     },
 

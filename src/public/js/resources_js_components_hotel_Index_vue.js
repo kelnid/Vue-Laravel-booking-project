@@ -163,10 +163,10 @@ var render = function () {
       _c("div", { staticClass: "container pt-5" }, [
         _c(
           "div",
-          { staticClass: "row row-cols-1 row-cols-md-3 g-4" },
+          { staticClass: "row row-cols-1 row-cols-md-3 g-4 " },
           _vm._l(_vm.hotels, function (hotel) {
-            return _c("div", { staticClass: "col" }, [
-              _c("div", { staticClass: "card h-100" }, [
+            return _c("div", { staticClass: "col " }, [
+              _c("div", { staticClass: "card h-100 shadow" }, [
                 _c("img", {
                   staticStyle: { height: "238px" },
                   attrs: { src: "../../../storage/" + hotel.image },
@@ -194,7 +194,7 @@ var render = function () {
                           _c(
                             "router-link",
                             {
-                              staticClass: "btn btn-outline-primary",
+                              staticClass: "btn btn-outline-primary shadow",
                               attrs: {
                                 to: {
                                   name: "hotel.show",
@@ -211,7 +211,7 @@ var render = function () {
                       _c(
                         "button",
                         {
-                          staticClass: "btn btn-outline-danger",
+                          staticClass: "btn btn-outline-danger shadow",
                           on: {
                             click: function ($event) {
                               return _vm.deleteHotel(hotel.id)

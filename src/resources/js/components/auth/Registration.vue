@@ -38,9 +38,9 @@ export default {
                             password_confirmation: this.password_confirmation,
                         })
                         .then(res => {
-                            // console.log(JSON.stringify(res.config.data));
                             localStorage.setItem('x_xsrf_token', res.config.headers['X-XSRF-TOKEN'])
-                            // localStorage.setItem('role_id', JSON.stringify(res.config.data))
+                            localStorage.setItem('role_id', JSON.stringify(res.data.role_id))
+                            localStorage.setItem('user_id', JSON.stringify(res.data.id))
                             this.$router.push({ name: 'country.index' })
                         })
                 })

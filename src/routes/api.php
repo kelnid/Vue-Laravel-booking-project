@@ -3,8 +3,10 @@
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\BookingController;
+use App\Http\Controllers\CommentController;
 use App\Http\Controllers\CountryController;
 use App\Http\Controllers\HotelController;
+use App\Http\Controllers\RatingController;
 use App\Http\Controllers\RoomController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -32,14 +34,12 @@ Route::group([
     'prefix' => 'countries',
 ], function () {
     Route::get('/', [CountryController::class, 'index'])->name('index');
-
     Route::group([
         'as' => 'store.',
         'prefix' => 'store',
     ], function () {
         Route::post('/', [CountryController::class, 'store'])->name('store');
     });
-
     Route::put('/{country}', [CountryController::class, 'update'])->name('update');
     Route::delete('{country}', [CountryController::class, 'destroy']);
 });
@@ -49,6 +49,19 @@ Route::group([
     'prefix' => 'hotels',
 ], function () {
     Route::post('/', [HotelController::class, 'store'])->name('store');
+    Route::group([
+        'as' => 'rate.',
+        'prefix' => 'rate'
+    ], function () {
+        Route::get('/{hotel}', [RatingController::class, 'show']);
+    });
+
+    Route::group([
+        'as' => 'post-rate.',
+        'prefix' => 'post-rate'
+    ], function () {
+        Route::post('/', [RatingController::class, 'store']);
+    });
     Route::group([
         'as' => 'show.',
         'prefix' => 'show',
@@ -61,6 +74,24 @@ Route::group([
         'prefix' => 'delete',
     ], function () {
         Route::delete('/{hotel}', [HotelController::class, 'destroy'])->name('destroy');
+    });
+    Route::group([
+        'as' => 'add-comment.',
+        'prefix' => 'add-comment',
+    ], function () {
+        Route::post('/', [CommentController::class, 'store']);
+    });
+    Route::group([
+        'as' => 'show-comment.',
+        'prefix' => 'show-comment',
+    ], function () {
+        Route::get('/{id}', [CommentController::class, 'show']);
+    });
+    Route::group([
+        'as' => 'update.',
+        'prefix' => 'update',
+    ], function () {
+        Route::patch('/{id}', [CommentController::class, 'update']);
     });
     Route::put('/{hotel}', [HotelController::class, 'update'])->name('update');
 });

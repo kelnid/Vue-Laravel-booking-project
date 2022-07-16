@@ -14,6 +14,7 @@ export default {
                 commit("x_xsrf_token", res.data.token);
                 localStorage.setItem('x_xsrf_token', res.config.headers['X-XSRF-TOKEN'])
                 localStorage.setItem('role_id', JSON.stringify(res.data.role_id))
+                localStorage.setItem('user_id', JSON.stringify(res.data.id))
                 router.push({name: 'country.index'})
             })
     },

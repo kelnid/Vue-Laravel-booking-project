@@ -38,9 +38,8 @@ __webpack_require__.r(__webpack_exports__);
   name: "Create",
   data: function data() {
     return {
-      name: '',
-      image: '' // errors: []
-
+      name: null,
+      image: null
     };
   },
   computed: {
@@ -49,22 +48,37 @@ __webpack_require__.r(__webpack_exports__);
     }
   },
   methods: {
-    addCountry: function addCountry() {
-      var formData = new FormData();
-      formData.append('name', this.name);
-      formData.append('image', this.image);
-      axios.post('/api/countries/store', formData).then(function (res) {
-        console.log(res.data.message);
-        _router__WEBPACK_IMPORTED_MODULE_0__["default"].push({
-          name: 'country.index'
-        });
-      })["catch"](function (error) {
-        // this.errors = error.data
-        console.log(error);
-      });
-    },
+    // addCountry() {
+    //     let formData = new FormData()
+    //
+    //     formData.append('name', this.name)
+    //     formData.append('image', this.image)
+    //
+    //     axios.post('/api/countries/store', formData)
+    //         .then(res => {
+    //             console.log(res.data.message);
+    //             router.push({name: 'country.index'})
+    //         })
+    // },
     addFile: function addFile(event) {
       this.image = event.target.files[0];
+    },
+    addCountry: function addCountry() {
+      var _this = this;
+
+      this.$validator.validateAll().then(function (result) {
+        if (result) {
+          var formData = new FormData();
+          formData.append('name', _this.name);
+          formData.append('image', _this.image);
+          axios.post('/api/countries/store', formData).then(function (res) {
+            console.log(res.data.message);
+            _router__WEBPACK_IMPORTED_MODULE_0__["default"].push({
+              name: 'country.index'
+            });
+          });
+        }
+      });
     }
   }
 });
@@ -160,77 +174,105 @@ var render = function () {
     [
       _c("v-header"),
       _vm._v(" "),
-      _c("div", { staticClass: "container pt-5" }, [
-        _c("div", { staticClass: "container w-25" }, [
-          _c("div", { staticClass: "mb-3" }, [
-            _c("input", {
-              directives: [
-                {
-                  name: "validate",
-                  rawName: "v-validate",
-                  value: "required",
-                  expression: "'required'",
-                },
-                {
-                  name: "model",
-                  rawName: "v-model",
-                  value: _vm.name,
-                  expression: "name",
-                },
-              ],
-              staticClass: "form-control",
-              attrs: { type: "text", name: "name", placeholder: "name" },
-              domProps: { value: _vm.name },
-              on: {
-                input: function ($event) {
-                  if ($event.target.composing) {
-                    return
-                  }
-                  _vm.name = $event.target.value
-                },
-              },
-            }),
-            _vm._v(" "),
-            _c("div", { staticClass: "help-block alert alert-danger" }, [
-              _vm._v(_vm._s(_vm.errors.first("name"))),
-            ]),
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "mb-3" }, [
-            _c("input", {
-              directives: [
-                {
-                  name: "validate",
-                  rawName: "v-validate",
-                  value: "required|image",
-                  expression: "'required|image'",
-                },
-              ],
-              staticClass: "form-control",
-              attrs: {
-                "data-vv-as": "image",
-                type: "file",
-                name: "image",
-                id: "image",
-              },
-              on: { change: _vm.addFile },
-            }),
-            _vm._v(" "),
-            _c("span", { staticStyle: { color: "red" } }, [
-              _vm._v(_vm._s(_vm.errors.first("image"))),
-            ]),
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "mb-3" }, [
-            _c(
-              "button",
+      _c("div", { staticClass: "container pt-5 w-25" }, [
+        _c("div", { staticClass: "mb-3 shadow" }, [
+          _c("input", {
+            directives: [
               {
-                staticClass: " btn btn-primary",
-                on: { click: _vm.addCountry },
+                name: "validate",
+                rawName: "v-validate",
+                value: "required|min:3",
+                expression: "'required|min:3'",
               },
-              [_vm._v("Добавить страну")]
-            ),
-          ]),
+              {
+                name: "model",
+                rawName: "v-model",
+                value: _vm.name,
+                expression: "name",
+              },
+            ],
+            staticClass: "form-control",
+            attrs: { type: "text", name: "name", placeholder: "Страна" },
+            domProps: { value: _vm.name },
+            on: {
+              input: function ($event) {
+                if ($event.target.composing) {
+                  return
+                }
+                _vm.name = $event.target.value
+              },
+            },
+          }),
+          _vm._v(" "),
+          _c(
+            "div",
+            {
+              directives: [
+                {
+                  name: "show",
+                  rawName: "v-show",
+                  value: _vm.errors.has("name"),
+                  expression: "errors.has('name')",
+                },
+              ],
+              staticClass: "help-block alert alert-danger",
+            },
+            [_vm._v(_vm._s(_vm.errors.first("name")))]
+          ),
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "mb-3" }, [
+          _c("input", {
+            directives: [
+              {
+                name: "validate",
+                rawName: "v-validate",
+                value: "required|image",
+                expression: "'required|image'",
+              },
+            ],
+            staticClass: "form-control",
+            attrs: {
+              "data-vv-as": "image",
+              type: "file",
+              name: "image",
+              id: "image",
+            },
+            on: { change: _vm.addFile },
+          }),
+          _vm._v(" "),
+          _c(
+            "div",
+            {
+              directives: [
+                {
+                  name: "show",
+                  rawName: "v-show",
+                  value: _vm.errors.has("image"),
+                  expression: "errors.has('image')",
+                },
+              ],
+              staticClass: "help-block alert alert-danger",
+            },
+            [_vm._v(_vm._s(_vm.errors.first("image")))]
+          ),
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "mb-3" }, [
+          _c(
+            "button",
+            {
+              staticClass: " btn btn-primary",
+              attrs: { disabled: !_vm.isDisabled },
+              on: {
+                click: function ($event) {
+                  $event.preventDefault()
+                  return _vm.addCountry($event)
+                },
+              },
+            },
+            [_vm._v("Добавить страну")]
+          ),
         ]),
       ]),
     ],
