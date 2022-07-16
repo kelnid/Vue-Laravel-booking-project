@@ -12,14 +12,18 @@ class CountryController extends Controller
     public function index()
     {
         $countries = Country::all();
+
         return response()->json($countries);
     }
     public function store(CountryRequest $request)
     {
-        $data = $request->validated();
+        $data = $request->except('_token');
+
+        $data['image'] = $request->file('image')->store('images');
+
         Country::create($data);
 
-        return response([]);
+        return response()->json();
     }
 
     public function update(Request $request, $id)
@@ -30,6 +34,7 @@ class CountryController extends Controller
     public function destroy(Country $country)
     {
         $country->delete();
-        return response([]);
+
+        return response()->json();
     }
 }

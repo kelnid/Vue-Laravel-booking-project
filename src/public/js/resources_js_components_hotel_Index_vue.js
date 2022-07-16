@@ -32,6 +32,10 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   name: "Index",
   props: {
@@ -168,44 +172,57 @@ var render = function () {
                   attrs: { src: "../../../storage/" + hotel.image },
                 }),
                 _vm._v(" "),
-                _c(
-                  "div",
-                  { staticClass: "card-body" },
-                  [
-                    _c("p", { staticClass: "card-title" }, [
-                      _vm._v(_vm._s(hotel.name)),
-                    ]),
-                    _vm._v(" "),
-                    _c("p", { staticClass: "card-title" }, [
-                      _vm._v(_vm._s(hotel.address)),
-                    ]),
-                    _vm._v(" "),
-                    _c(
-                      "router-link",
-                      {
-                        staticClass: "btn btn-outline-primary",
-                        attrs: {
-                          to: { name: "hotel.show", params: { id: hotel.id } },
-                        },
-                      },
-                      [_vm._v("Перейти")]
-                    ),
-                    _vm._v(" "),
-                    _c(
-                      "button",
-                      {
-                        staticClass: "btn btn-outline-danger",
-                        on: {
-                          click: function ($event) {
-                            return _vm.deleteHotel(hotel.id)
+                _c("div", { staticClass: "card-body" }, [
+                  _c("p", { staticClass: "card-title" }, [
+                    _vm._v(_vm._s(hotel.name)),
+                  ]),
+                  _vm._v(" "),
+                  _c("p", { staticClass: "card-title" }, [
+                    _vm._v(_vm._s(hotel.address)),
+                  ]),
+                  _vm._v(" "),
+                  _c(
+                    "div",
+                    {
+                      staticClass:
+                        "d-flex justify-content-between align-items-center",
+                    },
+                    [
+                      _c(
+                        "div",
+                        [
+                          _c(
+                            "router-link",
+                            {
+                              staticClass: "btn btn-outline-primary",
+                              attrs: {
+                                to: {
+                                  name: "hotel.show",
+                                  params: { id: hotel.id },
+                                },
+                              },
+                            },
+                            [_vm._v("Перейти")]
+                          ),
+                        ],
+                        1
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "button",
+                        {
+                          staticClass: "btn btn-outline-danger",
+                          on: {
+                            click: function ($event) {
+                              return _vm.deleteHotel(hotel.id)
+                            },
                           },
                         },
-                      },
-                      [_vm._v("Удалить")]
-                    ),
-                  ],
-                  1
-                ),
+                        [_vm._v("Удалить")]
+                      ),
+                    ]
+                  ),
+                ]),
               ]),
             ])
           }),

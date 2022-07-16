@@ -17,10 +17,11 @@ export default {
 
     data() {
         return {
-            name: [],
-            email: [],
-            password: [],
-            password_confirmation: [],
+            name: null,
+            email: null,
+            password: null,
+            password_confirmation: null,
+            role_id: 2
         }
     },
 
@@ -33,10 +34,13 @@ export default {
                             email: this.email,
                             password: this.password,
                             name: this.name,
+                            role_id: this.role_id,
                             password_confirmation: this.password_confirmation,
                         })
                         .then(res => {
+                            // console.log(JSON.stringify(res.config.data));
                             localStorage.setItem('x_xsrf_token', res.config.headers['X-XSRF-TOKEN'])
+                            // localStorage.setItem('role_id', JSON.stringify(res.config.data))
                             this.$router.push({ name: 'country.index' })
                         })
                 })

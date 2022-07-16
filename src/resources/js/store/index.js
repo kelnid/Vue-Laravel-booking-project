@@ -6,6 +6,9 @@ import Auth from "./modules/auth/index";
 Vue.use(Vuex)
 
 export default new Vuex.Store({
+    state:{
+        showErrors: [],
+    },
     modules: {
         Country,
         Auth

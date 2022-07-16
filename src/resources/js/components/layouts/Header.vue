@@ -12,9 +12,9 @@
                     <div class="col-sm-4 offset-md-1 py-4">
                         <h4 class="text-white">Contact</h4>
                         <ul class="list-unstyled">
-                            <router-link v-if="!token" class="navbar-brand" :to="{ name: 'user.login' }">Login</router-link>
-                            <router-link v-if="!token" class="navbar-brand" :to="{ name: 'user.registration' }">Registration</router-link>
-                            <a v-if="token" @click.prevent="logout" href="#">Logout</a>
+                            <router-link v-if="!token" class="navbar-brand" :to="{ name: 'user.login' }">Войти</router-link>
+                            <router-link v-if="!token" class="navbar-brand" :to="{ name: 'user.registration' }">Регистрация</router-link>
+                            <a  v-if="token" @click.prevent="logout" href="#" class="navbar-brand">Выйти</a>
                         </ul>
                     </div>
                 </div>
@@ -23,7 +23,7 @@
         <div class="navbar navbar-dark bg-dark shadow-sm">
             <div class="container">
                 <router-link :to="{ name: 'country.index' }" class="navbar-brand d-flex align-items-center"><strong>Travelmore.com</strong></router-link>
-                <template v-if="role_id === 1">
+                <template v-if="role_id === 1 || role_id === 2">
                     <router-link :to="{ name: 'booking.index' }" class="navbar-brand d-flex align-items-center"><strong>Мои бронирования</strong></router-link>
                 </template>
                 <button class="navbar-toggler collapsed" type="button" data-bs-toggle="collapse"
@@ -45,10 +45,6 @@ export default {
             token: [],
             role_id: null
         }
-    },
-
-    computed: {
-
     },
 
     updated() {

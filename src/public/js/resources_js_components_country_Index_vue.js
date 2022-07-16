@@ -134,6 +134,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   name: "Welcome",
   data: function data() {
@@ -313,7 +314,7 @@ var render = function () {
       _vm._v(" "),
       _c("welcome"),
       _vm._v(" "),
-      _vm.role_id === 2
+      _vm.role_id === 1
         ? [
             _c("div", { staticClass: "container" }, [
               _c(
@@ -370,8 +371,7 @@ var render = function () {
                                 _c(
                                   "router-link",
                                   {
-                                    staticClass:
-                                      "btn btn-sm btn-outline-secondary",
+                                    staticClass: "btn btn-outline-primary",
                                     attrs: {
                                       to: {
                                         name: "hotel.index",
@@ -379,17 +379,16 @@ var render = function () {
                                       },
                                     },
                                   },
-                                  [_c("strong", [_vm._v("View")])]
+                                  [_vm._v("Перейти")]
                                 ),
                                 _vm._v(" "),
                                 _c(
                                   "a",
                                   {
-                                    staticClass:
-                                      "btn btn-sm btn-outline-secondary",
-                                    attrs: { href: "" },
+                                    staticClass: "btn btn-outline-primary",
+                                    attrs: { href: "#" },
                                   },
-                                  [_vm._v("edit")]
+                                  [_vm._v("Редактировать")]
                                 ),
                               ],
                               1
@@ -398,7 +397,7 @@ var render = function () {
                             _c(
                               "button",
                               {
-                                staticClass: "btn btn-sm btn-outline-danger",
+                                staticClass: "btn btn-outline-danger",
                                 on: {
                                   click: function ($event) {
                                     return _vm.$store.dispatch(
@@ -408,7 +407,7 @@ var render = function () {
                                   },
                                 },
                               },
-                              [_vm._v("Delete")]
+                              [_vm._v("Удалить")]
                             ),
                           ]
                         ),
@@ -422,7 +421,7 @@ var render = function () {
           ]
         : _vm._e(),
       _vm._v(" "),
-      _vm.role_id === 1
+      _vm.role_id === 2
         ? [
             _c("div", { staticClass: "container" }, [
               _c(
@@ -533,7 +532,7 @@ var render = function () {
   return _c(
     "div",
     [
-      _vm.role_id === 2
+      _vm.role_id === 1
         ? [
             _c("div", { staticClass: "py-5 text-center container" }, [
               _c("div", { staticClass: "row py-lg-5" }, [
@@ -568,6 +567,15 @@ var render = function () {
                         },
                         [_vm._v("Добавить отель")]
                       ),
+                      _vm._v(" "),
+                      _c(
+                        "router-link",
+                        {
+                          staticClass: "btn btn-outline-primary",
+                          attrs: { to: { name: "room.create" } },
+                        },
+                        [_vm._v("Добавить номер")]
+                      ),
                     ],
                     1
                   ),
@@ -577,7 +585,7 @@ var render = function () {
           ]
         : _vm._e(),
       _vm._v(" "),
-      _vm.role_id === 1 ? [_vm._m(0)] : _vm._e(),
+      _vm.role_id === 2 ? [_vm._m(0)] : _vm._e(),
     ],
     2
   )

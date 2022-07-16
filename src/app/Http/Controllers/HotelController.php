@@ -14,11 +14,20 @@ class HotelController extends Controller
         $hotels = Hotel::where('country_id', $country_id)->get();
         return response()->json($hotels);
     }
+    public function indexHotels()
+    {
+        $hotels = Hotel::all();
 
+        return response()->json($hotels);
+    }
     public function store(Request $request)
     {
         $data = $request->except('_token');
+
+        $data['image'] = $request->file('image')->store('images');
+
         Hotel::create($data);
+
         return response()->json();
     }
 

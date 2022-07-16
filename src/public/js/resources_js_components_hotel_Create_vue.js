@@ -43,6 +43,9 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   name: "Create",
@@ -62,21 +65,26 @@ __webpack_require__.r(__webpack_exports__);
       return this.$store.getters.countries;
     },
     isDisabled: function isDisabled() {
-      return this.name && this.address && this.description && this.country_id;
+      return this.name && this.address && this.description && this.country_id && this.image;
     }
   },
   methods: {
-    store: function store() {
-      axios.post('/api/hotels', {
-        name: this.name,
-        address: this.address,
-        description: this.description,
-        country_id: this.country_id
-      }).then(function (res) {
+    addHotel: function addHotel() {
+      var formData = new FormData();
+      formData.append('name', this.name);
+      formData.append('image', this.image);
+      formData.append('address', this.address);
+      formData.append('description', this.description);
+      formData.append('country_id', this.country_id);
+      formData.append('image', this.image);
+      axios.post('/api/hotels', formData).then(function (res) {
         _router__WEBPACK_IMPORTED_MODULE_0__["default"].push({
           name: 'country.index'
         });
       });
+    },
+    addFile: function addFile(event) {
+      this.image = event.target.files[0];
     }
   }
 });
@@ -247,6 +255,14 @@ var render = function () {
           ]),
           _vm._v(" "),
           _c("div", { staticClass: "mb-3" }, [
+            _c("input", {
+              staticClass: "form-control",
+              attrs: { type: "file", id: "image" },
+              on: { change: _vm.addFile },
+            }),
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "mb-3" }, [
             _c(
               "select",
               {
@@ -301,7 +317,7 @@ var render = function () {
                 on: {
                   click: function ($event) {
                     $event.preventDefault()
-                    return _vm.store.apply(null, arguments)
+                    return _vm.addHotel.apply(null, arguments)
                   },
                 },
               },

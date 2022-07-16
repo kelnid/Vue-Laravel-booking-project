@@ -4,12 +4,10 @@ export default {
             .then(res => {
                 commit('setUserData', res.data)
                 localStorage.setItem('x_xsrf_token', res.config.headers['X-XSRF-TOKEN'])
-
             })
-
     },
 
-    Login({ commit }, data) {
+    Login({commit}, data) {
         return axios.post('/login', data)
             .then(res => {
                 commit("setUserData", res.data);
@@ -17,11 +15,8 @@ export default {
                 localStorage.setItem('x_xsrf_token', res.config.headers['X-XSRF-TOKEN'])
                 localStorage.setItem('role_id', JSON.stringify(res.data.role_id))
                 router.push({name: 'country.index'})
-            }).catch(err => {
-                console.log(err)
-            });
-    }
-
+            })
+    },
 }
 
 import router from "../../../router";

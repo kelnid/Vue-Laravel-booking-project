@@ -9,8 +9,12 @@
                         <div class="card-body">
                             <p class="card-title">{{ hotel.name }}</p>
                             <p class="card-title">{{ hotel.address }}</p>
-                            <router-link :to="{ name: 'hotel.show', params: {id: hotel.id} }" class="btn btn-outline-primary">Перейти</router-link>
-                            <button class="btn btn-outline-danger" @click="deleteHotel(hotel.id)">Удалить</button>
+                            <div class="d-flex justify-content-between align-items-center">
+                                <div>
+                                    <router-link :to="{ name: 'hotel.show', params: {id: hotel.id} }" class="btn btn-outline-primary">Перейти</router-link>
+                                </div>
+                                <button class="btn btn-outline-danger" @click="deleteHotel(hotel.id)">Удалить</button>
+                            </div>
                         </div>
                     </div>
                 </div>

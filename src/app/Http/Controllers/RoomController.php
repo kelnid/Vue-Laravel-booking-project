@@ -10,12 +10,19 @@ class RoomController extends Controller
 {
     public function store(Request $request)
     {
-        //
+        $data = $request->except('_token');
+
+        $data['image'] = $request->file('image')->store('images');
+
+        Room::create($data);
+
+        return response()->json();
     }
 
     public function show($id)
     {
         $room = Room::find($id);
+
         return response()->json($room);
     }
 

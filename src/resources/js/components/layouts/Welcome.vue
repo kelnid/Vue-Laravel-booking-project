@@ -1,6 +1,6 @@
 <template>
     <div>
-        <template v-if="role_id === 2" >
+        <template v-if="role_id === 1" >
             <div class="py-5 text-center container">
                 <div class="row py-lg-5">
                     <div class="col-lg-6 col-md-8 mx-auto">
@@ -11,12 +11,13 @@
                         <p>
                             <router-link class="btn btn-outline-primary" :to="{ name: 'country.create' }">Добавить страну</router-link>
                             <router-link class="btn btn-outline-primary" :to="{ name: 'hotel.create' }">Добавить отель</router-link>
+                            <router-link class="btn btn-outline-primary" :to="{ name: 'room.create' }">Добавить номер</router-link>
                         </p>
                     </div>
                 </div>
             </div>
         </template>
-        <template v-if="role_id === 1">
+        <template v-if="role_id === 2">
             <div class="py-5 text-center container">
                 <div class="row py-lg-5">
                     <div class="col-lg-6 col-md-8 mx-auto">

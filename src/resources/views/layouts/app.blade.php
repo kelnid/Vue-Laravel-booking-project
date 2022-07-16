@@ -15,6 +15,8 @@
 
     <!-- Scripts -->
     <script type="module" src="{{ asset('js/app.js') }}" defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/vee-validate@<3.0.0/dist/vee-validate.js"></script>
+    <script src="https://unpkg.com/vee-validate@<3.0.0"></script>
 
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
@@ -24,4 +26,5 @@
         @yield('content')
     </div>
 </body>
+
 </html>

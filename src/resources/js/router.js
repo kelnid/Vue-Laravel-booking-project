@@ -37,6 +37,10 @@ const router = new VueRouter({
             name: 'room.show',
         },
         {
+            path: '/room-create', component: () => import('./components/room/Create'),
+            name: 'room.create'
+        },
+        {
             path: '/user/login', component: () => import('./components/auth/Login'),
             name: 'user.login',
         },
@@ -50,26 +54,43 @@ const router = new VueRouter({
         },
     ]
 })
-// router.beforeEach((to, from, next) => {
-//     const token = localStorage.getItem('x_xsrf_token')
-//
-//     if(!token) {
-//         if(to.name === 'user.login' || to.name === 'user.registration') {
-//             return next()
-//         } else {
-//             return next({
-//                 name: 'user.login'
-//             })
-//         }
-//     }
-//
-//     if(to.name === 'user.login' || to.name === 'user.registration' && token) {
-//         return next({
-//             name: 'country.index'
-//         })
-//     }
-//
-//     next()
-// })
+router.beforeEach((to, from, next) => {
+
+
+    // const role = localStorage.getItem('role_id')
+    //
+    // if(role === '2') {
+    //     if(to.name === 'user.login' || to.name === 'user.registration') {
+    //         return next()
+    //     } else {
+    //         return next({
+    //             name: 'user.login'
+    //         })
+    //     }
+    // }
+
+
+
+
+    const token = localStorage.getItem('x_xsrf_token')
+
+    if(!token) {
+        if(to.name === 'user.login' || to.name === 'user.registration') {
+            return next()
+        } else {
+            return next({
+                name: 'user.login'
+            })
+        }
+    }
+
+    if(to.name === 'user.login' || to.name === 'user.registration' && token) {
+        return next({
+            name: 'country.index'
+        })
+    }
+
+    next()
+})
 
 export default router

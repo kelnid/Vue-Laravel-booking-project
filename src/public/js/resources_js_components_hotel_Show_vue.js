@@ -200,10 +200,6 @@ var render = function () {
                   ]),
                   _vm._v(" "),
                   _c("button", { staticClass: "btn btn-outline-primary" }, [
-                    _vm._v("Добавить номер"),
-                  ]),
-                  _vm._v(" "),
-                  _c("button", { staticClass: "btn btn-outline-primary" }, [
                     _vm._v("Редактировать"),
                   ]),
                 ]),

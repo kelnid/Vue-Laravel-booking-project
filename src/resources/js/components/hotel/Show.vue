@@ -12,7 +12,7 @@
                        </div>
                        <p class="card-title">{{ hotel.address }}</p>
                        <p class="card-text">{{ hotel.description }}</p>
-                       <button class="btn btn-outline-primary">Добавить номер</button>
+
                        <button class="btn btn-outline-primary">Редактировать</button>
                    </div>
                </div>

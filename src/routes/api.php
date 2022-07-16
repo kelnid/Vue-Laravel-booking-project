@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\Auth\LoginController;
+use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\BookingController;
 use App\Http\Controllers\CountryController;
 use App\Http\Controllers\HotelController;
@@ -22,6 +24,9 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
+//Route::post('/login', [LoginController::class, 'login']);
+//Route::post('/register', [RegisterController::class, 'register']);
+
 Route::group([
     'as' => 'countries.',
     'prefix' => 'countries',
@@ -43,7 +48,6 @@ Route::group([
     'as' => 'hotels.',
     'prefix' => 'hotels',
 ], function () {
-    Route::get('/{country?}/create', [HotelController::class, 'create'])->name('create');
     Route::post('/', [HotelController::class, 'store'])->name('store');
     Route::group([
         'as' => 'show.',
@@ -51,6 +55,7 @@ Route::group([
     ], function () {
         Route::get('/{hotel}', [HotelController::class, 'show']);
     });
+    Route::get('/', [HotelController::class, 'indexHotels'])->name('indexHotels');
     Route::group([
         'as' => 'delete.',
         'prefix' => 'delete',
@@ -60,7 +65,7 @@ Route::group([
     Route::put('/{hotel}', [HotelController::class, 'update'])->name('update');
 });
 
-Route::prefix('countries/{id}')->group(function (){
+Route::prefix('countries/{id}')->group(function () {
     Route::get('/hotels', [HotelController::class, 'index']);
 });
 
@@ -74,6 +79,7 @@ Route::group([
     ], function () {
         Route::get('/{room}', [RoomController::class, 'show']);
     });
+    Route::post('/', [RoomController::class, 'store'])->name('store');
 });
 
 Route::group([
@@ -99,5 +105,5 @@ Route::group([
     ], function () {
         Route::get('/{id}', [BookingController::class, 'bookings']);
     });
-        Route::delete('{booking}', [BookingController::class, 'destroy']);
+    Route::delete('{booking}', [BookingController::class, 'destroy']);
 });

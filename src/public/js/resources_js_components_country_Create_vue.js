@@ -31,13 +31,16 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   name: "Create",
   data: function data() {
     return {
-      name: null,
-      image: null
+      name: '',
+      image: '' // errors: []
+
     };
   },
   computed: {
@@ -55,6 +58,9 @@ __webpack_require__.r(__webpack_exports__);
         _router__WEBPACK_IMPORTED_MODULE_0__["default"].push({
           name: 'country.index'
         });
+      })["catch"](function (error) {
+        // this.errors = error.data
+        console.log(error);
       });
     },
     addFile: function addFile(event) {
@@ -160,6 +166,12 @@ var render = function () {
             _c("input", {
               directives: [
                 {
+                  name: "validate",
+                  rawName: "v-validate",
+                  value: "required",
+                  expression: "'required'",
+                },
+                {
                   name: "model",
                   rawName: "v-model",
                   value: _vm.name,
@@ -167,7 +179,7 @@ var render = function () {
                 },
               ],
               staticClass: "form-control",
-              attrs: { type: "text", placeholder: "name" },
+              attrs: { type: "text", name: "name", placeholder: "name" },
               domProps: { value: _vm.name },
               on: {
                 input: function ($event) {
@@ -178,14 +190,35 @@ var render = function () {
                 },
               },
             }),
+            _vm._v(" "),
+            _c("div", { staticClass: "help-block alert alert-danger" }, [
+              _vm._v(_vm._s(_vm.errors.first("name"))),
+            ]),
           ]),
           _vm._v(" "),
           _c("div", { staticClass: "mb-3" }, [
             _c("input", {
+              directives: [
+                {
+                  name: "validate",
+                  rawName: "v-validate",
+                  value: "required|image",
+                  expression: "'required|image'",
+                },
+              ],
               staticClass: "form-control",
-              attrs: { type: "file", id: "image" },
+              attrs: {
+                "data-vv-as": "image",
+                type: "file",
+                name: "image",
+                id: "image",
+              },
               on: { change: _vm.addFile },
             }),
+            _vm._v(" "),
+            _c("span", { staticStyle: { color: "red" } }, [
+              _vm._v(_vm._s(_vm.errors.first("image"))),
+            ]),
           ]),
           _vm._v(" "),
           _c("div", { staticClass: "mb-3" }, [
@@ -193,7 +226,6 @@ var render = function () {
               "button",
               {
                 staticClass: " btn btn-primary",
-                attrs: { disabled: !_vm.isDisabled },
                 on: { click: _vm.addCountry },
               },
               [_vm._v("Добавить страну")]

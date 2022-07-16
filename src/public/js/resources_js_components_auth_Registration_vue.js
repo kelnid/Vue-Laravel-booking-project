@@ -28,10 +28,11 @@ __webpack_require__.r(__webpack_exports__);
   name: "Registration",
   data: function data() {
     return {
-      name: [],
-      email: [],
-      password: [],
-      password_confirmation: []
+      name: null,
+      email: null,
+      password: null,
+      password_confirmation: null,
+      role_id: 2
     };
   },
   methods: {
@@ -43,9 +44,11 @@ __webpack_require__.r(__webpack_exports__);
           email: _this.email,
           password: _this.password,
           name: _this.name,
+          role_id: _this.role_id,
           password_confirmation: _this.password_confirmation
         }).then(function (res) {
-          localStorage.setItem('x_xsrf_token', res.config.headers['X-XSRF-TOKEN']);
+          // console.log(JSON.stringify(res.config.data));
+          localStorage.setItem('x_xsrf_token', res.config.headers['X-XSRF-TOKEN']); // localStorage.setItem('role_id', JSON.stringify(res.config.data))
 
           _this.$router.push({
             name: 'country.index'
