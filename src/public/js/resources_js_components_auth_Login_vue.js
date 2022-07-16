@@ -34,6 +34,9 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
 
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
@@ -45,7 +48,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       }
     };
   },
-  computed: _objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_1__.mapGetters)("Auth", ["user", "x_xsrf_token"])),
+  computed: _objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_1__.mapGetters)("Auth", ["user", "x_xsrf_token", "showErrors"])),
   methods: _objectSpread(_objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_1__.mapActions)("Auth", ["Login", "getUserData"])), {}, {
     sendCredentials: function sendCredentials() {
       var _this = this;
@@ -262,8 +265,22 @@ var render = function () {
             [_vm._v(_vm._s(_vm.errors.first("password")))]
           ),
           _vm._v(" "),
+          _vm._l(_vm.showErrors.email, function (item) {
+            return [
+              _c(
+                "div",
+                {
+                  staticClass:
+                    "border border-t-0 border-red-400 rounded-b bg-red-100 px-4 py-3 text-red-700",
+                },
+                [_vm._v(_vm._s(item))]
+              ),
+            ]
+          }),
+          _vm._v(" "),
           _vm._m(0),
-        ]
+        ],
+        2
       ),
     ],
     1

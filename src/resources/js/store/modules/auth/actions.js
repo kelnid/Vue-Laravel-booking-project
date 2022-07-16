@@ -17,6 +17,9 @@ export default {
                 localStorage.setItem('user_id', JSON.stringify(res.data.id))
                 router.push({name: 'country.index'})
             })
+            .catch(error=>{
+                commit('showErrors', error.response.data.errors)
+            })
     },
 }
 

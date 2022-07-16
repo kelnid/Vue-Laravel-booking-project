@@ -68,6 +68,7 @@ export default {
                 .then( res => {
                     localStorage.removeItem('x_xsrf_token')
                     localStorage.removeItem('role_id')
+                    localStorage.removeItem('user_id')
                     this.$router.push({ name: 'user.login' })
                 })
         },

@@ -12,6 +12,21 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
 /* harmony import */ var _modal_ShowComments__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../modal/ShowComments */ "./resources/js/components/modal/ShowComments.vue");
+/* harmony import */ var _mixins_pagination_mixin__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../mixins/pagination.mixin */ "./resources/js/mixins/pagination.mixin.js");
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -184,8 +199,10 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 
+
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   name: "Show",
+  mixins: [_mixins_pagination_mixin__WEBPACK_IMPORTED_MODULE_1__["default"]],
   components: {
     ShowComments: _modal_ShowComments__WEBPACK_IMPORTED_MODULE_0__["default"]
   },
@@ -242,6 +259,8 @@ __webpack_require__.r(__webpack_exports__);
 
       axios.get("/api/hotels/show-comment/".concat(this.$route.params.id)).then(function (res) {
         _this3.comments = res.data;
+
+        _this3.setupPagination(_this3.comments);
       });
     },
     getRate: function getRate() {
@@ -332,6 +351,44 @@ __webpack_require__.r(__webpack_exports__);
 //
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   name: "ShowComments"
+});
+
+/***/ }),
+
+/***/ "./resources/js/mixins/pagination.mixin.js":
+/*!*************************************************!*\
+  !*** ./resources/js/mixins/pagination.mixin.js ***!
+  \*************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var lodash__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! lodash */ "./node_modules/lodash/lodash.js");
+/* harmony import */ var lodash__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(lodash__WEBPACK_IMPORTED_MODULE_0__);
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  data: function data() {
+    return {
+      page: +this.$route.query.page || 1,
+      pageSize: 4,
+      pageCount: 0,
+      allItems: [],
+      items: []
+    };
+  },
+  methods: {
+    setupPagination: function setupPagination(allItems) {
+      this.allItems = lodash__WEBPACK_IMPORTED_MODULE_0___default().chunk(allItems, this.pageSize);
+      this.pageCount = lodash__WEBPACK_IMPORTED_MODULE_0___default().size(this.allItems);
+      this.items = this.allItems[this.page - 1] || this.allItems[0];
+    },
+    pageChangeHandler: function pageChangeHandler(page) {
+      this.$router.push("".concat(this.$route.path, "?page=").concat(page));
+      this.items = this.allItems[page - 1] || this.allItems[0];
+    }
+  }
 });
 
 /***/ }),
@@ -949,7 +1006,7 @@ var render = function () {
                         _c("input", {
                           staticClass: "star star-10",
                           attrs: {
-                            disabled: _vm.role_id == null,
+                            disabled: _vm.user == null,
                             id: "star-10",
                             type: "radio",
                             name: "star",
@@ -970,7 +1027,7 @@ var render = function () {
                         _c("input", {
                           staticClass: "star star-9",
                           attrs: {
-                            disabled: _vm.role_id == null,
+                            disabled: _vm.user == null,
                             id: "star-9",
                             type: "radio",
                             name: "star",
@@ -991,7 +1048,7 @@ var render = function () {
                         _c("input", {
                           staticClass: "star star-8",
                           attrs: {
-                            disabled: _vm.role_id == null,
+                            disabled: _vm.user == null,
                             id: "star-8",
                             type: "radio",
                             name: "star",
@@ -1012,7 +1069,7 @@ var render = function () {
                         _c("input", {
                           staticClass: "star star-7",
                           attrs: {
-                            disabled: _vm.role_id == null,
+                            disabled: _vm.user == null,
                             id: "star-7",
                             type: "radio",
                             name: "star",
@@ -1033,7 +1090,7 @@ var render = function () {
                         _c("input", {
                           staticClass: "star star-6",
                           attrs: {
-                            disabled: _vm.role_id == null,
+                            disabled: _vm.user == null,
                             id: "star-6",
                             type: "radio",
                             name: "star",
@@ -1054,7 +1111,7 @@ var render = function () {
                         _c("input", {
                           staticClass: "star star-5",
                           attrs: {
-                            disabled: _vm.role_id == null,
+                            disabled: _vm.user == null,
                             id: "star-5",
                             type: "radio",
                             name: "star",
@@ -1075,7 +1132,7 @@ var render = function () {
                         _c("input", {
                           staticClass: "star star-4",
                           attrs: {
-                            disabled: _vm.role_id == null,
+                            disabled: _vm.user == null,
                             id: "star-4",
                             type: "radio",
                             name: "star",
@@ -1096,7 +1153,7 @@ var render = function () {
                         _c("input", {
                           staticClass: "star star-3",
                           attrs: {
-                            disabled: _vm.role_id == null,
+                            disabled: _vm.user == null,
                             id: "star-3",
                             type: "radio",
                             name: "star",
@@ -1117,7 +1174,7 @@ var render = function () {
                         _c("input", {
                           staticClass: "star star-2",
                           attrs: {
-                            disabled: _vm.role_id == null,
+                            disabled: _vm.user == null,
                             id: "star-2",
                             type: "radio",
                             name: "star",
@@ -1138,7 +1195,7 @@ var render = function () {
                         _c("input", {
                           staticClass: "star star-1",
                           attrs: {
-                            disabled: _vm.role_id == null,
+                            disabled: _vm.user == null,
                             id: "star-1",
                             type: "radio",
                             name: "star",
@@ -1296,7 +1353,7 @@ var render = function () {
                                 ]),
                               ]),
                               _vm._v(" "),
-                              _vm._l(_vm.comments, function (comment) {
+                              _vm._l(_vm.items, function (comment) {
                                 return [
                                   _c("div", [
                                     _c("div", [
@@ -1447,14 +1504,38 @@ var render = function () {
                     {
                       key: "footer",
                       fn: function () {
-                        return undefined
+                        return [
+                          _c("Paginate", {
+                            attrs: {
+                              "page-count": _vm.pageCount,
+                              "click-handler": _vm.pageChangeHandler,
+                              "prev-text": "Назад",
+                              "next-text": "Вперед",
+                              "container-class": "pagination",
+                              "page-class": "page-item",
+                              "page-link-class": "page-link ",
+                              "prev-class": "page-item",
+                              "prev-link-class": "page-link",
+                              "next-class": "page-item",
+                              "next-link-class": "page-link",
+                              "active-class": "page-item active",
+                            },
+                            model: {
+                              value: _vm.page,
+                              callback: function ($$v) {
+                                _vm.page = $$v
+                              },
+                              expression: "page",
+                            },
+                          }),
+                        ]
                       },
                       proxy: true,
                     },
                   ],
                   null,
                   false,
-                  2689497502
+                  2023903951
                 ),
               })
             : _vm._e(),
@@ -1568,7 +1649,7 @@ var render = function () {
             2
           ),
           _vm._v(" "),
-          _c("div", { staticClass: "modal-footer" }, [_vm._t("footer")], 2),
+          _c("div", { staticClass: "modal-footer " }, [_vm._t("footer")], 2),
         ]),
       ]),
     ]),

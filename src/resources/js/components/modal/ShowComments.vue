@@ -13,8 +13,8 @@
                             default body
                         </slot>
                     </div>
-                    <div class="modal-footer">
-                        <slot name="footer">
+                    <div class="modal-footer ">
+                        <slot name="footer" class="align-items-center">
                         </slot>
                     </div>
                 </div>

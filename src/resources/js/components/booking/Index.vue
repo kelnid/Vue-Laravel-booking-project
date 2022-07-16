@@ -10,7 +10,7 @@
                             <p class="card-text" style="color: black">Price: {{ booking.price }} UAH</p>
                             <p class="card-text" style="color: black">Дата заезда - {{ booking.pivot.startDate }}</p>
                             <p class="card-text" style="color: black">Дата выезда - {{ booking.pivot.endDate }}</p>
-                            <button class="btn btn-outline-danger" @click.prevent="deleteBooking(booking.pivot.id)">Delete</button>
+                            <button class="btn btn-outline-danger" @click.prevent="deleteBooking(booking.pivot.id)">Отменить бронь</button>
                         </div>
                     </div>
                 </div>
