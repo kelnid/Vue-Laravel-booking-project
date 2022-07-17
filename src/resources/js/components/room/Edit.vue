@@ -23,10 +23,7 @@
 <!--                <div v-show="errors.has('image')" class="help-block alert alert-danger">{{errors.first('image') }}</div>-->
             </div>
             <div class="mb-3">
-                <select v-model="hotel_id" name="county_id">
-                    <option disabled value="0">
-                        Выберите шото
-                    </option>
+                <select style="width: 280px" class="form-select" v-model="hotel_id" name="county_id">
                     <template v-for="hotel in hotels">
                         <option :value="hotel.id">
                             {{ hotel.name }}
@@ -52,7 +49,7 @@ export default {
             bed: null,
             area: null,
             price: null,
-            hotel_id: 0,
+            hotel_id: null,
             hotels: []
         }
     },
@@ -75,6 +72,7 @@ export default {
                     this.bed = res.data.bed
                     this.area = res.data.area
                     this.price = res.data.price
+                    this.hotel_id = res.data.hotel_id
                 })
         },
         updateRoom() {

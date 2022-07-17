@@ -82,6 +82,15 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -98,12 +107,13 @@ __webpack_require__.r(__webpack_exports__);
       endDate: null,
       token: [],
       bookings: [],
-      error: null
+      error: null,
+      role_id: null
     };
   },
   mounted: function mounted() {
     this.getRoom();
-    this.getToken();
+    this.getUser();
     this.getBookings();
   },
   methods: {
@@ -130,8 +140,8 @@ __webpack_require__.r(__webpack_exports__);
 
       });
     },
-    getToken: function getToken() {
-      this.token = localStorage.getItem('x_xsrf_token');
+    getUser: function getUser() {
+      this.role_id = JSON.parse(localStorage.getItem('role_id'));
     },
     getBookings: function getBookings() {
       var _this3 = this;
@@ -10075,100 +10085,136 @@ var render = function () {
             },
             [
               _c("div", { staticClass: "card shadow" }, [
-                _c("div", { staticClass: "card-body" }, [
-                  _vm._m(1),
-                  _vm._v(" "),
-                  _c("hr"),
-                  _vm._v(" "),
-                  _c("p", [
-                    _c("strong", [
-                      _vm._v(
-                        "Площадь комнаты: " + _vm._s(_vm.room.area) + " м²"
-                      ),
-                    ]),
-                  ]),
-                  _vm._v(" "),
-                  _c("p", [
-                    _c("strong", [
-                      _vm._v("Кровать: " + _vm._s(_vm.room.bed) + " "),
-                    ]),
-                  ]),
-                  _vm._v(" "),
-                  _c("p", [
-                    _c("strong", [
-                      _vm._v(
-                        "Цена за ночь: " + _vm._s(_vm.room.price) + " UAH"
-                      ),
-                    ]),
-                  ]),
-                  _vm._v(" "),
-                  _c("p", [_vm._v("Выберите дату заезда и выселения")]),
-                  _vm._v(" "),
-                  _c(
-                    "form",
-                    { staticClass: "pt-2" },
-                    [
-                      _c("hotel-date-picker", {
-                        attrs: {
-                          halfDay: false,
-                          minNights: 5,
-                          maxNights: 10,
-                          disabledDates: _vm.bookings.unavailable_dates,
-                        },
-                        on: {
-                          "check-in-changed": _vm.updateCheckIn,
-                          "check-out-changed": _vm.updateCheckOut,
-                        },
-                      }),
-                      _vm._v(" "),
-                      _c("div", { staticClass: "mb-3" }, [
-                        _c("input", {
-                          directives: [
-                            {
-                              name: "model",
-                              rawName: "v-model",
-                              value: (_vm.room_id = _vm.room.id),
-                              expression: "room_id = room.id",
-                            },
-                          ],
-                          staticClass: "form-control",
-                          attrs: { type: "hidden" },
-                          domProps: { value: (_vm.room_id = _vm.room.id) },
-                          on: {
-                            input: function ($event) {
-                              if ($event.target.composing) {
-                                return
-                              }
-                              _vm.$set(
-                                (_vm.room_id = _vm.room),
-                                "id",
-                                $event.target.value
-                              )
-                            },
-                          },
-                        }),
+                _c(
+                  "div",
+                  { staticClass: "card-body" },
+                  [
+                    _vm._m(1),
+                    _vm._v(" "),
+                    _c("hr"),
+                    _vm._v(" "),
+                    _c("p", [
+                      _c("strong", [
+                        _vm._v(
+                          "Площадь комнаты: " + _vm._s(_vm.room.area) + " м²"
+                        ),
                       ]),
-                    ],
-                    1
-                  ),
-                  _vm._v(" "),
-                  _c("div", [
+                    ]),
+                    _vm._v(" "),
+                    _c("p", [
+                      _c("strong", [
+                        _vm._v("Кровать: " + _vm._s(_vm.room.bed) + " "),
+                      ]),
+                    ]),
+                    _vm._v(" "),
+                    _c("p", [
+                      _c("strong", [
+                        _vm._v(
+                          "Цена за ночь: " + _vm._s(_vm.room.price) + " UAH"
+                        ),
+                      ]),
+                    ]),
+                    _vm._v(" "),
+                    _c("p", [_vm._v("Выберите дату заезда и выселения")]),
+                    _vm._v(" "),
                     _c(
-                      "button",
-                      {
-                        staticClass: "btn btn-primary shadow",
-                        attrs: { type: "submit" },
-                        on: {
-                          click: function ($event) {
-                            $event.preventDefault()
-                            return _vm.booking($event)
-                          },
-                        },
-                      },
-                      [_vm._v("Забронировать")]
+                      "form",
+                      { staticClass: "pt-2" },
+                      [
+                        _vm.role_id === 1 || _vm.role_id === 2
+                          ? [
+                              _c("hotel-date-picker", {
+                                attrs: {
+                                  halfDay: false,
+                                  minNights: 5,
+                                  maxNights: 10,
+                                  disabledDates: _vm.bookings.unavailable_dates,
+                                },
+                                on: {
+                                  "check-in-changed": _vm.updateCheckIn,
+                                  "check-out-changed": _vm.updateCheckOut,
+                                },
+                              }),
+                            ]
+                          : _vm._e(),
+                        _vm._v(" "),
+                        _c("div", { staticClass: "mb-3" }, [
+                          _c("input", {
+                            directives: [
+                              {
+                                name: "model",
+                                rawName: "v-model",
+                                value: (_vm.room_id = _vm.room.id),
+                                expression: "room_id = room.id",
+                              },
+                            ],
+                            staticClass: "form-control",
+                            attrs: { type: "hidden" },
+                            domProps: { value: (_vm.room_id = _vm.room.id) },
+                            on: {
+                              input: function ($event) {
+                                if ($event.target.composing) {
+                                  return
+                                }
+                                _vm.$set(
+                                  (_vm.room_id = _vm.room),
+                                  "id",
+                                  $event.target.value
+                                )
+                              },
+                            },
+                          }),
+                        ]),
+                      ],
+                      2
                     ),
-                  ]),
-                ]),
+                    _vm._v(" "),
+                    _vm.role_id === null
+                      ? [
+                          _c(
+                            "div",
+                            { staticClass: "help-block alert alert-danger" },
+                            [
+                              _vm._v(
+                                "\n                                Бронировать номера могут только\n                                "
+                              ),
+                              _c(
+                                "router-link",
+                                {
+                                  attrs: { to: { name: "user.registration" } },
+                                },
+                                [_vm._v("зарегистрированные")]
+                              ),
+                              _vm._v(
+                                "\n                                пользователи\n                            "
+                              ),
+                            ],
+                            1
+                          ),
+                        ]
+                      : _vm._e(),
+                    _vm._v(" "),
+                    _vm.role_id === 1 || _vm.role_id === 2
+                      ? [
+                          _c(
+                            "button",
+                            {
+                              staticClass: "btn btn-primary shadow",
+                              attrs: { type: "submit" },
+                              on: {
+                                click: function ($event) {
+                                  $event.preventDefault()
+                                  return _vm.booking($event)
+                                },
+                              },
+                            },
+                            [_vm._v("Забронировать")]
+                          ),
+                        ]
+                      : _vm._e(),
+                  ],
+                  2
+                ),
               ]),
             ]
           ),

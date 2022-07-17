@@ -31,8 +31,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   name: "Create",
@@ -60,7 +58,6 @@ __webpack_require__.r(__webpack_exports__);
           formData.append('name', _this.name);
           formData.append('image', _this.image);
           axios.post('/api/countries/store', formData).then(function (res) {
-            console.log(res.data);
             _router__WEBPACK_IMPORTED_MODULE_0__["default"].push({
               name: 'country.index'
             });

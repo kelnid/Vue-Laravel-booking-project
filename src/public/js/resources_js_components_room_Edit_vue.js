@@ -52,9 +52,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   name: "Edit",
@@ -64,7 +61,7 @@ __webpack_require__.r(__webpack_exports__);
       bed: null,
       area: null,
       price: null,
-      hotel_id: 0,
+      hotel_id: null,
       hotels: []
     };
   },
@@ -89,6 +86,7 @@ __webpack_require__.r(__webpack_exports__);
         _this2.bed = res.data.bed;
         _this2.area = res.data.area;
         _this2.price = res.data.price;
+        _this2.hotel_id = res.data.hotel_id;
       });
     },
     updateRoom: function updateRoom() {
@@ -339,6 +337,8 @@ var render = function () {
                   expression: "hotel_id",
                 },
               ],
+              staticClass: "form-select",
+              staticStyle: { width: "280px" },
               attrs: { name: "county_id" },
               on: {
                 change: function ($event) {
@@ -357,12 +357,6 @@ var render = function () {
               },
             },
             [
-              _c("option", { attrs: { disabled: "", value: "0" } }, [
-                _vm._v(
-                  "\n                        Выберите шото\n                    "
-                ),
-              ]),
-              _vm._v(" "),
               _vm._l(_vm.hotels, function (hotel) {
                 return [
                   _c("option", { domProps: { value: hotel.id } }, [

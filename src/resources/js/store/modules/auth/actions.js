@@ -8,7 +8,7 @@ export default {
     },
 
     Login({commit}, data) {
-        return axios.post('/login', data)
+        return axios.post('/api/login', data)
             .then(res => {
                 commit("setUserData", res.data);
                 commit("x_xsrf_token", res.data.token);

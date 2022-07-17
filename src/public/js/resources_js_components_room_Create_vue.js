@@ -49,6 +49,13 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   name: "Create",
@@ -58,7 +65,7 @@ __webpack_require__.r(__webpack_exports__);
       bed: null,
       area: null,
       price: null,
-      hotel_id: null,
+      hotel_id: 0,
       hotels: []
     };
   },
@@ -190,174 +197,292 @@ var render = function () {
     [
       _c("v-header"),
       _vm._v(" "),
-      _c("div", { staticClass: "container pt-5" }, [
-        _c("div", { staticClass: "w-25" }, [
-          _c("div", { staticClass: "mb-3" }, [
-            _c("input", {
-              directives: [
-                {
-                  name: "model",
-                  rawName: "v-model",
-                  value: _vm.name,
-                  expression: "name",
-                },
-              ],
-              staticClass: "form-control",
-              attrs: { type: "text", placeholder: "Название" },
-              domProps: { value: _vm.name },
-              on: {
-                input: function ($event) {
-                  if ($event.target.composing) {
-                    return
-                  }
-                  _vm.name = $event.target.value
-                },
-              },
-            }),
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "mb-3" }, [
-            _c("input", {
-              directives: [
-                {
-                  name: "model",
-                  rawName: "v-model",
-                  value: _vm.area,
-                  expression: "area",
-                },
-              ],
-              staticClass: "form-control",
-              attrs: { type: "text", placeholder: "Площадь" },
-              domProps: { value: _vm.area },
-              on: {
-                input: function ($event) {
-                  if ($event.target.composing) {
-                    return
-                  }
-                  _vm.area = $event.target.value
-                },
-              },
-            }),
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "mb-3" }, [
-            _c("input", {
-              directives: [
-                {
-                  name: "model",
-                  rawName: "v-model",
-                  value: _vm.bed,
-                  expression: "bed",
-                },
-              ],
-              staticClass: "form-control",
-              attrs: { type: "text", placeholder: "Кровать" },
-              domProps: { value: _vm.bed },
-              on: {
-                input: function ($event) {
-                  if ($event.target.composing) {
-                    return
-                  }
-                  _vm.bed = $event.target.value
-                },
-              },
-            }),
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "mb-3" }, [
-            _c("input", {
-              directives: [
-                {
-                  name: "model",
-                  rawName: "v-model",
-                  value: _vm.price,
-                  expression: "price",
-                },
-              ],
-              staticClass: "form-control",
-              attrs: { type: "text", placeholder: "Цена" },
-              domProps: { value: _vm.price },
-              on: {
-                input: function ($event) {
-                  if ($event.target.composing) {
-                    return
-                  }
-                  _vm.price = $event.target.value
-                },
-              },
-            }),
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "mb-3" }, [
-            _c("input", {
-              staticClass: "form-control",
-              attrs: { type: "file", id: "image" },
-              on: { change: _vm.addFile },
-            }),
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "mb-3" }, [
-            _c(
-              "select",
+      _c("div", { staticClass: "container pt-5 w-25" }, [
+        _c("div", { staticClass: "mb-3" }, [
+          _c("input", {
+            directives: [
               {
-                directives: [
-                  {
-                    name: "model",
-                    rawName: "v-model",
-                    value: _vm.hotel_id,
-                    expression: "hotel_id",
-                  },
-                ],
-                attrs: { name: "hotel_id" },
-                on: {
-                  change: function ($event) {
-                    var $$selectedVal = Array.prototype.filter
-                      .call($event.target.options, function (o) {
-                        return o.selected
-                      })
-                      .map(function (o) {
-                        var val = "_value" in o ? o._value : o.value
-                        return val
-                      })
-                    _vm.hotel_id = $event.target.multiple
-                      ? $$selectedVal
-                      : $$selectedVal[0]
-                  },
-                },
+                name: "validate",
+                rawName: "v-validate",
+                value: "required|min:8",
+                expression: "'required|min:8'",
               },
-              [
-                _vm._l(_vm.hotels, function (hotel) {
-                  return [
-                    _c("option", { domProps: { value: hotel.id } }, [
-                      _vm._v(
-                        "\n                            " +
-                          _vm._s(hotel.name) +
-                          "\n                        "
-                      ),
-                    ]),
-                  ]
-                }),
-              ],
-              2
-            ),
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "mb-3" }, [
-            _c(
-              "button",
               {
-                staticClass: " btn btn-primary",
-                attrs: { disabled: !_vm.isDisabled },
-                on: {
-                  click: function ($event) {
-                    $event.preventDefault()
-                    return _vm.addRoom($event)
-                  },
+                name: "model",
+                rawName: "v-model",
+                value: _vm.name,
+                expression: "name",
+              },
+            ],
+            staticClass: "form-control",
+            attrs: { name: "name", type: "text", placeholder: "Название" },
+            domProps: { value: _vm.name },
+            on: {
+              input: function ($event) {
+                if ($event.target.composing) {
+                  return
+                }
+                _vm.name = $event.target.value
+              },
+            },
+          }),
+          _vm._v(" "),
+          _c(
+            "div",
+            {
+              directives: [
+                {
+                  name: "show",
+                  rawName: "v-show",
+                  value: _vm.errors.has("name"),
+                  expression: "errors.has('name')",
+                },
+              ],
+              staticClass: "help-block alert alert-danger",
+            },
+            [_vm._v(_vm._s(_vm.errors.first("name")))]
+          ),
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "mb-3" }, [
+          _c("input", {
+            directives: [
+              {
+                name: "validate",
+                rawName: "v-validate",
+                value: "required|digits:2",
+                expression: "'required|digits:2'",
+              },
+              {
+                name: "model",
+                rawName: "v-model",
+                value: _vm.area,
+                expression: "area",
+              },
+            ],
+            staticClass: "form-control",
+            attrs: { name: "area", type: "number", placeholder: "Площадь" },
+            domProps: { value: _vm.area },
+            on: {
+              input: function ($event) {
+                if ($event.target.composing) {
+                  return
+                }
+                _vm.area = $event.target.value
+              },
+            },
+          }),
+          _vm._v(" "),
+          _c(
+            "div",
+            {
+              directives: [
+                {
+                  name: "show",
+                  rawName: "v-show",
+                  value: _vm.errors.has("area"),
+                  expression: "errors.has('area')",
+                },
+              ],
+              staticClass: "help-block alert alert-danger",
+            },
+            [_vm._v(_vm._s(_vm.errors.first("area")))]
+          ),
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "mb-3" }, [
+          _c("input", {
+            directives: [
+              {
+                name: "validate",
+                rawName: "v-validate",
+                value: "required|min:5",
+                expression: "'required|min:5'",
+              },
+              {
+                name: "model",
+                rawName: "v-model",
+                value: _vm.bed,
+                expression: "bed",
+              },
+            ],
+            staticClass: "form-control",
+            attrs: { name: "bed", type: "text", placeholder: "Кровать" },
+            domProps: { value: _vm.bed },
+            on: {
+              input: function ($event) {
+                if ($event.target.composing) {
+                  return
+                }
+                _vm.bed = $event.target.value
+              },
+            },
+          }),
+          _vm._v(" "),
+          _c(
+            "div",
+            {
+              directives: [
+                {
+                  name: "show",
+                  rawName: "v-show",
+                  value: _vm.errors.has("bed"),
+                  expression: "errors.has('bed')",
+                },
+              ],
+              staticClass: "help-block alert alert-danger",
+            },
+            [_vm._v(_vm._s(_vm.errors.first("bed")))]
+          ),
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "mb-3" }, [
+          _c("input", {
+            directives: [
+              {
+                name: "validate",
+                rawName: "v-validate",
+                value: "required|min:3",
+                expression: "'required|min:3'",
+              },
+              {
+                name: "model",
+                rawName: "v-model",
+                value: _vm.price,
+                expression: "price",
+              },
+            ],
+            staticClass: "form-control",
+            attrs: { name: "price", type: "number", placeholder: "Цена" },
+            domProps: { value: _vm.price },
+            on: {
+              input: function ($event) {
+                if ($event.target.composing) {
+                  return
+                }
+                _vm.price = $event.target.value
+              },
+            },
+          }),
+          _vm._v(" "),
+          _c(
+            "div",
+            {
+              directives: [
+                {
+                  name: "show",
+                  rawName: "v-show",
+                  value: _vm.errors.has("price"),
+                  expression: "errors.has('price')",
+                },
+              ],
+              staticClass: "help-block alert alert-danger",
+            },
+            [_vm._v(_vm._s(_vm.errors.first("price")))]
+          ),
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "mb-3" }, [
+          _c("input", {
+            directives: [
+              {
+                name: "validate",
+                rawName: "v-validate",
+                value: "required|min:8",
+                expression: "'required|min:8'",
+              },
+            ],
+            staticClass: "form-control",
+            attrs: { name: "image", type: "file", id: "image" },
+            on: { change: _vm.addFile },
+          }),
+          _vm._v(" "),
+          _c(
+            "div",
+            {
+              directives: [
+                {
+                  name: "show",
+                  rawName: "v-show",
+                  value: _vm.errors.has("image"),
+                  expression: "errors.has('image')",
+                },
+              ],
+              staticClass: "help-block alert alert-danger",
+            },
+            [_vm._v(_vm._s(_vm.errors.first("image")))]
+          ),
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "mb-3" }, [
+          _c(
+            "select",
+            {
+              directives: [
+                {
+                  name: "model",
+                  rawName: "v-model",
+                  value: _vm.hotel_id,
+                  expression: "hotel_id",
+                },
+              ],
+              staticClass: "form-select",
+              staticStyle: { width: "160px" },
+              attrs: { name: "hotel_id" },
+              on: {
+                change: function ($event) {
+                  var $$selectedVal = Array.prototype.filter
+                    .call($event.target.options, function (o) {
+                      return o.selected
+                    })
+                    .map(function (o) {
+                      var val = "_value" in o ? o._value : o.value
+                      return val
+                    })
+                  _vm.hotel_id = $event.target.multiple
+                    ? $$selectedVal
+                    : $$selectedVal[0]
                 },
               },
-              [_vm._v("Добавить номер")]
-            ),
-          ]),
+            },
+            [
+              _c("option", { attrs: { disabled: "", value: "0" } }, [
+                _vm._v(
+                  "\n                    Выберите отель\n                "
+                ),
+              ]),
+              _vm._v(" "),
+              _vm._l(_vm.hotels, function (hotel) {
+                return [
+                  _c("option", { domProps: { value: hotel.id } }, [
+                    _vm._v(
+                      "\n                        " +
+                        _vm._s(hotel.name) +
+                        "\n                    "
+                    ),
+                  ]),
+                ]
+              }),
+            ],
+            2
+          ),
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "mb-3" }, [
+          _c(
+            "button",
+            {
+              staticClass: " btn btn-primary",
+              attrs: { disabled: !_vm.isDisabled },
+              on: {
+                click: function ($event) {
+                  $event.preventDefault()
+                  return _vm.addRoom($event)
+                },
+              },
+            },
+            [_vm._v("Добавить номер\n            ")]
+          ),
         ]),
       ]),
     ],

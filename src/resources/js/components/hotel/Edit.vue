@@ -4,25 +4,22 @@
         <div class="container pt-5 w-25">
             <div class="mb-3 shadow">
                 <input v-validate="'required|min:3'" v-model="name" type="text"  name="name" placeholder="Страна" class="form-control">
-<!--                <div v-show="errors.has('name')" class="help-block alert alert-danger">{{ errors.first('name') }}</div>-->
+                <div v-show="errors.has('name')" class="help-block alert alert-danger">{{ errors.first('name') }}</div>
             </div>
             <div class="mb-3 shadow">
-                <input v-validate="'required|min:3'" v-model="address" type="text"  name="name" placeholder="Страна" class="form-control">
-                <!--                <div v-show="errors.has('name')" class="help-block alert alert-danger">{{ errors.first('name') }}</div>-->
+                <input v-validate="'required|min:7'" v-model="address" type="text"  name="name" placeholder="Страна" class="form-control">
+                                <div v-show="errors.has('name')" class="help-block alert alert-danger">{{ errors.first('name') }}</div>
             </div>
             <div class="mb-3 shadow">
-                <textarea type="text" v-model="description" class="form-control" rows="3"></textarea>
-                <!--                <div v-show="errors.has('name')" class="help-block alert alert-danger">{{ errors.first('name') }}</div>-->
+                <textarea v-validate="'required|min:20'" type="text" v-model="description" class="form-control" rows="3"></textarea>
+                <div v-show="errors.has('name')" class="help-block alert alert-danger">{{ errors.first('name') }}</div>
             </div>
             <div class="mb-3">
-                <input v-validate="'required|image'" data-vv-as="image" type="file" name="image" id="image" class="form-control">
-<!--                <div v-show="errors.has('image')" class="help-block alert alert-danger">{{errors.first('image') }}</div>-->
+                <input v-validate="'image'" data-vv-as="image" type="file" name="image" id="image" class="form-control">
+                <div v-show="errors.has('image')" class="help-block alert alert-danger">{{errors.first('image') }}</div>
             </div>
             <div class="mb-3">
                 <select v-model="country_id" name="county_id">
-                    <option disabled value="0">
-                        Выберите шото
-                    </option>
                     <template v-for="country in countries">
                         <option :value="country.id">
                             {{ country.name }}
@@ -47,7 +44,7 @@ export default {
             name: null,
             address: null,
             description: null,
-            country_id: 0,
+            country_id: null,
         }
     },
     computed:{
@@ -67,6 +64,7 @@ export default {
                     this.name = res.data.name
                     this.address = res.data.address
                     this.description = res.data.description
+                    this.country_id = res.data.country_id
                 })
         },
         updateHotel() {

@@ -42,21 +42,30 @@
                             <p><strong>Цена за ночь: {{ room.price }} UAH</strong></p>
                             <p>Выберите дату заезда и выселения</p>
                             <form class="pt-2">
-                                <hotel-date-picker
-                                    @check-in-changed="updateCheckIn"
-                                    @check-out-changed="updateCheckOut"
-                                    :halfDay="false"
-                                    :minNights="5"
-                                    :maxNights="10"
-                                    :disabledDates="bookings.unavailable_dates">
-                                </hotel-date-picker>
+                                <template v-if="role_id === 1 || role_id === 2">
+                                    <hotel-date-picker
+                                        @check-in-changed="updateCheckIn"
+                                        @check-out-changed="updateCheckOut"
+                                        :halfDay="false"
+                                        :minNights="5"
+                                        :maxNights="10"
+                                        :disabledDates="bookings.unavailable_dates">
+                                    </hotel-date-picker>
+                                </template>
                                 <div class="mb-3">
                                     <input type="hidden" v-model="room_id = room.id" class="form-control">
                                 </div>
                             </form>
-                            <div>
+                            <template v-if="role_id === null">
+                                <div class="help-block alert alert-danger">
+                                    Бронировать номера могут только
+                                    <router-link :to="{ name: 'user.registration' }">зарегистрированные</router-link>
+                                    пользователи
+                                </div>
+                            </template>
+                            <template v-if="role_id === 1 || role_id === 2">
                                 <button @click.prevent="booking" type="submit" class="btn btn-primary shadow">Забронировать</button>
-                            </div>
+                            </template>
                         </div>
                     </div>
                 </div>
@@ -84,12 +93,13 @@ export default {
             endDate: null,
             token: [],
             bookings: [],
-            error: null
+            error: null,
+            role_id: null,
         }
     },
     mounted() {
         this.getRoom()
-        this.getToken()
+        this.getUser()
         this.getBookings()
     },
     methods: {
@@ -111,8 +121,8 @@ export default {
                     // document.location.reload()
                 })
         },
-        getToken() {
-            this.token = localStorage.getItem('x_xsrf_token')
+        getUser() {
+            this.role_id = JSON.parse(localStorage.getItem('role_id'))
         },
         getBookings() {
             axios.get(`/api/bookings/bookings/${this.$route.params.id}`)

@@ -6,8 +6,8 @@
                 <div class="col" v-for="booking in bookings">
                     <div class="card">
                         <div class="card-body">
-                            <p class="card-title" style="color: black">{{ booking.name }}</p>
-                            <p class="card-text" style="color: black">Price: {{ booking.price }} UAH</p>
+                            <p class="card-title" style="color: black"><strong>{{ booking.name }}</strong></p>
+                            <p class="card-text" style="color: black">Цена: {{ booking.price }} UAH</p>
                             <p class="card-text" style="color: black">Дата заезда - {{ booking.pivot.startDate }}</p>
                             <p class="card-text" style="color: black">Дата выезда - {{ booking.pivot.endDate }}</p>
                             <button class="btn btn-outline-danger" @click="showBookingModal(booking.pivot.id)">Отменить бронь</button>

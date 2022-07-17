@@ -32,7 +32,7 @@ class CountryController extends Controller
         return response()->json();
     }
 
-    public function update(Request $request, $id)
+    public function update(CountryRequest $request, $id)
     {
         $data = $request->except('_token', '_method');
 

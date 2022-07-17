@@ -48,9 +48,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   name: "Edit",
@@ -59,7 +56,7 @@ __webpack_require__.r(__webpack_exports__);
       name: null,
       address: null,
       description: null,
-      country_id: 0
+      country_id: null
     };
   },
   computed: {
@@ -80,6 +77,7 @@ __webpack_require__.r(__webpack_exports__);
         _this.name = res.data.name;
         _this.address = res.data.address;
         _this.description = res.data.description;
+        _this.country_id = res.data.country_id;
       });
     },
     updateHotel: function updateHotel() {
@@ -218,6 +216,22 @@ var render = function () {
               },
             },
           }),
+          _vm._v(" "),
+          _c(
+            "div",
+            {
+              directives: [
+                {
+                  name: "show",
+                  rawName: "v-show",
+                  value: _vm.errors.has("name"),
+                  expression: "errors.has('name')",
+                },
+              ],
+              staticClass: "help-block alert alert-danger",
+            },
+            [_vm._v(_vm._s(_vm.errors.first("name")))]
+          ),
         ]),
         _vm._v(" "),
         _c("div", { staticClass: "mb-3 shadow" }, [
@@ -226,8 +240,8 @@ var render = function () {
               {
                 name: "validate",
                 rawName: "v-validate",
-                value: "required|min:3",
-                expression: "'required|min:3'",
+                value: "required|min:7",
+                expression: "'required|min:7'",
               },
               {
                 name: "model",
@@ -248,11 +262,33 @@ var render = function () {
               },
             },
           }),
+          _vm._v(" "),
+          _c(
+            "div",
+            {
+              directives: [
+                {
+                  name: "show",
+                  rawName: "v-show",
+                  value: _vm.errors.has("name"),
+                  expression: "errors.has('name')",
+                },
+              ],
+              staticClass: "help-block alert alert-danger",
+            },
+            [_vm._v(_vm._s(_vm.errors.first("name")))]
+          ),
         ]),
         _vm._v(" "),
         _c("div", { staticClass: "mb-3 shadow" }, [
           _c("textarea", {
             directives: [
+              {
+                name: "validate",
+                rawName: "v-validate",
+                value: "required|min:20",
+                expression: "'required|min:20'",
+              },
               {
                 name: "model",
                 rawName: "v-model",
@@ -272,6 +308,22 @@ var render = function () {
               },
             },
           }),
+          _vm._v(" "),
+          _c(
+            "div",
+            {
+              directives: [
+                {
+                  name: "show",
+                  rawName: "v-show",
+                  value: _vm.errors.has("name"),
+                  expression: "errors.has('name')",
+                },
+              ],
+              staticClass: "help-block alert alert-danger",
+            },
+            [_vm._v(_vm._s(_vm.errors.first("name")))]
+          ),
         ]),
         _vm._v(" "),
         _c("div", { staticClass: "mb-3" }, [
@@ -280,8 +332,8 @@ var render = function () {
               {
                 name: "validate",
                 rawName: "v-validate",
-                value: "required|image",
-                expression: "'required|image'",
+                value: "image",
+                expression: "'image'",
               },
             ],
             staticClass: "form-control",
@@ -292,6 +344,22 @@ var render = function () {
               id: "image",
             },
           }),
+          _vm._v(" "),
+          _c(
+            "div",
+            {
+              directives: [
+                {
+                  name: "show",
+                  rawName: "v-show",
+                  value: _vm.errors.has("image"),
+                  expression: "errors.has('image')",
+                },
+              ],
+              staticClass: "help-block alert alert-danger",
+            },
+            [_vm._v(_vm._s(_vm.errors.first("image")))]
+          ),
         ]),
         _vm._v(" "),
         _c("div", { staticClass: "mb-3" }, [
@@ -324,19 +392,13 @@ var render = function () {
               },
             },
             [
-              _c("option", { attrs: { disabled: "", value: "0" } }, [
-                _vm._v(
-                  "\n                        Выберите шото\n                    "
-                ),
-              ]),
-              _vm._v(" "),
               _vm._l(_vm.countries, function (country) {
                 return [
                   _c("option", { domProps: { value: country.id } }, [
                     _vm._v(
-                      "\n                            " +
+                      "\n                        " +
                         _vm._s(country.name) +
-                        "\n                        "
+                        "\n                    "
                     ),
                   ]),
                 ]

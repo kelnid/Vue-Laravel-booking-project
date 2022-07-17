@@ -64,7 +64,7 @@ export default {
             this.role_id = JSON.parse(localStorage.getItem('role_id'))
         },
         logout() {
-            axios.post('/logout')
+            axios.post('/api/logout')
                 .then( res => {
                     localStorage.removeItem('x_xsrf_token')
                     localStorage.removeItem('role_id')

@@ -25,6 +25,7 @@ class CountryRequest extends FormRequest
     {
         return [
             'name' => 'required|string',
+            'image' => 'sometimes',
         ];
     }
 }

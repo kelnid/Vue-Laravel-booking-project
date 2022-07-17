@@ -36,7 +36,8 @@ __webpack_require__.r(__webpack_exports__);
   name: "Edit",
   data: function data() {
     return {
-      name: null
+      name: null,
+      image: null
     };
   },
   mounted: function mounted() {
@@ -47,17 +48,33 @@ __webpack_require__.r(__webpack_exports__);
       var _this = this;
 
       axios.get("/api/countries/".concat(this.$route.params.id)).then(function (res) {
+        console.log(res);
         _this.name = res.data.name;
+        _this.image = res.data.image;
       });
     },
+    addFile: function addFile(event) {
+      this.image = event.target.files[0];
+    },
     updateCountry: function updateCountry() {
-      axios.patch("/api/countries/".concat(this.$route.params.id), {
-        name: this.name
-      }).then(function (res) {
-        _router__WEBPACK_IMPORTED_MODULE_0__["default"].push({
-          name: 'country.index'
-        });
-        console.log(res);
+      var _this2 = this;
+
+      this.$validator.validateAll().then(function (result) {
+        if (result) {
+          var formData = new FormData();
+          formData.append('_method', 'PATCH');
+          formData.append('name', _this2.name);
+
+          if (_this2.image) {
+            formData.append('image', _this2.image);
+          }
+
+          axios.post("/api/countries/".concat(_this2.$route.params.id), formData).then(function (res) {
+            _router__WEBPACK_IMPORTED_MODULE_0__["default"].push({
+              name: 'country.index'
+            });
+          });
+        }
       });
     }
   }
@@ -207,8 +224,8 @@ var render = function () {
               {
                 name: "validate",
                 rawName: "v-validate",
-                value: "required|image",
-                expression: "'required|image'",
+                value: "image",
+                expression: "'image'",
               },
             ],
             staticClass: "form-control",
@@ -218,7 +235,24 @@ var render = function () {
               name: "image",
               id: "image",
             },
+            on: { change: _vm.addFile },
           }),
+          _vm._v(" "),
+          _c(
+            "div",
+            {
+              directives: [
+                {
+                  name: "show",
+                  rawName: "v-show",
+                  value: _vm.errors.has("image"),
+                  expression: "errors.has('image')",
+                },
+              ],
+              staticClass: "help-block alert alert-danger",
+            },
+            [_vm._v(_vm._s(_vm.errors.first("image")))]
+          ),
         ]),
         _vm._v(" "),
         _c("div", { staticClass: "mb-3" }, [

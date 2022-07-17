@@ -51,7 +51,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   name: "Index",
@@ -67,11 +66,13 @@ __webpack_require__.r(__webpack_exports__);
     return {
       hotels: [],
       showModal: false,
-      hotel_id: 0
+      hotel_id: 0,
+      role_id: null
     };
   },
   mounted: function mounted() {
     this.getHotels();
+    this.getUser();
   },
   methods: {
     showMyModal: function showMyModal(id) {
@@ -93,6 +94,9 @@ __webpack_require__.r(__webpack_exports__);
 
         _this2.showModal = false;
       });
+    },
+    getUser: function getUser() {
+      this.role_id = JSON.parse(localStorage.getItem('role_id'));
     }
   }
 });
@@ -761,29 +765,30 @@ var render = function () {
                                   },
                                 },
                               },
-                              [
-                                _vm._v(
-                                  "Перейти\n                                "
-                                ),
-                              ]
+                              [_vm._v("Перейти")]
                             ),
                           ],
                           1
                         ),
                         _vm._v(" "),
-                        _c(
-                          "button",
-                          {
-                            staticClass: "btn btn-outline-danger shadow",
-                            on: {
-                              click: function ($event) {
-                                return _vm.showMyModal(hotel.id)
-                              },
-                            },
-                          },
-                          [_vm._v("Удалить\n                            ")]
-                        ),
-                      ]
+                        _vm.role_id === 1
+                          ? [
+                              _c(
+                                "button",
+                                {
+                                  staticClass: "btn btn-outline-danger shadow",
+                                  on: {
+                                    click: function ($event) {
+                                      return _vm.showMyModal(hotel.id)
+                                    },
+                                  },
+                                },
+                                [_vm._v("Удалить")]
+                              ),
+                            ]
+                          : _vm._e(),
+                      ],
+                      2
                     ),
                   ]),
                 ]),

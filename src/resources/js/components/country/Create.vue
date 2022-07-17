@@ -3,13 +3,11 @@
         <v-header></v-header>
         <div class="container pt-5 w-25">
             <div class="mb-3 shadow">
-                <input v-validate="'required|min:3'" type="text" v-model="name" name="name" placeholder="Страна"
-                       class="form-control">
+                <input v-validate="'required|min:3'" type="text" v-model="name" name="name" placeholder="Страна" class="form-control">
                 <div v-show="errors.has('name')" class="help-block alert alert-danger">{{ errors.first('name') }}</div>
             </div>
             <div class="mb-3">
-                <input v-validate="'required|image'" data-vv-as="image" type="file" @change="addFile" name="image"
-                       id="image" class="form-control">
+                <input v-validate="'required|image'" data-vv-as="image" type="file" @change="addFile" name="image" id="image" class="form-control">
                 <div v-show="errors.has('image')" class="help-block alert alert-danger">{{errors.first('image') }}</div>
             </div>
             <div class="mb-3">
@@ -52,7 +50,6 @@ export default {
 
                     axios.post('/api/countries/store', formData)
                         .then(res => {
-                            console.log(res.data);
                             router.push({name: 'country.index'})
                         })
                 }

@@ -51,11 +51,13 @@
                                 <label class="star star-1" for="star-1"></label>
                             </div>
                         </div>
-                        <strong class="card-title">Страна:  {{ hotelCountry }}</strong>
+                        <strong class="card-title">Страна: {{ hotelCountry }}</strong>
                         <p class="card-title">{{ hotel.address }}</p>
                         <p class="card-text">{{ hotel.description }}</p>
                         <button @click="showMyModal(hotel.id)" class="btn btn-outline-primary shadow">Комментарии</button>
-                        <router-link :to="{ name: 'hotel.edit', params: hotel.id}" class="btn btn-outline-primary shadow">Редактировать</router-link>
+                        <template v-if="role_id === 1">
+                            <router-link :to="{ name: 'hotel.edit', params: hotel.id}" class="btn btn-outline-primary shadow">Редактировать</router-link>
+                        </template>
                     </div>
                 </div>
             </div>
@@ -68,16 +70,25 @@
                         <div>
                             <div>
                                 <h2>Добавьте свой комментарий</h2>
-                                <div>
-                            <textarea v-model="description" class="form-control" name="description"></textarea>
-                                </div>
+                                <template v-if="role_id === null">
+                                    <div class="help-block alert alert-danger">
+                                        Оставлять комментарии могут только
+                                        <router-link :to="{ name: 'user.registration' }">зарегистрированные</router-link>
+                                        пользователи
+                                    </div>
+                                </template>
+                                <template v-if="role_id === 2 || role_id === 1">
+                                    <textarea v-model="description" class="form-control" name="description"></textarea>
+                                </template>
                                 <div>
                                     <div>
                                     </div>
                                     <div>
-                                        <button @click="addComment" class="btn btn-outline-primary">
-                                            Добавьте комментарий
-                                        </button>
+                                        <template v-if="role_id === 2 || role_id === 1">
+                                            <button @click="addComment" class="btn btn-outline-primary">
+                                                Добавьте комментарий
+                                            </button>
+                                        </template>
                                         <button class="btn btn-outline-primary" @click="hideModal">Отмена</button>
                                     </div>
                                 </div>
@@ -115,7 +126,7 @@
                                 <div>
                                 </div>
                             </div>
-                        </template >
+                        </template>
                     </div>
                 </template>
                 <template v-slot:footer>
@@ -142,12 +153,16 @@
                 <div class="col" v-for="(room, index) in hotel.rooms">
                     <div class="card h-100 shadow">
                         <div class="card-body h-100">
-                            <h5 class="card-title">{{ room.name }}</h5>
-                            <h5 class="card-title">{{ room.bed }}</h5>
+                            <h3 class="card-title">{{ room.name }}</h3>
+                            <p class="card-title">{{ room.bed }}</p>
                             <p class="card-text">Площадь: {{ room.area }} м²</p>
                             <p class="card-text">Цена: {{ room.price }} UAH</p>
-                            <router-link :to="{ name: 'room.show', params: {id: room.id} }" class="btn btn-outline-primary shadow">Перейти</router-link>
-                            <router-link :to="{ name: 'room.edit', params: {id: room.id}}" class="btn btn-outline-primary shadow">Редактировать</router-link>
+                            <router-link :to="{ name: 'room.show', params: {id: room.id} }"
+                                         class="btn btn-outline-primary shadow">Перейти
+                            </router-link>
+                            <template v-if="role_id === 1">
+                                <router-link :to="{ name: 'room.edit', params: {id: room.id}}" class="btn btn-outline-primary shadow">Редактировать</router-link>
+                            </template>
                         </div>
                     </div>
                 </div>
@@ -162,15 +177,15 @@ import PaginationMixin from "../../mixins/pagination.mixin";
 
 export default {
     name: "Show",
-    mixins: [ PaginationMixin ],
+    mixins: [PaginationMixin],
     components: {ShowComments},
     data() {
         return {
+            role_id: null,
             hotel: [],
             description: null,
             comments: null,
             rate: null,
-            role_id: null,
             showModal: false,
             hotel_id: 0,
             commentDescription: '',
@@ -230,14 +245,14 @@ export default {
                 hotel_id: hotel,
                 points: value
             }).then(res => {
-                    setTimeout(() => {
-                        this.getRate()
-                    }, 500)
-                })
+                setTimeout(() => {
+                    this.getRate()
+                }, 500)
+            })
         },
         getUser() {
-            this.role_id = localStorage.getItem('role_id')
-            this.user = localStorage.getItem('user_id')
+            this.role_id = JSON.parse(localStorage.getItem('role_id'))
+            this.user = JSON.parse(localStorage.getItem('user_id'))
         },
         isEdit(id) {
             return this.editCommentId === id
@@ -254,9 +269,9 @@ export default {
                 description: this.commentDescription,
                 hotel_id: this.$route.params.id
             }).then(res => {
-                    this.closeEditComment()
-                    this.getComments()
-                })
+                this.closeEditComment()
+                this.getComments()
+            })
         }
     }
 }

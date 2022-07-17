@@ -1071,7 +1071,7 @@ var render = function () {
           ]
         : _vm._e(),
       _vm._v(" "),
-      _vm.role_id === 2
+      _vm.role_id === 2 || _vm.role_id === null
         ? [
             _c("div", { staticClass: "container" }, [
               _c(
@@ -1129,7 +1129,7 @@ var render = function () {
                                   "router-link",
                                   {
                                     staticClass:
-                                      "btn btn-sm btn-outline-secondary",
+                                      "btn btn-outline-primary shadow",
                                     attrs: {
                                       to: {
                                         name: "hotel.index",
@@ -1137,7 +1137,7 @@ var render = function () {
                                       },
                                     },
                                   },
-                                  [_c("strong", [_vm._v("View")])]
+                                  [_c("strong", [_vm._v("Перейти")])]
                                 ),
                               ],
                               1
@@ -1235,7 +1235,7 @@ var render = function () {
           ]
         : _vm._e(),
       _vm._v(" "),
-      _vm.role_id === 2 ? [_vm._m(0)] : _vm._e(),
+      _vm.role_id === 2 || _vm.role_id === null ? [_vm._m(0)] : _vm._e(),
     ],
     2
   )

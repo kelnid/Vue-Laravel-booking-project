@@ -24,6 +24,13 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   name: "Registration",
   data: function data() {
@@ -32,29 +39,36 @@ __webpack_require__.r(__webpack_exports__);
       email: null,
       password: null,
       password_confirmation: null,
-      role_id: 2
+      role_id: 2,
+      showErrors: []
     };
   },
   methods: {
     registration: function registration() {
       var _this = this;
 
-      axios.get('/sanctum/csrf-cookie').then(function (res) {
-        axios.post('/register', {
-          email: _this.email,
-          password: _this.password,
-          name: _this.name,
-          role_id: _this.role_id,
-          password_confirmation: _this.password_confirmation
-        }).then(function (res) {
-          localStorage.setItem('x_xsrf_token', res.config.headers['X-XSRF-TOKEN']);
-          localStorage.setItem('role_id', JSON.stringify(res.data.role_id));
-          localStorage.setItem('user_id', JSON.stringify(res.data.id));
+      this.$validator.validateAll().then(function (result) {
+        if (result) {
+          axios.get('/sanctum/csrf-cookie').then(function (res) {
+            axios.post('/api/register', {
+              email: _this.email,
+              password: _this.password,
+              name: _this.name,
+              role_id: _this.role_id,
+              password_confirmation: _this.password_confirmation
+            }).then(function (res) {
+              localStorage.setItem('x_xsrf_token', res.config.headers['X-XSRF-TOKEN']);
+              localStorage.setItem('role_id', JSON.stringify(res.data.role_id));
+              localStorage.setItem('user_id', JSON.stringify(res.data.id));
 
-          _this.$router.push({
-            name: 'country.index'
+              _this.$router.push({
+                name: 'country.index'
+              });
+            })["catch"](function (error) {
+              _this.showErrors = error.response.data.errors;
+            });
           });
-        });
+        }
       });
     }
   }
@@ -151,106 +165,235 @@ var render = function () {
     [
       _c("v-header"),
       _vm._v(" "),
-      _c("div", { staticClass: "pt-5 container w-25" }, [
-        _c("input", {
-          directives: [
+      _c(
+        "div",
+        { staticClass: "pt-5 container w-25" },
+        [
+          _c("input", {
+            directives: [
+              {
+                name: "model",
+                rawName: "v-model.trim",
+                value: _vm.name,
+                expression: "name",
+                modifiers: { trim: true },
+              },
+              {
+                name: "validate",
+                rawName: "v-validate",
+                value: "required|min:5",
+                expression: "'required|min:5'",
+              },
+            ],
+            staticClass: "form-control mb-3",
+            attrs: { type: "text", name: "name", placeholder: "Имя" },
+            domProps: { value: _vm.name },
+            on: {
+              input: function ($event) {
+                if ($event.target.composing) {
+                  return
+                }
+                _vm.name = $event.target.value.trim()
+              },
+              blur: function ($event) {
+                return _vm.$forceUpdate()
+              },
+            },
+          }),
+          _vm._v(" "),
+          _c(
+            "div",
             {
-              name: "model",
-              rawName: "v-model",
-              value: _vm.name,
-              expression: "name",
+              directives: [
+                {
+                  name: "show",
+                  rawName: "v-show",
+                  value: _vm.errors.has("name"),
+                  expression: "errors.has('name')",
+                },
+              ],
+              staticClass: "help-block alert alert-danger",
             },
-          ],
-          staticClass: "form-control mb-3",
-          attrs: { type: "text", placeholder: "name" },
-          domProps: { value: _vm.name },
-          on: {
-            input: function ($event) {
-              if ($event.target.composing) {
-                return
-              }
-              _vm.name = $event.target.value
+            [_vm._v(_vm._s(_vm.errors.first("name")))]
+          ),
+          _vm._v(" "),
+          _c("input", {
+            directives: [
+              {
+                name: "model",
+                rawName: "v-model",
+                value: _vm.email,
+                expression: "email",
+              },
+              {
+                name: "validate",
+                rawName: "v-validate",
+                value: "required|email",
+                expression: "'required|email'",
+              },
+            ],
+            staticClass: "form-control mb-3",
+            attrs: { placeholder: "email", name: "email", type: "email" },
+            domProps: { value: _vm.email },
+            on: {
+              input: function ($event) {
+                if ($event.target.composing) {
+                  return
+                }
+                _vm.email = $event.target.value
+              },
             },
-          },
-        }),
-        _vm._v(" "),
-        _c("input", {
-          directives: [
+          }),
+          _vm._v(" "),
+          _c(
+            "div",
             {
-              name: "model",
-              rawName: "v-model",
-              value: _vm.email,
-              expression: "email",
+              directives: [
+                {
+                  name: "show",
+                  rawName: "v-show",
+                  value: _vm.errors.has("email"),
+                  expression: "errors.has('email')",
+                },
+              ],
+              staticClass: "help-block alert alert-danger",
             },
-          ],
-          staticClass: "form-control mb-3",
-          attrs: { type: "email", placeholder: "email" },
-          domProps: { value: _vm.email },
-          on: {
-            input: function ($event) {
-              if ($event.target.composing) {
-                return
-              }
-              _vm.email = $event.target.value
+            [_vm._v(_vm._s(_vm.errors.first("email")))]
+          ),
+          _vm._v(" "),
+          _c("input", {
+            directives: [
+              {
+                name: "model",
+                rawName: "v-model.trim",
+                value: _vm.password,
+                expression: "password",
+                modifiers: { trim: true },
+              },
+              {
+                name: "validate",
+                rawName: "v-validate",
+                value: "required|min:8",
+                expression: "'required|min:8'",
+              },
+            ],
+            ref: "password",
+            staticClass: "form-control mb-3",
+            class: { "is-danger": _vm.errors.has("password") },
+            attrs: {
+              name: "password",
+              type: "password",
+              placeholder: "Пароль",
             },
-          },
-        }),
-        _vm._v(" "),
-        _c("input", {
-          directives: [
+            domProps: { value: _vm.password },
+            on: {
+              input: function ($event) {
+                if ($event.target.composing) {
+                  return
+                }
+                _vm.password = $event.target.value.trim()
+              },
+              blur: function ($event) {
+                return _vm.$forceUpdate()
+              },
+            },
+          }),
+          _vm._v(" "),
+          _c(
+            "div",
             {
-              name: "model",
-              rawName: "v-model",
-              value: _vm.password,
-              expression: "password",
+              directives: [
+                {
+                  name: "show",
+                  rawName: "v-show",
+                  value: _vm.errors.has("password"),
+                  expression: "errors.has('password')",
+                },
+              ],
+              staticClass: "help-block alert alert-danger",
             },
-          ],
-          staticClass: "form-control mb-3",
-          attrs: { type: "password", placeholder: "password" },
-          domProps: { value: _vm.password },
-          on: {
-            input: function ($event) {
-              if ($event.target.composing) {
-                return
-              }
-              _vm.password = $event.target.value
+            [_vm._v(_vm._s(_vm.errors.first("password")))]
+          ),
+          _vm._v(" "),
+          _c("input", {
+            directives: [
+              {
+                name: "model",
+                rawName: "v-model.trim",
+                value: _vm.password_confirmation,
+                expression: "password_confirmation",
+                modifiers: { trim: true },
+              },
+              {
+                name: "validate",
+                rawName: "v-validate",
+                value: "required|confirmed:password",
+                expression: "'required|confirmed:password'",
+              },
+            ],
+            staticClass: "form-control mb-3",
+            class: { "is-danger": _vm.errors.has("password_confirmation") },
+            attrs: {
+              name: "password_confirmation",
+              type: "password",
+              placeholder: "Подтвердите пароль",
+              "data-vv-as": "password",
             },
-          },
-        }),
-        _vm._v(" "),
-        _c("input", {
-          directives: [
+            domProps: { value: _vm.password_confirmation },
+            on: {
+              input: function ($event) {
+                if ($event.target.composing) {
+                  return
+                }
+                _vm.password_confirmation = $event.target.value.trim()
+              },
+              blur: function ($event) {
+                return _vm.$forceUpdate()
+              },
+            },
+          }),
+          _vm._v(" "),
+          _c(
+            "div",
             {
-              name: "model",
-              rawName: "v-model",
-              value: _vm.password_confirmation,
-              expression: "password_confirmation",
+              directives: [
+                {
+                  name: "show",
+                  rawName: "v-show",
+                  value: _vm.errors.has("password_confirmation"),
+                  expression: "errors.has('password_confirmation')",
+                },
+              ],
+              staticClass: "help-block alert alert-danger",
             },
-          ],
-          staticClass: "form-control mb-3",
-          attrs: { type: "password", placeholder: "password_confirmation" },
-          domProps: { value: _vm.password_confirmation },
-          on: {
-            input: function ($event) {
-              if ($event.target.composing) {
-                return
-              }
-              _vm.password_confirmation = $event.target.value
+            [_vm._v(_vm._s(_vm.errors.first("password_confirmation")))]
+          ),
+          _vm._v(" "),
+          _vm._l(_vm.showErrors.email, function (error) {
+            return [
+              _c("div", { staticClass: "help-block alert alert-danger" }, [
+                _vm._v(_vm._s(error)),
+              ]),
+            ]
+          }),
+          _vm._v(" "),
+          _c(
+            "button",
+            {
+              staticClass: "btn btn-outline-primary",
+              attrs: { type: "submit" },
+              on: {
+                click: function ($event) {
+                  $event.preventDefault()
+                  return _vm.registration($event)
+                },
+              },
             },
-          },
-        }),
-        _vm._v(" "),
-        _c("input", {
-          staticClass: "btn-outline-primary",
-          attrs: { type: "submit", value: "registration" },
-          on: {
-            click: function ($event) {
-              $event.preventDefault()
-              return _vm.registration($event)
-            },
-          },
-        }),
-      ]),
+            [_vm._v("Зарегистрироваться")]
+          ),
+        ],
+        2
+      ),
     ],
     1
   )

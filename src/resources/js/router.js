@@ -13,11 +13,17 @@ const router = new VueRouter({
         },
         {
             path: '/create', component: () => import('./components/country/Create'),
-            name: 'country.create'
+            name: 'country.create',
+            beforeEnter: (to, from, next) => {
+                roleCheck(to, from, next)
+            }
         },
         {
             path: '/:id/edit', component: () => import('./components/country/Edit'),
-            name: 'country.edit'
+            name: 'country.edit',
+            beforeEnter: (to, from, next) => {
+                roleCheck(to, from, next)
+            }
         },
         {
             path: '/:id/hotels', component: () => import('./components/hotel/Index'),
@@ -30,11 +36,17 @@ const router = new VueRouter({
         },
         {
             path: '/hotel-create', component: () => import('./components/hotel/Create'),
-            name: 'hotel.create'
+            name: 'hotel.create',
+            beforeEnter: (to, from, next) => {
+                roleCheck(to, from, next)
+            }
         },
         {
             path: '/:id/edit-hotel', component: () => import('./components/hotel/Edit'),
-            name: 'hotel.edit'
+            name: 'hotel.edit',
+            beforeEnter: (to, from, next) => {
+                roleCheck(to, from, next)
+            }
         },
         {
             path: '/show/:id', component: () => import('./components/room/Show'),
@@ -42,11 +54,17 @@ const router = new VueRouter({
         },
         {
             path: '/room-create', component: () => import('./components/room/Create'),
-            name: 'room.create'
+            name: 'room.create',
+            beforeEnter: (to, from, next) => {
+                roleCheck(to, from, next)
+            }
         },
         {
             path: '/:id/edit-room', component: () => import('./components/room/Edit'),
-            name: 'room.edit'
+            name: 'room.edit',
+            beforeEnter: (to, from, next) => {
+                roleCheck(to, from, next)
+            }
         },
         {
             path: '/user/login', component: () => import('./components/auth/Login'),
@@ -58,31 +76,31 @@ const router = new VueRouter({
         },
         {
             path: '/my-bookings', component: () => import('./components/booking/Index'),
-            name: 'booking.index'
+            name: 'booking.index',
+            beforeEnter: (to, from, next) => {
+                enterBookings(to, from, next)
+            }
         },
+        {
+            path: "*", component: () => import('./components/PageNotFound')
+        }
     ]
 })
 
-router.beforeEach((to, from, next) => {
-    const token = localStorage.getItem('x_xsrf_token')
-
-    if(!token) {
-        if(to.name === 'user.login' || to.name === 'user.registration') {
-            return next()
-        } else {
-            return next({
-                name: 'user.login'
-            })
-        }
+function enterBookings(to, from, next) {
+    let role = localStorage.getItem('role_id');
+    if (role !== null) {
+        next()
+    } else {
+        next('/')
     }
-
-    if(to.name === 'user.login' || to.name === 'user.registration' && token) {
-        return next({
-            name: 'country.index'
-        })
+}
+function roleCheck(to, from, next) {
+    let role = localStorage.getItem('role_id');
+    if (+role !== 2 && role !== null) {
+        next()
+    } else {
+        next('/')
     }
-
-    next()
-})
-
+}
 export default router

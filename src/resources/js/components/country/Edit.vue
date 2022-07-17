@@ -7,8 +7,8 @@
                 <div v-show="errors.has('name')" class="help-block alert alert-danger">{{ errors.first('name') }}</div>
             </div>
             <div class="mb-3">
-                <input v-validate="'required|image'" data-vv-as="image" type="file" name="image" id="image" class="form-control">
-<!--                <div v-show="errors.has('image')" class="help-block alert alert-danger">{{errors.first('image') }}</div>-->
+                <input v-validate="'image'" data-vv-as="image" type="file" @change="addFile" name="image" id="image" class="form-control">
+                <div v-show="errors.has('image')" class="help-block alert alert-danger">{{errors.first('image') }}</div>
             </div>
             <div class="mb-3">
                 <button class=" btn btn-primary" @click.prevent="updateCountry">Обновить</button>
@@ -25,6 +25,7 @@ export default {
     data() {
         return {
             name: null,
+            image: null
         }
     },
     mounted() {
@@ -34,16 +35,30 @@ export default {
         getCountry() {
             axios.get(`/api/countries/${this.$route.params.id}`)
                 .then(res=>{
+                    console.log(res);
                     this.name = res.data.name
+                    this.image = res.data.image
                 })
         },
+        addFile(event) {
+            this.image = event.target.files[0]
+        },
         updateCountry() {
-            axios.patch(`/api/countries/${this.$route.params.id}`, {name: this.name})
-                .then(res=>{
-                    router.push({name: 'country.index'})
-                    console.log(res);
-                })
-        }
+            this.$validator.validateAll().then((result) => {
+                if (result) {
+                    let formData = new FormData()
+                    formData.append('_method', 'PATCH');
+                    formData.append('name', this.name)
+                    if(this.image) {
+                        formData.append('image', this.image)
+                    }
+                    axios.post(`/api/countries/${this.$route.params.id}`, formData )
+                        .then(res => {
+                            router.push({name: 'country.index'})
+                        })
+                }
+            });
+        },
     }
 }
 </script>

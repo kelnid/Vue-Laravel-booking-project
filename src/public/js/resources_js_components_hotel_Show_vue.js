@@ -171,6 +171,21 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
@@ -181,11 +196,11 @@ __webpack_require__.r(__webpack_exports__);
   },
   data: function data() {
     return {
+      role_id: null,
       hotel: [],
       description: null,
       comments: null,
       rate: null,
-      role_id: null,
       showModal: false,
       hotel_id: 0,
       commentDescription: '',
@@ -259,8 +274,8 @@ __webpack_require__.r(__webpack_exports__);
       });
     },
     getUser: function getUser() {
-      this.role_id = localStorage.getItem('role_id');
-      this.user = localStorage.getItem('user_id');
+      this.role_id = JSON.parse(localStorage.getItem('role_id'));
+      this.user = JSON.parse(localStorage.getItem('user_id'));
     },
     isEdit: function isEdit(id) {
       return this.editCommentId === id;
@@ -1113,7 +1128,7 @@ var render = function () {
                       ]),
                       _vm._v(" "),
                       _c("strong", { staticClass: "card-title" }, [
-                        _vm._v("Страна:  " + _vm._s(_vm.hotelCountry)),
+                        _vm._v("Страна: " + _vm._s(_vm.hotelCountry)),
                       ]),
                       _vm._v(" "),
                       _c("p", { staticClass: "card-title" }, [
@@ -1137,18 +1152,25 @@ var render = function () {
                         [_vm._v("Комментарии")]
                       ),
                       _vm._v(" "),
-                      _c(
-                        "router-link",
-                        {
-                          staticClass: "btn btn-outline-primary shadow",
-                          attrs: {
-                            to: { name: "hotel.edit", params: _vm.hotel.id },
-                          },
-                        },
-                        [_vm._v("Редактировать")]
-                      ),
+                      _vm.role_id === 1
+                        ? [
+                            _c(
+                              "router-link",
+                              {
+                                staticClass: "btn btn-outline-primary shadow",
+                                attrs: {
+                                  to: {
+                                    name: "hotel.edit",
+                                    params: _vm.hotel.id,
+                                  },
+                                },
+                              },
+                              [_vm._v("Редактировать")]
+                            ),
+                          ]
+                        : _vm._e(),
                     ],
-                    1
+                    2
                   ),
                 ]
               ),
@@ -1182,65 +1204,116 @@ var render = function () {
                             { staticClass: "container" },
                             [
                               _c("div", [
-                                _c("div", [
-                                  _c("h2", [
-                                    _vm._v("Добавьте свой комментарий"),
-                                  ]),
-                                  _vm._v(" "),
-                                  _c("div", [
-                                    _c("textarea", {
-                                      directives: [
-                                        {
-                                          name: "model",
-                                          rawName: "v-model",
-                                          value: _vm.description,
-                                          expression: "description",
-                                        },
-                                      ],
-                                      staticClass: "form-control",
-                                      attrs: { name: "description" },
-                                      domProps: { value: _vm.description },
-                                      on: {
-                                        input: function ($event) {
-                                          if ($event.target.composing) {
-                                            return
-                                          }
-                                          _vm.description = $event.target.value
-                                        },
-                                      },
-                                    }),
-                                  ]),
-                                  _vm._v(" "),
-                                  _c("div", [
-                                    _c("div"),
+                                _c(
+                                  "div",
+                                  [
+                                    _c("h2", [
+                                      _vm._v("Добавьте свой комментарий"),
+                                    ]),
                                     _vm._v(" "),
-                                    _c("div", [
-                                      _c(
-                                        "button",
-                                        {
-                                          staticClass:
-                                            "btn btn-outline-primary",
-                                          on: { click: _vm.addComment },
-                                        },
-                                        [
-                                          _vm._v(
-                                            "\n                                        Добавьте комментарий\n                                    "
+                                    _vm.role_id === null
+                                      ? [
+                                          _c(
+                                            "div",
+                                            {
+                                              staticClass:
+                                                "help-block alert alert-danger",
+                                            },
+                                            [
+                                              _vm._v(
+                                                "\n                                    Оставлять комментарии могут только\n                                    "
+                                              ),
+                                              _c(
+                                                "router-link",
+                                                {
+                                                  attrs: {
+                                                    to: {
+                                                      name: "user.registration",
+                                                    },
+                                                  },
+                                                },
+                                                [_vm._v("зарегистрированные")]
+                                              ),
+                                              _vm._v(
+                                                "\n                                    пользователи\n                                "
+                                              ),
+                                            ],
+                                            1
                                           ),
                                         ]
-                                      ),
+                                      : _vm._e(),
+                                    _vm._v(" "),
+                                    _vm.role_id === 2 || _vm.role_id === 1
+                                      ? [
+                                          _c("textarea", {
+                                            directives: [
+                                              {
+                                                name: "model",
+                                                rawName: "v-model",
+                                                value: _vm.description,
+                                                expression: "description",
+                                              },
+                                            ],
+                                            staticClass: "form-control",
+                                            attrs: { name: "description" },
+                                            domProps: {
+                                              value: _vm.description,
+                                            },
+                                            on: {
+                                              input: function ($event) {
+                                                if ($event.target.composing) {
+                                                  return
+                                                }
+                                                _vm.description =
+                                                  $event.target.value
+                                              },
+                                            },
+                                          }),
+                                        ]
+                                      : _vm._e(),
+                                    _vm._v(" "),
+                                    _c("div", [
+                                      _c("div"),
                                       _vm._v(" "),
                                       _c(
-                                        "button",
-                                        {
-                                          staticClass:
-                                            "btn btn-outline-primary",
-                                          on: { click: _vm.hideModal },
-                                        },
-                                        [_vm._v("Отмена")]
+                                        "div",
+                                        [
+                                          _vm.role_id === 2 || _vm.role_id === 1
+                                            ? [
+                                                _c(
+                                                  "button",
+                                                  {
+                                                    staticClass:
+                                                      "btn btn-outline-primary",
+                                                    on: {
+                                                      click: _vm.addComment,
+                                                    },
+                                                  },
+                                                  [
+                                                    _vm._v(
+                                                      "\n                                            Добавьте комментарий\n                                        "
+                                                    ),
+                                                  ]
+                                                ),
+                                              ]
+                                            : _vm._e(),
+                                          _vm._v(" "),
+                                          _c(
+                                            "button",
+                                            {
+                                              staticClass:
+                                                "btn btn-outline-primary",
+                                              on: { click: _vm.hideModal },
+                                            },
+                                            [_vm._v("Отмена")]
+                                          ),
+                                        ],
+                                        2
                                       ),
                                     ]),
-                                  ]),
-                                ]),
+                                  ],
+                                  2
+                                ),
                               ]),
                               _vm._v(" "),
                               _vm._l(_vm.items, function (comment) {
@@ -1425,7 +1498,7 @@ var render = function () {
                   ],
                   null,
                   false,
-                  108026389
+                  4143452970
                 ),
               })
             : _vm._e(),
@@ -1447,11 +1520,11 @@ var render = function () {
                     "div",
                     { staticClass: "card-body h-100" },
                     [
-                      _c("h5", { staticClass: "card-title" }, [
+                      _c("h3", { staticClass: "card-title" }, [
                         _vm._v(_vm._s(room.name)),
                       ]),
                       _vm._v(" "),
-                      _c("h5", { staticClass: "card-title" }, [
+                      _c("p", { staticClass: "card-title" }, [
                         _vm._v(_vm._s(room.bed)),
                       ]),
                       _vm._v(" "),
@@ -1471,21 +1544,28 @@ var render = function () {
                             to: { name: "room.show", params: { id: room.id } },
                           },
                         },
-                        [_vm._v("Перейти")]
+                        [_vm._v("Перейти\n                        ")]
                       ),
                       _vm._v(" "),
-                      _c(
-                        "router-link",
-                        {
-                          staticClass: "btn btn-outline-primary shadow",
-                          attrs: {
-                            to: { name: "room.edit", params: { id: room.id } },
-                          },
-                        },
-                        [_vm._v("Редактировать")]
-                      ),
+                      _vm.role_id === 1
+                        ? [
+                            _c(
+                              "router-link",
+                              {
+                                staticClass: "btn btn-outline-primary shadow",
+                                attrs: {
+                                  to: {
+                                    name: "room.edit",
+                                    params: { id: room.id },
+                                  },
+                                },
+                              },
+                              [_vm._v("Редактировать")]
+                            ),
+                          ]
+                        : _vm._e(),
                     ],
-                    1
+                    2
                   ),
                 ]),
               ])

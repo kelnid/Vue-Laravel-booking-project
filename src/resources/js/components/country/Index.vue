@@ -47,7 +47,7 @@
                 </div>
             </div>
         </template>
-        <template v-if="role_id === 2">
+        <template v-if="role_id === 2 || role_id === null">
             <div class="container">
                 <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
                     <div class="col" v-for="country in countries">
@@ -59,7 +59,7 @@
                             <div class="card-body">
                                 <div class="d-flex justify-content-between align-items-center">
                                     <div class="btn-group">
-                                        <router-link :to="{ name: 'hotel.index', params: {id: country.id}}" class="btn btn-sm btn-outline-secondary"><strong>View</strong></router-link>
+                                        <router-link :to="{ name: 'hotel.index', params: {id: country.id}}" class="btn btn-outline-primary shadow"><strong>Перейти</strong></router-link>
                                     </div>
                                 </div>
                             </div>

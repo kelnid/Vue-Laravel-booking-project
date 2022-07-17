@@ -7,7 +7,7 @@
             <input v-model.trim="details.password" type="password" v-validate="'required|min:10'" placeholder="Пароль" name="password" class="form-control mb-3">
             <div class="help-block alert alert-danger" v-show="errors.has('password')">{{ errors.first('password') }}</div>
             <template v-for="item in showErrors.email">
-                <div class="border border-t-0 border-red-400 rounded-b bg-red-100 px-4 py-3 text-red-700">{{item}}</div>
+                <div class="help-block alert alert-danger">{{item}}</div>
             </template>
             <div>
                 <button type="submit" class="btn-outline-primary mb-3">Войти</button>
@@ -19,7 +19,6 @@
 <script>
 
 import {mapActions, mapGetters} from 'vuex';
-import router from "../../router";
 
 export default {
     data() {

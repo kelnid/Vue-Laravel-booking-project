@@ -11,12 +11,11 @@
                             <p class="card-title">{{ hotel.address }}</p>
                             <div class="d-flex justify-content-between align-items-center">
                                 <div>
-                                    <router-link :to="{ name: 'hotel.show', params: {id: hotel.id} }"
-                                                 class="btn btn-outline-primary shadow">Перейти
-                                    </router-link>
+                                    <router-link :to="{ name: 'hotel.show', params: {id: hotel.id} }" class="btn btn-outline-primary shadow">Перейти</router-link>
                                 </div>
-                                <button class="btn btn-outline-danger shadow" @click="showMyModal(hotel.id)">Удалить
-                                </button>
+                                <template v-if="role_id === 1">
+                                    <button class="btn btn-outline-danger shadow" @click="showMyModal(hotel.id)">Удалить</button>
+                                </template>
                             </div>
                         </div>
                     </div>
@@ -54,10 +53,12 @@ export default {
             hotels: [],
             showModal: false,
             hotel_id: 0,
+            role_id: null,
         }
     },
     mounted() {
         this.getHotels()
+        this.getUser()
     },
     methods: {
         showMyModal(id) {
@@ -76,6 +77,9 @@ export default {
                     this.getHotels()
                     this.showModal = false
                 })
+        },
+        getUser() {
+            this.role_id = JSON.parse(localStorage.getItem('role_id'))
         },
     },
 

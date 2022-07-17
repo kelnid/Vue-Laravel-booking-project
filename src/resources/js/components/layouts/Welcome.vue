@@ -17,7 +17,7 @@
                 </div>
             </div>
         </template>
-        <template v-if="role_id === 2">
+        <template v-if="role_id === 2 || role_id === null">
             <div class="py-5 text-center container">
                 <div class="row py-lg-5">
                     <div class="col-lg-6 col-md-8 mx-auto">

@@ -724,7 +724,7 @@ var render = function () {
                         staticClass: "card-title",
                         staticStyle: { color: "black" },
                       },
-                      [_vm._v(_vm._s(booking.name))]
+                      [_c("strong", [_vm._v(_vm._s(booking.name))])]
                     ),
                     _vm._v(" "),
                     _c(
@@ -733,7 +733,7 @@ var render = function () {
                         staticClass: "card-text",
                         staticStyle: { color: "black" },
                       },
-                      [_vm._v("Price: " + _vm._s(booking.price) + " UAH")]
+                      [_vm._v("Цена: " + _vm._s(booking.price) + " UAH")]
                     ),
                     _vm._v(" "),
                     _c(
