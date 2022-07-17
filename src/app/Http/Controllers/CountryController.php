@@ -15,6 +15,12 @@ class CountryController extends Controller
 
         return response()->json($countries);
     }
+    public function show($id)
+    {
+        $country = Country::find($id);
+
+        return response()->json($country);
+    }
     public function store(CountryRequest $request)
     {
         $data = $request->except('_token');
@@ -28,7 +34,17 @@ class CountryController extends Controller
 
     public function update(Request $request, $id)
     {
-        //
+        $data = $request->except('_token', '_method');
+
+        if ($request->hasFile('image')) {
+            $data['image'] = $request->file('image')->store('images');
+        }
+
+        $country = Country::find($id);
+
+        $country->update($data);
+
+        return response()->json();
     }
 
     public function destroy(Country $country)

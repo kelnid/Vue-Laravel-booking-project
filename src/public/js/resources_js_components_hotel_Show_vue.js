@@ -171,33 +171,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
@@ -217,7 +190,8 @@ __webpack_require__.r(__webpack_exports__);
       hotel_id: 0,
       commentDescription: '',
       editCommentId: null,
-      user: null
+      user: null,
+      hotelCountry: null
     };
   },
   mounted: function mounted() {
@@ -238,6 +212,7 @@ __webpack_require__.r(__webpack_exports__);
       var _this = this;
 
       axios.get("/api/hotels/show/".concat(this.$route.params.id)).then(function (res) {
+        _this.hotelCountry = res.data.country.name;
         _this.hotel = res.data;
       });
     },
@@ -302,7 +277,7 @@ __webpack_require__.r(__webpack_exports__);
 
       axios.patch("/api/hotels/update/".concat(id), {
         description: this.commentDescription,
-        film_id: this.$route.params.id
+        hotel_id: this.$route.params.id
       }).then(function (res) {
         _this6.closeEditComment();
 
@@ -996,266 +971,185 @@ var render = function () {
                     attrs: { src: "../../../storage/" + _vm.hotel.image },
                   }),
                   _vm._v(" "),
-                  _c("div", { staticClass: "card-body" }, [
-                    _c("h1", { staticClass: "card-title" }, [
-                      _vm._v(" " + _vm._s(_vm.hotel.name)),
-                    ]),
-                    _vm._v(" "),
-                    _c("div", { staticClass: "stars mr-2" }, [
-                      _c("div", { staticClass: "class" }, [
-                        _c("input", {
-                          staticClass: "star star-10",
-                          attrs: {
-                            disabled: _vm.user == null,
-                            id: "star-10",
-                            type: "radio",
-                            name: "star",
-                          },
-                          domProps: { checked: Math.round(_vm.rate) === 10 },
-                          on: {
-                            click: function ($event) {
-                              return _vm.postRate(10)
-                            },
-                          },
-                        }),
-                        _vm._v(" "),
-                        _c("label", {
-                          staticClass: "star star-10",
-                          attrs: { for: "star-10" },
-                        }),
-                        _vm._v(" "),
-                        _c("input", {
-                          staticClass: "star star-9",
-                          attrs: {
-                            disabled: _vm.user == null,
-                            id: "star-9",
-                            type: "radio",
-                            name: "star",
-                          },
-                          domProps: { checked: Math.round(_vm.rate) === 9 },
-                          on: {
-                            click: function ($event) {
-                              return _vm.postRate(9)
-                            },
-                          },
-                        }),
-                        _vm._v(" "),
-                        _c("label", {
-                          staticClass: "star star-9",
-                          attrs: { for: "star-9" },
-                        }),
-                        _vm._v(" "),
-                        _c("input", {
-                          staticClass: "star star-8",
-                          attrs: {
-                            disabled: _vm.user == null,
-                            id: "star-8",
-                            type: "radio",
-                            name: "star",
-                          },
-                          domProps: { checked: Math.round(_vm.rate) === 8 },
-                          on: {
-                            click: function ($event) {
-                              return _vm.postRate(8)
-                            },
-                          },
-                        }),
-                        _vm._v(" "),
-                        _c("label", {
-                          staticClass: "star star-8",
-                          attrs: { for: "star-8" },
-                        }),
-                        _vm._v(" "),
-                        _c("input", {
-                          staticClass: "star star-7",
-                          attrs: {
-                            disabled: _vm.user == null,
-                            id: "star-7",
-                            type: "radio",
-                            name: "star",
-                          },
-                          domProps: { checked: Math.round(_vm.rate) === 7 },
-                          on: {
-                            click: function ($event) {
-                              return _vm.postRate(7)
-                            },
-                          },
-                        }),
-                        _vm._v(" "),
-                        _c("label", {
-                          staticClass: "star star-7",
-                          attrs: { for: "star-7" },
-                        }),
-                        _vm._v(" "),
-                        _c("input", {
-                          staticClass: "star star-6",
-                          attrs: {
-                            disabled: _vm.user == null,
-                            id: "star-6",
-                            type: "radio",
-                            name: "star",
-                          },
-                          domProps: { checked: Math.round(_vm.rate) === 6 },
-                          on: {
-                            click: function ($event) {
-                              return _vm.postRate(6)
-                            },
-                          },
-                        }),
-                        _vm._v(" "),
-                        _c("label", {
-                          staticClass: "star star-6",
-                          attrs: { for: "star-6" },
-                        }),
-                        _vm._v(" "),
-                        _c("input", {
-                          staticClass: "star star-5",
-                          attrs: {
-                            disabled: _vm.user == null,
-                            id: "star-5",
-                            type: "radio",
-                            name: "star",
-                          },
-                          domProps: { checked: Math.round(_vm.rate) === 5 },
-                          on: {
-                            click: function ($event) {
-                              return _vm.postRate(5)
-                            },
-                          },
-                        }),
-                        _vm._v(" "),
-                        _c("label", {
-                          staticClass: "star star-5",
-                          attrs: { for: "star-5" },
-                        }),
-                        _vm._v(" "),
-                        _c("input", {
-                          staticClass: "star star-4",
-                          attrs: {
-                            disabled: _vm.user == null,
-                            id: "star-4",
-                            type: "radio",
-                            name: "star",
-                          },
-                          domProps: { checked: Math.round(_vm.rate) === 4 },
-                          on: {
-                            click: function ($event) {
-                              return _vm.postRate(4)
-                            },
-                          },
-                        }),
-                        _vm._v(" "),
-                        _c("label", {
-                          staticClass: "star star-4",
-                          attrs: { for: "star-4" },
-                        }),
-                        _vm._v(" "),
-                        _c("input", {
-                          staticClass: "star star-3",
-                          attrs: {
-                            disabled: _vm.user == null,
-                            id: "star-3",
-                            type: "radio",
-                            name: "star",
-                          },
-                          domProps: { checked: Math.round(_vm.rate) === 3 },
-                          on: {
-                            click: function ($event) {
-                              return _vm.postRate(3)
-                            },
-                          },
-                        }),
-                        _vm._v(" "),
-                        _c("label", {
-                          staticClass: "star star-3",
-                          attrs: { for: "star-3" },
-                        }),
-                        _vm._v(" "),
-                        _c("input", {
-                          staticClass: "star star-2",
-                          attrs: {
-                            disabled: _vm.user == null,
-                            id: "star-2",
-                            type: "radio",
-                            name: "star",
-                          },
-                          domProps: { checked: Math.round(_vm.rate) === 2 },
-                          on: {
-                            click: function ($event) {
-                              return _vm.postRate(2)
-                            },
-                          },
-                        }),
-                        _vm._v(" "),
-                        _c("label", {
-                          staticClass: "star star-2",
-                          attrs: { for: "star-2" },
-                        }),
-                        _vm._v(" "),
-                        _c("input", {
-                          staticClass: "star star-1",
-                          attrs: {
-                            disabled: _vm.user == null,
-                            id: "star-1",
-                            type: "radio",
-                            name: "star",
-                          },
-                          domProps: { checked: Math.round(_vm.rate) === 1 },
-                          on: {
-                            click: function ($event) {
-                              return _vm.postRate(1)
-                            },
-                          },
-                        }),
-                        _vm._v(" "),
-                        _c("label", {
-                          staticClass: "star star-1",
-                          attrs: { for: "star-1" },
-                        }),
-                      ]),
-                    ]),
-                    _vm._v(" "),
-                    _c("div", { staticClass: "mx-8" }, [
-                      _vm._v(
-                        "\n                        Оценка:\n                        "
-                      ),
-                      _c(
-                        "span",
-                        {
-                          staticClass: "mt-2 text-3xl",
-                          attrs: { id: "exact-rating" },
-                        },
-                        [_vm._v(_vm._s(_vm.rate))]
-                      ),
-                    ]),
-                    _vm._v(" "),
-                    _c("p", { staticClass: "card-title" }, [
-                      _vm._v(_vm._s(_vm.hotel.address)),
-                    ]),
-                    _vm._v(" "),
-                    _c("p", { staticClass: "card-text" }, [
-                      _vm._v(_vm._s(_vm.hotel.description)),
-                    ]),
-                    _vm._v(" "),
-                    _c(
-                      "button",
-                      {
-                        staticClass: "btn btn-outline-primary shadow",
-                        on: {
-                          click: function ($event) {
-                            return _vm.showMyModal(_vm.hotel.id)
-                          },
-                        },
+                  _c(
+                    "span",
+                    {
+                      staticClass: "position-absolute",
+                      staticStyle: {
+                        "margin-left": "1050px",
+                        "margin-top": "20px",
+                        "font-size": "20px",
+                        "border-radius": "8px 8px 8px 0",
+                        background: "#003580",
+                        color: "#fff",
+                        "text-align": "center",
+                        width: "40px",
                       },
-                      [_vm._v("Комментарии\n                    ")]
-                    ),
-                    _vm._v(" "),
-                    _c(
-                      "button",
-                      { staticClass: "btn btn-outline-primary shadow" },
-                      [_vm._v("Редактировать")]
-                    ),
-                  ]),
+                    },
+                    [
+                      _vm._v(
+                        "\n                    " +
+                          _vm._s(_vm.rate) +
+                          "\n                "
+                      ),
+                    ]
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "div",
+                    { staticClass: "card-body" },
+                    [
+                      _c("h1", { staticClass: "card-title" }, [
+                        _vm._v(_vm._s(_vm.hotel.name)),
+                      ]),
+                      _vm._v(" "),
+                      _c("div", { staticClass: "stars mr-2" }, [
+                        _c("div", { staticClass: "class" }, [
+                          _c("input", {
+                            staticClass: "star star-5",
+                            attrs: {
+                              disabled: _vm.user == null,
+                              id: "star-5",
+                              type: "radio",
+                              name: "star",
+                            },
+                            domProps: { checked: Math.round(_vm.rate) === 5 },
+                            on: {
+                              click: function ($event) {
+                                return _vm.postRate(5)
+                              },
+                            },
+                          }),
+                          _vm._v(" "),
+                          _c("label", {
+                            staticClass: "star star-5",
+                            attrs: { for: "star-5" },
+                          }),
+                          _vm._v(" "),
+                          _c("input", {
+                            staticClass: "star star-4",
+                            attrs: {
+                              disabled: _vm.user == null,
+                              id: "star-4",
+                              type: "radio",
+                              name: "star",
+                            },
+                            domProps: { checked: Math.round(_vm.rate) === 4 },
+                            on: {
+                              click: function ($event) {
+                                return _vm.postRate(4)
+                              },
+                            },
+                          }),
+                          _vm._v(" "),
+                          _c("label", {
+                            staticClass: "star star-4",
+                            attrs: { for: "star-4" },
+                          }),
+                          _vm._v(" "),
+                          _c("input", {
+                            staticClass: "star star-3",
+                            attrs: {
+                              disabled: _vm.user == null,
+                              id: "star-3",
+                              type: "radio",
+                              name: "star",
+                            },
+                            domProps: { checked: Math.round(_vm.rate) === 3 },
+                            on: {
+                              click: function ($event) {
+                                return _vm.postRate(3)
+                              },
+                            },
+                          }),
+                          _vm._v(" "),
+                          _c("label", {
+                            staticClass: "star star-3",
+                            attrs: { for: "star-3" },
+                          }),
+                          _vm._v(" "),
+                          _c("input", {
+                            staticClass: "star star-2",
+                            attrs: {
+                              disabled: _vm.user == null,
+                              id: "star-2",
+                              type: "radio",
+                              name: "star",
+                            },
+                            domProps: { checked: Math.round(_vm.rate) === 2 },
+                            on: {
+                              click: function ($event) {
+                                return _vm.postRate(2)
+                              },
+                            },
+                          }),
+                          _vm._v(" "),
+                          _c("label", {
+                            staticClass: "star star-2",
+                            attrs: { for: "star-2" },
+                          }),
+                          _vm._v(" "),
+                          _c("input", {
+                            staticClass: "star star-1",
+                            attrs: {
+                              disabled: _vm.user == null,
+                              id: "star-1",
+                              type: "radio",
+                              name: "star",
+                            },
+                            domProps: { checked: Math.round(_vm.rate) === 1 },
+                            on: {
+                              click: function ($event) {
+                                return _vm.postRate(1)
+                              },
+                            },
+                          }),
+                          _vm._v(" "),
+                          _c("label", {
+                            staticClass: "star star-1",
+                            attrs: { for: "star-1" },
+                          }),
+                        ]),
+                      ]),
+                      _vm._v(" "),
+                      _c("strong", { staticClass: "card-title" }, [
+                        _vm._v("Страна:  " + _vm._s(_vm.hotelCountry)),
+                      ]),
+                      _vm._v(" "),
+                      _c("p", { staticClass: "card-title" }, [
+                        _vm._v(_vm._s(_vm.hotel.address)),
+                      ]),
+                      _vm._v(" "),
+                      _c("p", { staticClass: "card-text" }, [
+                        _vm._v(_vm._s(_vm.hotel.description)),
+                      ]),
+                      _vm._v(" "),
+                      _c(
+                        "button",
+                        {
+                          staticClass: "btn btn-outline-primary shadow",
+                          on: {
+                            click: function ($event) {
+                              return _vm.showMyModal(_vm.hotel.id)
+                            },
+                          },
+                        },
+                        [_vm._v("Комментарии")]
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "router-link",
+                        {
+                          staticClass: "btn btn-outline-primary shadow",
+                          attrs: {
+                            to: { name: "hotel.edit", params: _vm.hotel.id },
+                          },
+                        },
+                        [_vm._v("Редактировать")]
+                      ),
+                    ],
+                    1
+                  ),
                 ]
               ),
             ]
@@ -1304,11 +1198,7 @@ var render = function () {
                                         },
                                       ],
                                       staticClass: "form-control",
-                                      attrs: {
-                                        name: "description",
-                                        placeholder:
-                                          "Оставьте свой комментарий",
-                                      },
+                                      attrs: { name: "description" },
                                       domProps: { value: _vm.description },
                                       on: {
                                         input: function ($event) {
@@ -1535,7 +1425,7 @@ var render = function () {
                   ],
                   null,
                   false,
-                  2023903951
+                  108026389
                 ),
               })
             : _vm._e(),
@@ -1570,7 +1460,7 @@ var render = function () {
                       ]),
                       _vm._v(" "),
                       _c("p", { staticClass: "card-text" }, [
-                        _vm._v("Price: " + _vm._s(room.price) + " UAH"),
+                        _vm._v("Цена: " + _vm._s(room.price) + " UAH"),
                       ]),
                       _vm._v(" "),
                       _c(
@@ -1581,7 +1471,18 @@ var render = function () {
                             to: { name: "room.show", params: { id: room.id } },
                           },
                         },
-                        [_vm._v("Перейти\n                        ")]
+                        [_vm._v("Перейти")]
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "router-link",
+                        {
+                          staticClass: "btn btn-outline-primary shadow",
+                          attrs: {
+                            to: { name: "room.edit", params: { id: room.id } },
+                          },
+                        },
+                        [_vm._v("Редактировать")]
                       ),
                     ],
                     1

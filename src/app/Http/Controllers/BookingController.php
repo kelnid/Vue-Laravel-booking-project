@@ -47,9 +47,9 @@ class BookingController extends Controller
     public function destroy($id)
     {
         $booking = RoomUser::find($id);
+
         $booking->delete();
-//        $user = User::find(auth()->user()->id);
-//        $user->rooms()->wherePivot('id', $roomUser)->detach();
-        return response([]);
+
+        return response()->json();
     }
 }

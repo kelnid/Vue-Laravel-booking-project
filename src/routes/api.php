@@ -34,13 +34,14 @@ Route::group([
     'prefix' => 'countries',
 ], function () {
     Route::get('/', [CountryController::class, 'index'])->name('index');
+    Route::get('/{country}', [CountryController::class, 'show'])->name('show');
     Route::group([
         'as' => 'store.',
         'prefix' => 'store',
     ], function () {
         Route::post('/', [CountryController::class, 'store'])->name('store');
     });
-    Route::put('/{country}', [CountryController::class, 'update'])->name('update');
+    Route::patch('/{country}', [CountryController::class, 'update'])->name('update');
     Route::delete('{country}', [CountryController::class, 'destroy']);
 });
 
@@ -93,7 +94,7 @@ Route::group([
     ], function () {
         Route::patch('/{id}', [CommentController::class, 'update']);
     });
-    Route::put('/{hotel}', [HotelController::class, 'update'])->name('update');
+    Route::patch('/{hotel}', [HotelController::class, 'update'])->name('update');
 });
 
 Route::prefix('countries/{id}')->group(function () {
@@ -110,6 +111,7 @@ Route::group([
     ], function () {
         Route::get('/{room}', [RoomController::class, 'show']);
     });
+    Route::patch('/{room}', [RoomController::class, 'update'])->name('update');
     Route::post('/', [RoomController::class, 'store'])->name('store');
 });
 

@@ -11,6 +11,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
+/* harmony import */ var _router__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../router */ "./resources/js/router.js");
 //
 //
 //
@@ -28,46 +29,36 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   name: "Edit",
-  //before Vuex
-  // data() {
-  //     return {
-  //         name: null,
-  //         age: null,
-  //         job: null
-  //     }
-  // },
-  mounted: function mounted() {
-    //before Vuex
-    // this.getPerson()
-    //after
-    this.$store.dispatch('getPerson', this.$route.params.id);
+  data: function data() {
+    return {
+      name: null
+    };
   },
-  // methods: {
-  //     before Vuex
-  //     getPerson() {
-  //         axios.get(`/api/people/${this.$route.params.id}`)
-  //             .then(res => {
-  //                 this.name = res.data.data.name
-  //                 this.age = res.data.data.age
-  //                 this.job = res.data.data.job
-  //             })
-  //     },
-  //
-  //     update () {
-  //         axios.patch(`/api/people/${this.$route.params.id}`, {name:this.name, age:this.age, job:this.job})
-  //             .then( res => {
-  //                 this.$router.push({ name: 'person.show', params: { id:this.$route.params.id } })
-  //             })
-  //     }
-  // },
-  computed: {
-    isDisabled: function isDisabled() {
-      return this.person.name && this.person.age && this.person.job;
+  mounted: function mounted() {
+    this.getCountry();
+  },
+  methods: {
+    getCountry: function getCountry() {
+      var _this = this;
+
+      axios.get("/api/countries/".concat(this.$route.params.id)).then(function (res) {
+        _this.name = res.data.name;
+      });
     },
-    person: function person() {
-      return this.$store.getters.person;
+    updateCountry: function updateCountry() {
+      axios.patch("/api/countries/".concat(this.$route.params.id), {
+        name: this.name
+      }).then(function (res) {
+        _router__WEBPACK_IMPORTED_MODULE_0__["default"].push({
+          name: 'country.index'
+        });
+        console.log(res);
+      });
     }
   }
 });
@@ -158,103 +149,97 @@ var render = function () {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _vm.person
-    ? _c("div", { staticClass: "w-25" }, [
-        _c("div", { staticClass: "mb-3" }, [
+  return _c(
+    "div",
+    [
+      _c("v-header"),
+      _vm._v(" "),
+      _c("div", { staticClass: "container pt-5 w-25" }, [
+        _c("div", { staticClass: "mb-3 shadow" }, [
           _c("input", {
             directives: [
               {
+                name: "validate",
+                rawName: "v-validate",
+                value: "required|min:3",
+                expression: "'required|min:3'",
+              },
+              {
                 name: "model",
                 rawName: "v-model",
-                value: _vm.person.name,
-                expression: "person.name",
+                value: _vm.name,
+                expression: "name",
               },
             ],
             staticClass: "form-control",
-            attrs: { type: "text", placeholder: "name" },
-            domProps: { value: _vm.person.name },
+            attrs: { type: "text", name: "name", placeholder: "Страна" },
+            domProps: { value: _vm.name },
             on: {
               input: function ($event) {
                 if ($event.target.composing) {
                   return
                 }
-                _vm.$set(_vm.person, "name", $event.target.value)
+                _vm.name = $event.target.value
               },
             },
           }),
+          _vm._v(" "),
+          _c(
+            "div",
+            {
+              directives: [
+                {
+                  name: "show",
+                  rawName: "v-show",
+                  value: _vm.errors.has("name"),
+                  expression: "errors.has('name')",
+                },
+              ],
+              staticClass: "help-block alert alert-danger",
+            },
+            [_vm._v(_vm._s(_vm.errors.first("name")))]
+          ),
         ]),
         _vm._v(" "),
         _c("div", { staticClass: "mb-3" }, [
           _c("input", {
             directives: [
               {
-                name: "model",
-                rawName: "v-model",
-                value: _vm.person.age,
-                expression: "person.age",
+                name: "validate",
+                rawName: "v-validate",
+                value: "required|image",
+                expression: "'required|image'",
               },
             ],
             staticClass: "form-control",
-            attrs: { type: "number", placeholder: "age" },
-            domProps: { value: _vm.person.age },
-            on: {
-              input: function ($event) {
-                if ($event.target.composing) {
-                  return
-                }
-                _vm.$set(_vm.person, "age", $event.target.value)
-              },
-            },
-          }),
-        ]),
-        _vm._v(" "),
-        _c("div", { staticClass: "mb-3" }, [
-          _c("input", {
-            directives: [
-              {
-                name: "model",
-                rawName: "v-model",
-                value: _vm.person.job,
-                expression: "person.job",
-              },
-            ],
-            staticClass: "form-control",
-            attrs: { type: "text", placeholder: "job" },
-            domProps: { value: _vm.person.job },
-            on: {
-              input: function ($event) {
-                if ($event.target.composing) {
-                  return
-                }
-                _vm.$set(_vm.person, "job", $event.target.value)
-              },
-            },
-          }),
-        ]),
-        _vm._v(" "),
-        _c("div", { staticClass: "mb-3" }, [
-          _c("input", {
-            staticClass: " btn btn-primary",
             attrs: {
-              disabled: !_vm.isDisabled,
-              type: "submit",
-              value: "Update",
-            },
-            on: {
-              click: function ($event) {
-                $event.preventDefault()
-                return _vm.$store.dispatch("update", {
-                  id: _vm.person.id,
-                  name: _vm.person.name,
-                  age: _vm.person.age,
-                  job: _vm.person.job,
-                })
-              },
+              "data-vv-as": "image",
+              type: "file",
+              name: "image",
+              id: "image",
             },
           }),
         ]),
-      ])
-    : _vm._e()
+        _vm._v(" "),
+        _c("div", { staticClass: "mb-3" }, [
+          _c(
+            "button",
+            {
+              staticClass: " btn btn-primary",
+              on: {
+                click: function ($event) {
+                  $event.preventDefault()
+                  return _vm.updateCountry($event)
+                },
+              },
+            },
+            [_vm._v("Обновить")]
+          ),
+        ]),
+      ]),
+    ],
+    1
+  )
 }
 var staticRenderFns = []
 render._withStripped = true

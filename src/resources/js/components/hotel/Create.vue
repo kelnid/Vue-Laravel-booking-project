@@ -10,7 +10,7 @@
                     <input type="text" v-model="address" placeholder="Адрес" class="form-control">
                 </div>
                 <div class="mb-3">
-                    <input type="text" v-model="description" placeholder="Описание" class="form-control">
+                    <textarea type="text" v-model="description" placeholder="Описание" class="form-control" rows="3"></textarea>
                 </div>
                 <div class="mb-3">
                     <input type="file" @change="addFile" id="image" class="form-control">

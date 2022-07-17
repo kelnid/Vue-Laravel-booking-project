@@ -13,8 +13,9 @@
                             default body
                         </slot>
                     </div>
-                    <div class="modal-footer ">
+                    <div class="modal-footer">
                         <slot name="footer">
+                            default footer
                         </slot>
                     </div>
                 </div>
@@ -25,14 +26,11 @@
 
 <script>
 export default {
-    name: "ShowComments"
+    name: "BookingsModal"
 }
 </script>
 
 <style scoped>
-body.modal-open {
-    overflow: hidden;
-}
 .modal-mask {
     position: fixed;
     z-index: 9998;
@@ -51,9 +49,7 @@ body.modal-open {
 }
 
 .modal-container {
-
-    /*overflow-y: auto;*/
-    width: 700px;
+    width: 400px;
     margin: 0px auto;
     padding: 20px 30px;
     background-color: #fff;
@@ -98,4 +94,5 @@ body.modal-open {
     -webkit-transform: scale(1.1);
     transform: scale(1.1);
 }
+
 </style>

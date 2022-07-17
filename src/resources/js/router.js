@@ -9,7 +9,7 @@ const router = new VueRouter({
     routes: [
         {
             path: '/', component: () => import('./components/country/Index'),
-            name: 'country.index'
+            name: 'country.index',
         },
         {
             path: '/create', component: () => import('./components/country/Create'),
@@ -33,12 +33,20 @@ const router = new VueRouter({
             name: 'hotel.create'
         },
         {
+            path: '/:id/edit-hotel', component: () => import('./components/hotel/Edit'),
+            name: 'hotel.edit'
+        },
+        {
             path: '/show/:id', component: () => import('./components/room/Show'),
             name: 'room.show',
         },
         {
             path: '/room-create', component: () => import('./components/room/Create'),
             name: 'room.create'
+        },
+        {
+            path: '/:id/edit-room', component: () => import('./components/room/Edit'),
+            name: 'room.edit'
         },
         {
             path: '/user/login', component: () => import('./components/auth/Login'),
@@ -54,24 +62,8 @@ const router = new VueRouter({
         },
     ]
 })
+
 router.beforeEach((to, from, next) => {
-
-
-    // const role = localStorage.getItem('role_id')
-    //
-    // if(role === '2') {
-    //     if(to.name === 'user.login' || to.name === 'user.registration') {
-    //         return next()
-    //     } else {
-    //         return next({
-    //             name: 'user.login'
-    //         })
-    //     }
-    // }
-
-
-
-
     const token = localStorage.getItem('x_xsrf_token')
 
     if(!token) {

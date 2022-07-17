@@ -11,7 +11,8 @@ class HotelController extends Controller
 {
     public function index($country_id)
     {
-        $hotels = Hotel::where('country_id', $country_id)->get();
+        $hotels = Hotel::with('rating')->where('country_id', $country_id)->get();
+
         return response()->json($hotels);
     }
     public function indexHotels()
@@ -33,14 +34,23 @@ class HotelController extends Controller
 
     public function show($id)
     {
-        $hotel = Hotel::with('rooms')->find($id);
-//        ->with(['rooms','связь из модели'])
+        $hotel = Hotel::with('rooms', 'country')->find($id);
         return response()->json($hotel);
     }
 
     public function update(Request $request, $id)
     {
-        //
+        $data = $request->except('_token', '_method');
+
+        if ($request->hasFile('image')) {
+            $data['image'] = $request->file('image')->store('images');
+        }
+
+        $hotel = Hotel::find($id);
+
+        $hotel->update($data);
+
+        return response()->json();
     }
 
     public function destroy(Hotel $hotel)

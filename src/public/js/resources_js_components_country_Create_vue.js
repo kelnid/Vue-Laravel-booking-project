@@ -48,18 +48,6 @@ __webpack_require__.r(__webpack_exports__);
     }
   },
   methods: {
-    // addCountry() {
-    //     let formData = new FormData()
-    //
-    //     formData.append('name', this.name)
-    //     formData.append('image', this.image)
-    //
-    //     axios.post('/api/countries/store', formData)
-    //         .then(res => {
-    //             console.log(res.data.message);
-    //             router.push({name: 'country.index'})
-    //         })
-    // },
     addFile: function addFile(event) {
       this.image = event.target.files[0];
     },
@@ -72,7 +60,7 @@ __webpack_require__.r(__webpack_exports__);
           formData.append('name', _this.name);
           formData.append('image', _this.image);
           axios.post('/api/countries/store', formData).then(function (res) {
-            console.log(res.data.message);
+            console.log(res.data);
             _router__WEBPACK_IMPORTED_MODULE_0__["default"].push({
               name: 'country.index'
             });

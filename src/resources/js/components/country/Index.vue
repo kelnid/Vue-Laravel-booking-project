@@ -8,14 +8,24 @@
                     <div class="col" v-for="country in countries">
                         <div class="card shadow-sm">
                             <div style="position: relative; text-align: center; color: black; font-size: larger">
+<!--                                <span class="position-absolute" style="-->
+<!--                                       margin-top: 10px; font-size: 20px;-->
+<!--                                       border-radius: 8px 8px 8px 8px;-->
+<!--                                       background: #003580;-->
+<!--                                       color: #fff;-->
+<!--                                       padding: 3px 3px 3px 3px;-->
+<!--                                       margin-left: 20px;-->
+<!--                                       text-align: center;">-->
+<!--                                    {{ country.name }}-->
+<!--                                </span>-->
                                 <img :src="`storage/${country.image}`" style="width: 420px; height: 237px">
-                                <div class="top-left" style="position: absolute; top: 8px; left: 16px;">{{ country.name }}</div>
+                                <div class="top-left" style="position: absolute; top: 8px; left: 16px;"><strong>{{ country.name }}</strong></div>
                             </div>
                             <div class="card-body">
                                 <div class="d-flex justify-content-between align-items-center">
                                     <div class="btn-group">
                                         <router-link :to="{ name: 'hotel.index', params: {id: country.id}}" class="btn btn-outline-primary shadow">Перейти</router-link>
-                                        <a href="#" class="btn btn-outline-primary shadow">Редактировать</a>
+                                        <router-link :to="{ name: 'country.edit', params: {id: country.id}}" class="btn btn-outline-primary shadow">Редактировать</router-link>
                                     </div>
                                     <button class="btn btn-outline-danger" @click="showMyModal(country.id)">Удалить</button>
                                 </div>
@@ -102,7 +112,6 @@ export default {
         this.$store.dispatch('getCountries')
         this.getUser()
     },
-
 }
 </script>
 

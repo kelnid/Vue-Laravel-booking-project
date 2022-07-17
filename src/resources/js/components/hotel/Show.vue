@@ -5,40 +5,20 @@
             <div class="container" style="display: flex; width: 1140px">
                 <div class="card mb-3 mt-5 shadow" style="width: 1295px; height: auto; margin: 0 auto;">
                     <img :src="`../../../storage/${hotel.image}`">
+                    <span class="position-absolute" style="
+                    margin-left: 1050px;
+                    margin-top: 20px; font-size: 20px;
+                    border-radius: 8px 8px 8px 0;
+                    background: #003580;
+                    color: #fff;
+                    text-align: center;
+                    width: 40px;">
+                        {{ rate }}
+                    </span>
                     <div class="card-body">
-                        <h1 class="card-title"> {{ hotel.name }}</h1>
+                        <h1 class="card-title">{{ hotel.name }}</h1>
                         <div class="stars mr-2">
                             <div class="class">
-                                <input
-                                    :disabled="user == null"
-                                    @click="postRate(10)" class="star star-10" id="star-10" type="radio"
-                                    :checked="Math.round(rate) === 10"
-                                    name="star"/>
-                                <label class="star star-10" for="star-10"></label>
-                                <input
-                                    :disabled="user == null"
-                                    @click="postRate(9)" class="star star-9" id="star-9" type="radio"
-                                    :checked="Math.round(rate) === 9"
-                                    name="star"/>
-                                <label class="star star-9" for="star-9"></label>
-                                <input
-                                    :disabled="user == null"
-                                    @click="postRate(8)" class="star star-8" id="star-8" type="radio"
-                                    :checked="Math.round(rate) === 8"
-                                    name="star"/>
-                                <label class="star star-8" for="star-8"></label>
-                                <input
-                                    :disabled="user == null"
-                                    @click="postRate(7)" class="star star-7" id="star-7" type="radio"
-                                    :checked="Math.round(rate) === 7"
-                                    name="star"/>
-                                <label class="star star-7" for="star-7"></label>
-                                <input
-                                    :disabled="user == null"
-                                    @click="postRate(6)" class="star star-6" id="star-6" type="radio"
-                                    :checked="Math.round(rate) === 6"
-                                    name="star"/>
-                                <label class="star star-6" for="star-6"></label>
                                 <input
                                     :disabled="user == null"
                                     @click="postRate(5)" class="star star-5" id="star-5" type="radio"
@@ -71,15 +51,11 @@
                                 <label class="star star-1" for="star-1"></label>
                             </div>
                         </div>
-                        <div class="mx-8">
-                            Оценка:
-                            <span id="exact-rating" class="mt-2 text-3xl">{{ rate }}</span>
-                        </div>
+                        <strong class="card-title">Страна:  {{ hotelCountry }}</strong>
                         <p class="card-title">{{ hotel.address }}</p>
                         <p class="card-text">{{ hotel.description }}</p>
-                        <button @click="showMyModal(hotel.id)" class="btn btn-outline-primary shadow">Комментарии
-                        </button>
-                        <button class="btn btn-outline-primary shadow">Редактировать</button>
+                        <button @click="showMyModal(hotel.id)" class="btn btn-outline-primary shadow">Комментарии</button>
+                        <router-link :to="{ name: 'hotel.edit', params: hotel.id}" class="btn btn-outline-primary shadow">Редактировать</router-link>
                     </div>
                 </div>
             </div>
@@ -93,8 +69,7 @@
                             <div>
                                 <h2>Добавьте свой комментарий</h2>
                                 <div>
-                            <textarea v-model="description" class="form-control" name="description"
-                                      placeholder="Оставьте свой комментарий"></textarea>
+                            <textarea v-model="description" class="form-control" name="description"></textarea>
                                 </div>
                                 <div>
                                     <div>
@@ -115,8 +90,7 @@
                                     <div>
                                         <p>{{ comment.description }}</p>
                                         <div :class="isEdit(comment.id) ? '' : 'd-none'">
-                                            <textarea v-model="commentDescription" class="form-control"
-                                                      name="description"></textarea>
+                                            <textarea v-model="commentDescription" class="form-control" name="description"></textarea>
                                         </div>
                                     </div>
                                     <div>
@@ -171,10 +145,9 @@
                             <h5 class="card-title">{{ room.name }}</h5>
                             <h5 class="card-title">{{ room.bed }}</h5>
                             <p class="card-text">Площадь: {{ room.area }} м²</p>
-                            <p class="card-text">Price: {{ room.price }} UAH</p>
-                            <router-link :to="{ name: 'room.show', params: {id: room.id} }"
-                                         class="btn btn-outline-primary shadow">Перейти
-                            </router-link>
+                            <p class="card-text">Цена: {{ room.price }} UAH</p>
+                            <router-link :to="{ name: 'room.show', params: {id: room.id} }" class="btn btn-outline-primary shadow">Перейти</router-link>
+                            <router-link :to="{ name: 'room.edit', params: {id: room.id}}" class="btn btn-outline-primary shadow">Редактировать</router-link>
                         </div>
                     </div>
                 </div>
@@ -202,7 +175,8 @@ export default {
             hotel_id: 0,
             commentDescription: '',
             editCommentId: null,
-            user: null
+            user: null,
+            hotelCountry: null
         }
     },
     mounted() {
@@ -222,6 +196,7 @@ export default {
         getHotel() {
             axios.get(`/api/hotels/show/${this.$route.params.id}`)
                 .then(res => {
+                    this.hotelCountry = res.data.country.name
                     this.hotel = res.data
                 })
         },
@@ -254,8 +229,7 @@ export default {
             axios.post(`/api/hotels/post-rate`, {
                 hotel_id: hotel,
                 points: value
-            })
-                .then(res => {
+            }).then(res => {
                     setTimeout(() => {
                         this.getRate()
                     }, 500)
@@ -278,7 +252,7 @@ export default {
         updateComment(id) {
             axios.patch(`/api/hotels/update/${id}`, {
                 description: this.commentDescription,
-                film_id: this.$route.params.id
+                hotel_id: this.$route.params.id
             }).then(res => {
                     this.closeEditComment()
                     this.getComments()

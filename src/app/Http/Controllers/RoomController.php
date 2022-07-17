@@ -28,11 +28,23 @@ class RoomController extends Controller
 
     public function update(Request $request, $id)
     {
-        //
+        $data = $request->except('_token', '_method');
+
+        if ($request->hasFile('image')) {
+            $data['image'] = $request->file('image')->store('images');
+        }
+
+        $room = Room::find($id);
+
+        $room->update($data);
+
+        return response()->json();
     }
 
-    public function destroy($id)
+    public function destroy(Room $room)
     {
-        //
+        $room->delete();
+
+        return response()->json();
     }
 }

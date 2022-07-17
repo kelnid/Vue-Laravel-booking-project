@@ -1,65 +1,48 @@
 <template>
-    <div class="w-25" v-if="person">
-        <div class="mb-3">
-            <input type="text" v-model="person.name" placeholder="name" class="form-control">
-        </div>
-        <div class="mb-3">
-            <input type="number" v-model="person.age" placeholder="age" class="form-control">
-        </div>
-        <div class="mb-3">
-            <input type="text" v-model="person.job" placeholder="job" class="form-control">
-        </div>
-        <div class="mb-3">
-            <input :disabled="!isDisabled" @click.prevent="$store.dispatch('update', {id: person.id, name:person.name, age:person.age, job:person.job})" type="submit" value="Update" class=" btn btn-primary">
+    <div>
+        <v-header></v-header>
+        <div class="container pt-5 w-25">
+            <div class="mb-3 shadow">
+                <input v-validate="'required|min:3'" v-model="name" type="text"  name="name" placeholder="Страна" class="form-control">
+                <div v-show="errors.has('name')" class="help-block alert alert-danger">{{ errors.first('name') }}</div>
+            </div>
+            <div class="mb-3">
+                <input v-validate="'required|image'" data-vv-as="image" type="file" name="image" id="image" class="form-control">
+<!--                <div v-show="errors.has('image')" class="help-block alert alert-danger">{{errors.first('image') }}</div>-->
+            </div>
+            <div class="mb-3">
+                <button class=" btn btn-primary" @click.prevent="updateCountry">Обновить</button>
+            </div>
         </div>
     </div>
 </template>
 
 <script>
+import router from "../../router";
+
 export default {
     name: "Edit",
-
-    //before Vuex
-    // data() {
-    //     return {
-    //         name: null,
-    //         age: null,
-    //         job: null
-    //     }
-    // },
-
-    mounted() {
-        //before Vuex
-        // this.getPerson()
-
-        //after
-        this.$store.dispatch('getPerson', this.$route.params.id)
+    data() {
+        return {
+            name: null,
+        }
     },
-
-    // methods: {
-    //     before Vuex
-    //     getPerson() {
-    //         axios.get(`/api/people/${this.$route.params.id}`)
-    //             .then(res => {
-    //                 this.name = res.data.data.name
-    //                 this.age = res.data.data.age
-    //                 this.job = res.data.data.job
-    //             })
-    //     },
-    //
-    //     update () {
-    //         axios.patch(`/api/people/${this.$route.params.id}`, {name:this.name, age:this.age, job:this.job})
-    //             .then( res => {
-    //                 this.$router.push({ name: 'person.show', params: { id:this.$route.params.id } })
-    //             })
-    //     }
-    // },
-    computed: {
-        isDisabled() {
-            return this.person.name && this.person.age && this.person.job
+    mounted() {
+        this.getCountry()
+    },
+    methods:{
+        getCountry() {
+            axios.get(`/api/countries/${this.$route.params.id}`)
+                .then(res=>{
+                    this.name = res.data.name
+                })
         },
-        person() {
-            return this.$store.getters.person
+        updateCountry() {
+            axios.patch(`/api/countries/${this.$route.params.id}`, {name: this.name})
+                .then(res=>{
+                    router.push({name: 'country.index'})
+                    console.log(res);
+                })
         }
     }
 }

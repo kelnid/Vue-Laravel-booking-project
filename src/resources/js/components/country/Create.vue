@@ -39,18 +39,6 @@ export default {
         }
     },
     methods: {
-        // addCountry() {
-        //     let formData = new FormData()
-        //
-        //     formData.append('name', this.name)
-        //     formData.append('image', this.image)
-        //
-        //     axios.post('/api/countries/store', formData)
-        //         .then(res => {
-        //             console.log(res.data.message);
-        //             router.push({name: 'country.index'})
-        //         })
-        // },
         addFile(event) {
             this.image = event.target.files[0]
         },
@@ -64,7 +52,7 @@ export default {
 
                     axios.post('/api/countries/store', formData)
                         .then(res => {
-                            console.log(res.data.message);
+                            console.log(res.data);
                             router.push({name: 'country.index'})
                         })
                 }

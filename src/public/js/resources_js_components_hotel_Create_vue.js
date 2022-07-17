@@ -234,7 +234,7 @@ var render = function () {
           ]),
           _vm._v(" "),
           _c("div", { staticClass: "mb-3" }, [
-            _c("input", {
+            _c("textarea", {
               directives: [
                 {
                   name: "model",
@@ -244,7 +244,7 @@ var render = function () {
                 },
               ],
               staticClass: "form-control",
-              attrs: { type: "text", placeholder: "Описание" },
+              attrs: { type: "text", placeholder: "Описание", rows: "3" },
               domProps: { value: _vm.description },
               on: {
                 input: function ($event) {
