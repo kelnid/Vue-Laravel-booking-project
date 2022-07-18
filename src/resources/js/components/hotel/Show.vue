@@ -163,9 +163,24 @@
                             <template v-if="role_id === 1">
                                 <router-link :to="{ name: 'room.edit', params: {id: room.id}}" class="btn btn-outline-primary shadow">Редактировать</router-link>
                             </template>
+                            <template v-if="role_id === 1">
+                                <button class="btn btn-outline-danger shadow" @click="showRoomDelete(room.id)">Удалить</button>
+                            </template>
                         </div>
                     </div>
                 </div>
+                <room-delete v-if="showModalRoom" @close="showModalRoom = false">
+                    <template v-slot:header>
+                        Подтверждение удаления
+                    </template>
+                    <template v-slot:body>
+                        Действительно хотите удалить?
+                    </template>
+                    <template v-slot:footer>
+                        <button class="btn btn-outline-danger" @click="deleteRoom(room_id)">Удалить</button>
+                        <button class="btn btn-outline-primary" @click="showModalRoom = false">Отмена</button>
+                    </template>
+                </room-delete>
             </div>
         </div>
     </div>
@@ -173,12 +188,13 @@
 
 <script>
 import ShowComments from "../modal/ShowComments";
+import RoomDelete from "../modal/RoomDelete";
 import PaginationMixin from "../../mixins/pagination.mixin";
 
 export default {
     name: "Show",
     mixins: [PaginationMixin],
-    components: {ShowComments},
+    components: {ShowComments, RoomDelete},
     data() {
         return {
             role_id: null,
@@ -187,7 +203,9 @@ export default {
             comments: null,
             rate: null,
             showModal: false,
+            showModalRoom: false,
             hotel_id: 0,
+            room_id: 0,
             commentDescription: '',
             editCommentId: null,
             user: null,
@@ -204,6 +222,10 @@ export default {
         showMyModal(id) {
             this.hotel_id = id
             this.showModal = true
+        },
+        showRoomDelete(id) {
+            this.room_id = id
+            this.showModalRoom = true
         },
         hideModal() {
             this.showModal = false
@@ -249,6 +271,13 @@ export default {
                     this.getRate()
                 }, 500)
             })
+        },
+        deleteRoom(id) {
+            axios.delete(`/api/rooms/delete/${id}`)
+                .then(res => {
+                    this.getHotel()
+                    this.showModalRoom = false
+                })
         },
         getUser() {
             this.role_id = JSON.parse(localStorage.getItem('role_id'))

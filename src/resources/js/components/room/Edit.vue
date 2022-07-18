@@ -19,7 +19,7 @@
                 <!--                <div v-show="errors.has('name')" class="help-block alert alert-danger">{{ errors.first('name') }}</div>-->
             </div>
             <div class="mb-3">
-                <input v-validate="'required|image'" data-vv-as="image" type="file" name="image" id="image" class="form-control">
+                <input v-validate="'image'" @change="addFile"  data-vv-as="image" type="file" name="image" id="image" class="form-control">
 <!--                <div v-show="errors.has('image')" class="help-block alert alert-danger">{{errors.first('image') }}</div>-->
             </div>
             <div class="mb-3">
@@ -49,6 +49,7 @@ export default {
             bed: null,
             area: null,
             price: null,
+            image: null,
             hotel_id: null,
             hotels: []
         }
@@ -67,7 +68,6 @@ export default {
         getRoom() {
             axios.get(`/api/rooms/show/${this.$route.params.id}`)
                 .then(res => {
-                    console.log(res);
                     this.name = res.data.name
                     this.bed = res.data.bed
                     this.area = res.data.area
@@ -75,18 +75,30 @@ export default {
                     this.hotel_id = res.data.hotel_id
                 })
         },
+        addFile(event) {
+            this.image = event.target.files[0]
+            console.log(this.image)
+        },
         updateRoom() {
-            axios.patch(`/api/rooms/${this.$route.params.id}`, {
-                name: this.name,
-                bed: this.bed,
-                area: this.area,
-                price: this.price,
-                hotel_id: this.hotel_id
+            this.$validator.validateAll().then((result) => {
+                if (result) {
+                    let formData = new FormData()
+                    formData.append('_method', 'PATCH');
+                    formData.append('name', this.name)
+                    formData.append('bed', this.bed)
+                    formData.append('area', this.area)
+                    formData.append('price', this.price)
+                    formData.append('hotel_id', this.hotel_id)
+                    if(this.image) {
+                        formData.append('image', this.image)
+                    }
+                    axios.post(`/api/rooms/${this.$route.params.id}`, formData )
+                        .then(res => {
+                            router.push({name: 'room.show', params: { id:this.$route.params.id }})
+                        })
+                }
             })
-                .then(res=>{
-                    router.push({name: 'country.index'})
-                })
-        }
+        },
     }
 }
 </script>

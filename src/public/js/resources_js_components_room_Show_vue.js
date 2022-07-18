@@ -14,7 +14,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var vue_hotel_datepicker__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue-hotel-datepicker */ "./node_modules/vue-hotel-datepicker/dist/vueHotelDatepicker.common.js");
 /* harmony import */ var vue_hotel_datepicker__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(vue_hotel_datepicker__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var vue_hotel_datepicker_dist_vueHotelDatepicker_css__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vue-hotel-datepicker/dist/vueHotelDatepicker.css */ "./node_modules/vue-hotel-datepicker/dist/vueHotelDatepicker.css");
-/* harmony import */ var _router__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../router */ "./resources/js/router.js");
 //
 //
 //
@@ -91,7 +90,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-
 
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
@@ -132,12 +130,9 @@ __webpack_require__.r(__webpack_exports__);
         endDate: this.endDate,
         room_id: this.room_id
       }).then(function (res) {
-        console.log(res);
-
         _this2.$router.push({
           name: 'booking.index'
-        }); // document.location.reload()
-
+        });
       });
     },
     getUser: function getUser() {
@@ -148,8 +143,6 @@ __webpack_require__.r(__webpack_exports__);
 
       axios.get("/api/bookings/bookings/".concat(this.$route.params.id)).then(function (res) {
         _this3.bookings = res.data;
-      })["catch"](function (err) {
-        console.log(err.message);
       });
     },
     updateCheckIn: function updateCheckIn(date) {

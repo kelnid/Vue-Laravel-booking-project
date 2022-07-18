@@ -56,7 +56,8 @@ __webpack_require__.r(__webpack_exports__);
       name: null,
       address: null,
       description: null,
-      country_id: null
+      country_id: null,
+      image: null
     };
   },
   computed: {
@@ -73,24 +74,37 @@ __webpack_require__.r(__webpack_exports__);
       var _this = this;
 
       axios.get("/api/hotels/show/".concat(this.$route.params.id)).then(function (res) {
-        console.log(res);
         _this.name = res.data.name;
         _this.address = res.data.address;
         _this.description = res.data.description;
         _this.country_id = res.data.country_id;
       });
     },
+    addFile: function addFile(event) {
+      this.image = event.target.files[0];
+    },
     updateHotel: function updateHotel() {
-      axios.patch("/api/hotels/".concat(this.$route.params.id), {
-        name: this.name,
-        address: this.address,
-        description: this.description,
-        country_id: this.country_id
-      }).then(function (res) {
-        _router__WEBPACK_IMPORTED_MODULE_0__["default"].push({
-          name: 'hotel.show'
-        });
-        console.log(res);
+      var _this2 = this;
+
+      this.$validator.validateAll().then(function (result) {
+        if (result) {
+          var formData = new FormData();
+          formData.append('_method', 'PATCH');
+          formData.append('address', _this2.address);
+          formData.append('description', _this2.description);
+          formData.append('name', _this2.name);
+          formData.append('country_id', _this2.country_id);
+
+          if (_this2.image) {
+            formData.append('image', _this2.image);
+          }
+
+          axios.post("/api/hotels/".concat(_this2.$route.params.id), formData).then(function (res) {
+            _router__WEBPACK_IMPORTED_MODULE_0__["default"].push({
+              name: 'hotel.show'
+            });
+          });
+        }
       });
     }
   }
@@ -251,7 +265,7 @@ var render = function () {
               },
             ],
             staticClass: "form-control",
-            attrs: { type: "text", name: "name", placeholder: "Страна" },
+            attrs: { type: "text", name: "address", placeholder: "Страна" },
             domProps: { value: _vm.address },
             on: {
               input: function ($event) {
@@ -270,13 +284,13 @@ var render = function () {
                 {
                   name: "show",
                   rawName: "v-show",
-                  value: _vm.errors.has("name"),
-                  expression: "errors.has('name')",
+                  value: _vm.errors.has("address"),
+                  expression: "errors.has('address')",
                 },
               ],
               staticClass: "help-block alert alert-danger",
             },
-            [_vm._v(_vm._s(_vm.errors.first("name")))]
+            [_vm._v(_vm._s(_vm.errors.first("address")))]
           ),
         ]),
         _vm._v(" "),
@@ -297,7 +311,7 @@ var render = function () {
               },
             ],
             staticClass: "form-control",
-            attrs: { type: "text", rows: "3" },
+            attrs: { name: "description", type: "text", rows: "3" },
             domProps: { value: _vm.description },
             on: {
               input: function ($event) {
@@ -316,13 +330,13 @@ var render = function () {
                 {
                   name: "show",
                   rawName: "v-show",
-                  value: _vm.errors.has("name"),
-                  expression: "errors.has('name')",
+                  value: _vm.errors.has("description"),
+                  expression: "errors.has('description')",
                 },
               ],
               staticClass: "help-block alert alert-danger",
             },
-            [_vm._v(_vm._s(_vm.errors.first("name")))]
+            [_vm._v(_vm._s(_vm.errors.first("description")))]
           ),
         ]),
         _vm._v(" "),
@@ -343,6 +357,7 @@ var render = function () {
               name: "image",
               id: "image",
             },
+            on: { change: _vm.addFile },
           }),
           _vm._v(" "),
           _c(

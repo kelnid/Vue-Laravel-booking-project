@@ -79,7 +79,7 @@ export default {
 
             axios.post('/api/rooms', formData)
                 .then(res => {
-                    router.push({name: 'country.index'})
+                    this.$router.push({ name: 'country.index'  })
                 })
         },
         addFile(event) {
@@ -88,7 +88,6 @@ export default {
         getHotels() {
             axios.get('/api/hotels')
                 .then(res => {
-                    console.log(res)
                     this.hotels = res.data
                 })
         },

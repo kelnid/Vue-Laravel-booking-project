@@ -35,7 +35,6 @@ export default {
         getCountry() {
             axios.get(`/api/countries/${this.$route.params.id}`)
                 .then(res=>{
-                    console.log(res);
                     this.name = res.data.name
                     this.image = res.data.image
                 })

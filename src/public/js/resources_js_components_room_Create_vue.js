@@ -79,6 +79,8 @@ __webpack_require__.r(__webpack_exports__);
   },
   methods: {
     addRoom: function addRoom() {
+      var _this = this;
+
       var formData = new FormData();
       formData.append('name', this.name);
       formData.append('image', this.image);
@@ -87,7 +89,7 @@ __webpack_require__.r(__webpack_exports__);
       formData.append('hotel_id', this.hotel_id);
       formData.append('bed', this.bed);
       axios.post('/api/rooms', formData).then(function (res) {
-        _router__WEBPACK_IMPORTED_MODULE_0__["default"].push({
+        _this.$router.push({
           name: 'country.index'
         });
       });
@@ -96,11 +98,10 @@ __webpack_require__.r(__webpack_exports__);
       this.image = event.target.files[0];
     },
     getHotels: function getHotels() {
-      var _this = this;
+      var _this2 = this;
 
       axios.get('/api/hotels').then(function (res) {
-        console.log(res);
-        _this.hotels = res.data;
+        _this2.hotels = res.data;
       });
     }
   }

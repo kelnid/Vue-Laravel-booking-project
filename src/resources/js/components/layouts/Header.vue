@@ -39,23 +39,19 @@
 <script>
 export default {
     name: "Layout",
-
     data() {
         return {
             token: [],
             role_id: null
         }
     },
-
     updated() {
         this.getToken()
     },
-
     mounted() {
         this.getToken()
         this.getUser()
     },
-
     methods: {
         getToken() {
             this.token = localStorage.getItem('x_xsrf_token')

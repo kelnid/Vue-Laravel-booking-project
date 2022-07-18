@@ -54,7 +54,6 @@ export default {
         getBookings() {
             axios.get('/api/bookings/index')
                 .then(res => {
-                    console.log(res.data);
                     this.bookings = res.data
                 })
         },

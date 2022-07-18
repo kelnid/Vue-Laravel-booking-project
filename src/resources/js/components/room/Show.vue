@@ -78,7 +78,7 @@
 
 import HotelDatePicker from 'vue-hotel-datepicker'
 import 'vue-hotel-datepicker/dist/vueHotelDatepicker.css';
-import router from "../../router";
+
 
 export default {
     components: {
@@ -116,9 +116,7 @@ export default {
                 room_id: this.room_id,
             })
                 .then(res => {
-                    console.log(res);
                     this.$router.push({name: 'booking.index'})
-                    // document.location.reload()
                 })
         },
         getUser() {
@@ -128,9 +126,6 @@ export default {
             axios.get(`/api/bookings/bookings/${this.$route.params.id}`)
                 .then(res => {
                     this.bookings = res.data
-                })
-                .catch(err => {
-                    console.log(err.message);
                 })
         },
         updateCheckIn(date) {

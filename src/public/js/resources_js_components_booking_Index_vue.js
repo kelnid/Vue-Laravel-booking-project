@@ -68,7 +68,6 @@ __webpack_require__.r(__webpack_exports__);
       var _this = this;
 
       axios.get('/api/bookings/index').then(function (res) {
-        console.log(res.data);
         _this.bookings = res.data;
       });
     },

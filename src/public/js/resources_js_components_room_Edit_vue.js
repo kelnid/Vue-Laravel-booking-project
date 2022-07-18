@@ -61,6 +61,7 @@ __webpack_require__.r(__webpack_exports__);
       bed: null,
       area: null,
       price: null,
+      image: null,
       hotel_id: null,
       hotels: []
     };
@@ -81,7 +82,6 @@ __webpack_require__.r(__webpack_exports__);
       var _this2 = this;
 
       axios.get("/api/rooms/show/".concat(this.$route.params.id)).then(function (res) {
-        console.log(res);
         _this2.name = res.data.name;
         _this2.bed = res.data.bed;
         _this2.area = res.data.area;
@@ -89,17 +89,36 @@ __webpack_require__.r(__webpack_exports__);
         _this2.hotel_id = res.data.hotel_id;
       });
     },
+    addFile: function addFile(event) {
+      this.image = event.target.files[0];
+      console.log(this.image);
+    },
     updateRoom: function updateRoom() {
-      axios.patch("/api/rooms/".concat(this.$route.params.id), {
-        name: this.name,
-        bed: this.bed,
-        area: this.area,
-        price: this.price,
-        hotel_id: this.hotel_id
-      }).then(function (res) {
-        _router__WEBPACK_IMPORTED_MODULE_0__["default"].push({
-          name: 'country.index'
-        });
+      var _this3 = this;
+
+      this.$validator.validateAll().then(function (result) {
+        if (result) {
+          var formData = new FormData();
+          formData.append('_method', 'PATCH');
+          formData.append('name', _this3.name);
+          formData.append('bed', _this3.bed);
+          formData.append('area', _this3.area);
+          formData.append('price', _this3.price);
+          formData.append('hotel_id', _this3.hotel_id);
+
+          if (_this3.image) {
+            formData.append('image', _this3.image);
+          }
+
+          axios.post("/api/rooms/".concat(_this3.$route.params.id), formData).then(function (res) {
+            _router__WEBPACK_IMPORTED_MODULE_0__["default"].push({
+              name: 'room.show',
+              params: {
+                id: _this3.$route.params.id
+              }
+            });
+          });
+        }
       });
     }
   }
@@ -311,8 +330,8 @@ var render = function () {
               {
                 name: "validate",
                 rawName: "v-validate",
-                value: "required|image",
-                expression: "'required|image'",
+                value: "image",
+                expression: "'image'",
               },
             ],
             staticClass: "form-control",
@@ -322,6 +341,7 @@ var render = function () {
               name: "image",
               id: "image",
             },
+            on: { change: _vm.addFile },
           }),
         ]),
         _vm._v(" "),

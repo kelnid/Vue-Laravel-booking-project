@@ -114,6 +114,12 @@ Route::group([
     });
     Route::patch('/{room}', [RoomController::class, 'update'])->name('update');
     Route::post('/', [RoomController::class, 'store'])->name('store');
+    Route::group([
+        'as' => 'delete.',
+        'prefix' => 'delete',
+    ], function () {
+        Route::delete('/{room}', [RoomController::class, 'destroy'])->name('destroy');
+    });
 });
 
 Route::group([
