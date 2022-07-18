@@ -34,8 +34,7 @@
                 <div class="sticky col-lg-4" style="padding-left: 50px">
                     <div class="card shadow">
                         <div class="card-body">
-                            <div class="d-flex justify-content-between align-items-end flex-wrap"><h2 class="mb-0">
-                                Бронирование</h2></div>
+                            <div class="d-flex justify-content-between align-items-end flex-wrap"><h2 class="mb-0">Бронирование</h2></div>
                             <hr>
                             <p><strong>Площадь комнаты: {{ room.area }} м²</strong></p>
                             <p><strong>Кровать: {{ room.bed }} </strong></p>
@@ -47,7 +46,7 @@
                                         @check-in-changed="updateCheckIn"
                                         @check-out-changed="updateCheckOut"
                                         :halfDay="false"
-                                        :minNights="5"
+                                        :minNights="3"
                                         :maxNights="10"
                                         :disabledDates="bookings.unavailable_dates">
                                     </hotel-date-picker>
@@ -56,6 +55,9 @@
                                     <input type="hidden" v-model="room_id = room.id" class="form-control">
                                 </div>
                             </form>
+                            <template v-for="error in showErrors">
+                                <div class="help-block alert alert-danger">{{error}}</div>
+                            </template>
                             <template v-if="role_id === null">
                                 <div class="help-block alert alert-danger">
                                     Бронировать номера могут только
@@ -79,7 +81,6 @@
 import HotelDatePicker from 'vue-hotel-datepicker'
 import 'vue-hotel-datepicker/dist/vueHotelDatepicker.css';
 
-
 export default {
     components: {
         HotelDatePicker,
@@ -95,6 +96,7 @@ export default {
             bookings: [],
             error: null,
             role_id: null,
+            showErrors: []
         }
     },
     mounted() {
@@ -110,14 +112,21 @@ export default {
                 })
         },
         booking() {
-            axios.post('/api/bookings/store', {
-                startDate: this.startDate,
-                endDate: this.endDate,
-                room_id: this.room_id,
-            })
-                .then(res => {
-                    this.$router.push({name: 'booking.index'})
-                })
+            this.$validator.validateAll().then((result) => {
+                if (result) {
+                    axios.post('/api/bookings/store', {
+                        startDate: this.startDate,
+                        endDate: this.endDate,
+                        room_id: this.room_id,
+                    })
+                        .then(res => {
+                            this.$router.push({name: 'booking.index'})
+                        })
+                        .catch(error =>{
+                            this.showErrors = error.response.data.errors
+                        })
+                }
+            });
         },
         getUser() {
             this.role_id = JSON.parse(localStorage.getItem('role_id'))

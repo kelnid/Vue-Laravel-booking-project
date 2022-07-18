@@ -51,6 +51,11 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   name: "Index",
@@ -753,22 +758,49 @@ var render = function () {
                       [
                         _c(
                           "div",
+                          { staticStyle: { display: "flex" } },
                           [
                             _c(
-                              "router-link",
-                              {
-                                staticClass: "btn btn-outline-primary shadow",
-                                attrs: {
-                                  to: {
-                                    name: "hotel.show",
-                                    params: { id: hotel.id },
+                              "div",
+                              [
+                                _c(
+                                  "router-link",
+                                  {
+                                    staticClass:
+                                      "btn btn-outline-primary shadow",
+                                    attrs: {
+                                      to: {
+                                        name: "hotel.show",
+                                        params: { id: hotel.id },
+                                      },
+                                    },
                                   },
-                                },
-                              },
-                              [_vm._v("Перейти")]
+                                  [_vm._v("Перейти")]
+                                ),
+                              ],
+                              1
                             ),
+                            _vm._v(" "),
+                            _vm.role_id === 1
+                              ? [
+                                  _c(
+                                    "router-link",
+                                    {
+                                      staticClass:
+                                        "btn btn-outline-primary shadow",
+                                      attrs: {
+                                        to: {
+                                          name: "hotel.edit",
+                                          params: { id: hotel.id },
+                                        },
+                                      },
+                                    },
+                                    [_vm._v("Редактировать")]
+                                  ),
+                                ]
+                              : _vm._e(),
                           ],
-                          1
+                          2
                         ),
                         _vm._v(" "),
                         _vm.role_id === 1

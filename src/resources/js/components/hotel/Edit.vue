@@ -7,7 +7,7 @@
                 <div v-show="errors.has('name')" class="help-block alert alert-danger">{{ errors.first('name') }}</div>
             </div>
             <div class="mb-3 shadow">
-                <input v-validate="'required|min:7'" v-model="address" type="text"  name="address" placeholder="Страна" class="form-control">
+                <input v-validate="'required|min:3'" v-model="address" type="text"  name="address" placeholder="Страна" class="form-control">
                 <div v-show="errors.has('address')" class="help-block alert alert-danger">{{ errors.first('address') }}</div>
             </div>
             <div class="mb-3 shadow">

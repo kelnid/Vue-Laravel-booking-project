@@ -14,6 +14,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _modal_ShowComments__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../modal/ShowComments */ "./resources/js/components/modal/ShowComments.vue");
 /* harmony import */ var _modal_RoomDelete__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../modal/RoomDelete */ "./resources/js/components/modal/RoomDelete.vue");
 /* harmony import */ var _mixins_pagination_mixin__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../mixins/pagination.mixin */ "./resources/js/mixins/pagination.mixin.js");
+/* harmony import */ var _router__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../router */ "./resources/js/router.js");
 //
 //
 //
@@ -202,6 +203,15 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+
 
 
 
@@ -258,14 +268,18 @@ __webpack_require__.r(__webpack_exports__);
     addComment: function addComment() {
       var _this2 = this;
 
-      var hotel_id = this.$route.params.id;
-      axios.post("/api/hotels/add-comment", {
-        description: this.description,
-        hotel_id: hotel_id
-      }).then(function (res) {
-        _this2.description = '';
+      this.$validator.validateAll().then(function (result) {
+        if (result) {
+          var hotel_id = _this2.$route.params.id;
+          axios.post("/api/hotels/add-comment", {
+            description: _this2.description,
+            hotel_id: hotel_id
+          }).then(function (res) {
+            _this2.description = '';
 
-        _this2.getComments();
+            _this2.getComments();
+          });
+        }
       });
     },
     getComments: function getComments() {
@@ -1220,168 +1234,145 @@ var render = function () {
                     ]
                   ),
                   _vm._v(" "),
-                  _c(
-                    "div",
-                    { staticClass: "card-body" },
-                    [
-                      _c("h1", { staticClass: "card-title" }, [
-                        _vm._v(_vm._s(_vm.hotel.name)),
-                      ]),
-                      _vm._v(" "),
-                      _c("div", { staticClass: "stars mr-2" }, [
-                        _c("div", { staticClass: "class" }, [
-                          _c("input", {
-                            staticClass: "star star-5",
-                            attrs: {
-                              disabled: _vm.user == null,
-                              id: "star-5",
-                              type: "radio",
-                              name: "star",
-                            },
-                            domProps: { checked: Math.round(_vm.rate) === 5 },
-                            on: {
-                              click: function ($event) {
-                                return _vm.postRate(5)
-                              },
-                            },
-                          }),
-                          _vm._v(" "),
-                          _c("label", {
-                            staticClass: "star star-5",
-                            attrs: { for: "star-5" },
-                          }),
-                          _vm._v(" "),
-                          _c("input", {
-                            staticClass: "star star-4",
-                            attrs: {
-                              disabled: _vm.user == null,
-                              id: "star-4",
-                              type: "radio",
-                              name: "star",
-                            },
-                            domProps: { checked: Math.round(_vm.rate) === 4 },
-                            on: {
-                              click: function ($event) {
-                                return _vm.postRate(4)
-                              },
-                            },
-                          }),
-                          _vm._v(" "),
-                          _c("label", {
-                            staticClass: "star star-4",
-                            attrs: { for: "star-4" },
-                          }),
-                          _vm._v(" "),
-                          _c("input", {
-                            staticClass: "star star-3",
-                            attrs: {
-                              disabled: _vm.user == null,
-                              id: "star-3",
-                              type: "radio",
-                              name: "star",
-                            },
-                            domProps: { checked: Math.round(_vm.rate) === 3 },
-                            on: {
-                              click: function ($event) {
-                                return _vm.postRate(3)
-                              },
-                            },
-                          }),
-                          _vm._v(" "),
-                          _c("label", {
-                            staticClass: "star star-3",
-                            attrs: { for: "star-3" },
-                          }),
-                          _vm._v(" "),
-                          _c("input", {
-                            staticClass: "star star-2",
-                            attrs: {
-                              disabled: _vm.user == null,
-                              id: "star-2",
-                              type: "radio",
-                              name: "star",
-                            },
-                            domProps: { checked: Math.round(_vm.rate) === 2 },
-                            on: {
-                              click: function ($event) {
-                                return _vm.postRate(2)
-                              },
-                            },
-                          }),
-                          _vm._v(" "),
-                          _c("label", {
-                            staticClass: "star star-2",
-                            attrs: { for: "star-2" },
-                          }),
-                          _vm._v(" "),
-                          _c("input", {
-                            staticClass: "star star-1",
-                            attrs: {
-                              disabled: _vm.user == null,
-                              id: "star-1",
-                              type: "radio",
-                              name: "star",
-                            },
-                            domProps: { checked: Math.round(_vm.rate) === 1 },
-                            on: {
-                              click: function ($event) {
-                                return _vm.postRate(1)
-                              },
-                            },
-                          }),
-                          _vm._v(" "),
-                          _c("label", {
-                            staticClass: "star star-1",
-                            attrs: { for: "star-1" },
-                          }),
-                        ]),
-                      ]),
-                      _vm._v(" "),
-                      _c("strong", { staticClass: "card-title" }, [
-                        _vm._v("Страна: " + _vm._s(_vm.hotelCountry)),
-                      ]),
-                      _vm._v(" "),
-                      _c("p", { staticClass: "card-title" }, [
-                        _vm._v(_vm._s(_vm.hotel.address)),
-                      ]),
-                      _vm._v(" "),
-                      _c("p", { staticClass: "card-text" }, [
-                        _vm._v(_vm._s(_vm.hotel.description)),
-                      ]),
-                      _vm._v(" "),
-                      _c(
-                        "button",
-                        {
-                          staticClass: "btn btn-outline-primary shadow",
+                  _c("div", { staticClass: "card-body" }, [
+                    _c("h1", { staticClass: "card-title" }, [
+                      _vm._v(_vm._s(_vm.hotel.name)),
+                    ]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "stars mr-2" }, [
+                      _c("div", { staticClass: "class" }, [
+                        _c("input", {
+                          staticClass: "star star-5",
+                          attrs: {
+                            disabled: _vm.user == null,
+                            id: "star-5",
+                            type: "radio",
+                            name: "star",
+                          },
+                          domProps: { checked: Math.round(_vm.rate) === 5 },
                           on: {
                             click: function ($event) {
-                              return _vm.showMyModal(_vm.hotel.id)
+                              return _vm.postRate(5)
                             },
                           },
+                        }),
+                        _vm._v(" "),
+                        _c("label", {
+                          staticClass: "star star-5",
+                          attrs: { for: "star-5" },
+                        }),
+                        _vm._v(" "),
+                        _c("input", {
+                          staticClass: "star star-4",
+                          attrs: {
+                            disabled: _vm.user == null,
+                            id: "star-4",
+                            type: "radio",
+                            name: "star",
+                          },
+                          domProps: { checked: Math.round(_vm.rate) === 4 },
+                          on: {
+                            click: function ($event) {
+                              return _vm.postRate(4)
+                            },
+                          },
+                        }),
+                        _vm._v(" "),
+                        _c("label", {
+                          staticClass: "star star-4",
+                          attrs: { for: "star-4" },
+                        }),
+                        _vm._v(" "),
+                        _c("input", {
+                          staticClass: "star star-3",
+                          attrs: {
+                            disabled: _vm.user == null,
+                            id: "star-3",
+                            type: "radio",
+                            name: "star",
+                          },
+                          domProps: { checked: Math.round(_vm.rate) === 3 },
+                          on: {
+                            click: function ($event) {
+                              return _vm.postRate(3)
+                            },
+                          },
+                        }),
+                        _vm._v(" "),
+                        _c("label", {
+                          staticClass: "star star-3",
+                          attrs: { for: "star-3" },
+                        }),
+                        _vm._v(" "),
+                        _c("input", {
+                          staticClass: "star star-2",
+                          attrs: {
+                            disabled: _vm.user == null,
+                            id: "star-2",
+                            type: "radio",
+                            name: "star",
+                          },
+                          domProps: { checked: Math.round(_vm.rate) === 2 },
+                          on: {
+                            click: function ($event) {
+                              return _vm.postRate(2)
+                            },
+                          },
+                        }),
+                        _vm._v(" "),
+                        _c("label", {
+                          staticClass: "star star-2",
+                          attrs: { for: "star-2" },
+                        }),
+                        _vm._v(" "),
+                        _c("input", {
+                          staticClass: "star star-1",
+                          attrs: {
+                            disabled: _vm.user == null,
+                            id: "star-1",
+                            type: "radio",
+                            name: "star",
+                          },
+                          domProps: { checked: Math.round(_vm.rate) === 1 },
+                          on: {
+                            click: function ($event) {
+                              return _vm.postRate(1)
+                            },
+                          },
+                        }),
+                        _vm._v(" "),
+                        _c("label", {
+                          staticClass: "star star-1",
+                          attrs: { for: "star-1" },
+                        }),
+                      ]),
+                    ]),
+                    _vm._v(" "),
+                    _c("strong", { staticClass: "card-title" }, [
+                      _vm._v("Страна: " + _vm._s(_vm.hotelCountry)),
+                    ]),
+                    _vm._v(" "),
+                    _c("p", { staticClass: "card-title" }, [
+                      _vm._v("Город: " + _vm._s(_vm.hotel.address)),
+                    ]),
+                    _vm._v(" "),
+                    _c("p", { staticClass: "card-text" }, [
+                      _vm._v(_vm._s(_vm.hotel.description)),
+                    ]),
+                    _vm._v(" "),
+                    _c(
+                      "button",
+                      {
+                        staticClass: "btn btn-outline-primary shadow",
+                        on: {
+                          click: function ($event) {
+                            return _vm.showMyModal(_vm.hotel.id)
+                          },
                         },
-                        [_vm._v("Комментарии")]
-                      ),
-                      _vm._v(" "),
-                      _vm.role_id === 1
-                        ? [
-                            _c(
-                              "router-link",
-                              {
-                                staticClass: "btn btn-outline-primary shadow",
-                                attrs: {
-                                  to: {
-                                    name: "hotel.edit",
-                                    params: _vm.hotel.id,
-                                  },
-                                },
-                              },
-                              [_vm._v("Редактировать")]
-                            ),
-                          ]
-                        : _vm._e(),
-                    ],
-                    2
-                  ),
+                      },
+                      [_vm._v("Комментарии\n                    ")]
+                    ),
+                  ]),
                 ]
               ),
             ]
@@ -1442,7 +1433,11 @@ var render = function () {
                                                     },
                                                   },
                                                 },
-                                                [_vm._v("зарегистрированные")]
+                                                [
+                                                  _vm._v(
+                                                    "зарегистрированные\n                                    "
+                                                  ),
+                                                ]
                                               ),
                                               _vm._v(
                                                 "\n                                    пользователи\n                                "
@@ -1458,6 +1453,12 @@ var render = function () {
                                           _c("textarea", {
                                             directives: [
                                               {
+                                                name: "validate",
+                                                rawName: "v-validate",
+                                                value: "required|min:8",
+                                                expression: "'required|min:8'",
+                                              },
+                                              {
                                                 name: "model",
                                                 rawName: "v-model",
                                                 value: _vm.description,
@@ -1465,7 +1466,11 @@ var render = function () {
                                               },
                                             ],
                                             staticClass: "form-control",
-                                            attrs: { name: "description" },
+                                            attrs: {
+                                              name: "description",
+                                              type: "text",
+                                              rows: "3",
+                                            },
                                             domProps: {
                                               value: _vm.description,
                                             },
@@ -1479,6 +1484,37 @@ var render = function () {
                                               },
                                             },
                                           }),
+                                          _vm._v(" "),
+                                          _c(
+                                            "div",
+                                            {
+                                              directives: [
+                                                {
+                                                  name: "show",
+                                                  rawName: "v-show",
+                                                  value:
+                                                    _vm.errors.has(
+                                                      "description"
+                                                    ),
+                                                  expression:
+                                                    "errors.has('description')",
+                                                },
+                                              ],
+                                              staticClass:
+                                                "help-block alert alert-danger",
+                                            },
+                                            [
+                                              _vm._v(
+                                                "\n                                    " +
+                                                  _vm._s(
+                                                    _vm.errors.first(
+                                                      "description"
+                                                    )
+                                                  ) +
+                                                  "\n                                "
+                                              ),
+                                            ]
+                                          ),
                                         ]
                                       : _vm._e(),
                                     _vm._v(" "),
@@ -1708,7 +1744,7 @@ var render = function () {
                   ],
                   null,
                   false,
-                  4143452970
+                  1698991859
                 ),
               })
             : _vm._e(),
@@ -1774,7 +1810,11 @@ var render = function () {
                                     },
                                   },
                                 },
-                                [_vm._v("Редактировать")]
+                                [
+                                  _vm._v(
+                                    "Редактировать\n                            "
+                                  ),
+                                ]
                               ),
                             ]
                           : _vm._e(),
@@ -1791,7 +1831,11 @@ var render = function () {
                                     },
                                   },
                                 },
-                                [_vm._v("Удалить")]
+                                [
+                                  _vm._v(
+                                    "Удалить\n                            "
+                                  ),
+                                ]
                               ),
                             ]
                           : _vm._e(),

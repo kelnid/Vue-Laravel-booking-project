@@ -10,8 +10,13 @@
                             <p class="card-title">{{ hotel.name }}</p>
                             <p class="card-title">{{ hotel.address }}</p>
                             <div class="d-flex justify-content-between align-items-center">
-                                <div>
-                                    <router-link :to="{ name: 'hotel.show', params: {id: hotel.id} }" class="btn btn-outline-primary shadow">Перейти</router-link>
+                                <div style="display: flex">
+                                    <div>
+                                        <router-link :to="{ name: 'hotel.show', params: {id: hotel.id} }" class="btn btn-outline-primary shadow">Перейти</router-link>
+                                    </div>
+                                    <template v-if="role_id === 1">
+                                        <router-link :to="{ name: 'hotel.edit', params: {id: hotel.id}}" class="btn btn-outline-primary shadow">Редактировать</router-link>
+                                    </template>
                                 </div>
                                 <template v-if="role_id === 1">
                                     <button class="btn btn-outline-danger shadow" @click="showMyModal(hotel.id)">Удалить</button>

@@ -254,8 +254,8 @@ var render = function () {
               {
                 name: "validate",
                 rawName: "v-validate",
-                value: "required|min:7",
-                expression: "'required|min:7'",
+                value: "required|min:3",
+                expression: "'required|min:3'",
               },
               {
                 name: "model",

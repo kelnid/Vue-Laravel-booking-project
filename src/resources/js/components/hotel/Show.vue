@@ -52,12 +52,10 @@
                             </div>
                         </div>
                         <strong class="card-title">Страна: {{ hotelCountry }}</strong>
-                        <p class="card-title">{{ hotel.address }}</p>
+                        <p class="card-title">Город: {{ hotel.address }}</p>
                         <p class="card-text">{{ hotel.description }}</p>
-                        <button @click="showMyModal(hotel.id)" class="btn btn-outline-primary shadow">Комментарии</button>
-                        <template v-if="role_id === 1">
-                            <router-link :to="{ name: 'hotel.edit', params: hotel.id}" class="btn btn-outline-primary shadow">Редактировать</router-link>
-                        </template>
+                        <button @click="showMyModal(hotel.id)" class="btn btn-outline-primary shadow">Комментарии
+                        </button>
                     </div>
                 </div>
             </div>
@@ -73,12 +71,18 @@
                                 <template v-if="role_id === null">
                                     <div class="help-block alert alert-danger">
                                         Оставлять комментарии могут только
-                                        <router-link :to="{ name: 'user.registration' }">зарегистрированные</router-link>
+                                        <router-link :to="{ name: 'user.registration' }">зарегистрированные
+                                        </router-link>
                                         пользователи
                                     </div>
                                 </template>
                                 <template v-if="role_id === 2 || role_id === 1">
-                                    <textarea v-model="description" class="form-control" name="description"></textarea>
+                                    <!--                                    <textarea v-model="description" class="form-control" name="description"></textarea>-->
+                                    <textarea v-validate="'required|min:8'" name="description" type="text"
+                                              v-model="description" class="form-control" rows="3"></textarea>
+                                    <div v-show="errors.has('description')" class="help-block alert alert-danger">
+                                        {{ errors.first('description') }}
+                                    </div>
                                 </template>
                                 <div>
                                     <div>
@@ -101,7 +105,8 @@
                                     <div>
                                         <p>{{ comment.description }}</p>
                                         <div :class="isEdit(comment.id) ? '' : 'd-none'">
-                                            <textarea v-model="commentDescription" class="form-control" name="description"></textarea>
+                                            <textarea v-model="commentDescription" class="form-control"
+                                                      name="description"></textarea>
                                         </div>
                                     </div>
                                     <div>
@@ -161,10 +166,13 @@
                                          class="btn btn-outline-primary shadow">Перейти
                             </router-link>
                             <template v-if="role_id === 1">
-                                <router-link :to="{ name: 'room.edit', params: {id: room.id}}" class="btn btn-outline-primary shadow">Редактировать</router-link>
+                                <router-link :to="{ name: 'room.edit', params: {id: room.id}}"
+                                             class="btn btn-outline-primary shadow">Редактировать
+                                </router-link>
                             </template>
                             <template v-if="role_id === 1">
-                                <button class="btn btn-outline-danger shadow" @click="showRoomDelete(room.id)">Удалить</button>
+                                <button class="btn btn-outline-danger shadow" @click="showRoomDelete(room.id)">Удалить
+                                </button>
                             </template>
                         </div>
                     </div>
@@ -190,6 +198,7 @@
 import ShowComments from "../modal/ShowComments";
 import RoomDelete from "../modal/RoomDelete";
 import PaginationMixin from "../../mixins/pagination.mixin";
+import router from "../../router";
 
 export default {
     name: "Show",
@@ -238,15 +247,19 @@ export default {
                 })
         },
         addComment() {
-            let hotel_id = this.$route.params.id
-            axios.post(`/api/hotels/add-comment`, {
-                description: this.description,
-                hotel_id: hotel_id,
-            })
-                .then(res => {
-                    this.description = ''
-                    this.getComments()
-                })
+            this.$validator.validateAll().then((result) => {
+                if (result) {
+                    let hotel_id = this.$route.params.id
+                    axios.post(`/api/hotels/add-comment`, {
+                        description: this.description,
+                        hotel_id: hotel_id,
+                    })
+                        .then(res => {
+                            this.description = ''
+                            this.getComments()
+                        })
+                }
+            });
         },
         getComments() {
             axios.get(`/api/hotels/show-comment/${this.$route.params.id}`)

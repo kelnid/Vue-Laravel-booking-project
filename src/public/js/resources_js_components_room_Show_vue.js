@@ -90,6 +90,8 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
 
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
@@ -106,7 +108,8 @@ __webpack_require__.r(__webpack_exports__);
       token: [],
       bookings: [],
       error: null,
-      role_id: null
+      role_id: null,
+      showErrors: []
     };
   },
   mounted: function mounted() {
@@ -125,14 +128,20 @@ __webpack_require__.r(__webpack_exports__);
     booking: function booking() {
       var _this2 = this;
 
-      axios.post('/api/bookings/store', {
-        startDate: this.startDate,
-        endDate: this.endDate,
-        room_id: this.room_id
-      }).then(function (res) {
-        _this2.$router.push({
-          name: 'booking.index'
-        });
+      this.$validator.validateAll().then(function (result) {
+        if (result) {
+          axios.post('/api/bookings/store', {
+            startDate: _this2.startDate,
+            endDate: _this2.endDate,
+            room_id: _this2.room_id
+          }).then(function (res) {
+            _this2.$router.push({
+              name: 'booking.index'
+            });
+          })["catch"](function (error) {
+            _this2.showErrors = error.response.data.errors;
+          });
+        }
       });
     },
     getUser: function getUser() {
@@ -10119,7 +10128,7 @@ var render = function () {
                               _c("hotel-date-picker", {
                                 attrs: {
                                   halfDay: false,
-                                  minNights: 5,
+                                  minNights: 3,
                                   maxNights: 10,
                                   disabledDates: _vm.bookings.unavailable_dates,
                                 },
@@ -10161,6 +10170,16 @@ var render = function () {
                       ],
                       2
                     ),
+                    _vm._v(" "),
+                    _vm._l(_vm.showErrors, function (error) {
+                      return [
+                        _c(
+                          "div",
+                          { staticClass: "help-block alert alert-danger" },
+                          [_vm._v(_vm._s(error))]
+                        ),
+                      ]
+                    }),
                     _vm._v(" "),
                     _vm.role_id === null
                       ? [
@@ -10283,11 +10302,7 @@ var staticRenderFns = [
       {
         staticClass: "d-flex justify-content-between align-items-end flex-wrap",
       },
-      [
-        _c("h2", { staticClass: "mb-0" }, [
-          _vm._v("\n                            Бронирование"),
-        ]),
-      ]
+      [_c("h2", { staticClass: "mb-0" }, [_vm._v("Бронирование")])]
     )
   },
 ]
