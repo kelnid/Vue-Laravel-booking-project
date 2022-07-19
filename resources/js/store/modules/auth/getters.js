@@ -1,0 +1,9 @@
+// export default {
+//     user: state => state.userData,
+//     x_xsrf_token: state => state.x_xsrf_token,
+//     showErrors: state => state.showErrors,
+// }
+export default {
+    user: state => state.userData,
+    token: state => state.apiToken,
+}
