@@ -20,6 +20,7 @@
 <script>
 
 import router from "../../router";
+import {axiosInstance} from "../../service/api";
 
 
 export default {
@@ -48,7 +49,7 @@ export default {
                     formData.append('name', this.name)
                     formData.append('image', this.image)
 
-                    axios.post('/api/countries/store', formData)
+                    axiosInstance.post('countries/store', formData)
                         .then(res => {
                             router.push({name: 'country.index'})
                         })

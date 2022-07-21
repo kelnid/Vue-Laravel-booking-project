@@ -64,6 +64,7 @@
 <script>
 import Welcome from "../layouts/Welcome";
 import CountryDelete from "../modal/CountryDelete";
+import {axiosInstance} from "../../service/api";
 
 export default {
     components: {
@@ -86,7 +87,7 @@ export default {
             this.showModal = true
         },
         deleteCountry(id) {
-            axios.delete(`/api/countries/${id}`)
+            axiosInstance.delete(`countries/${id}`)
                 .then(res => {
                     this.$store.dispatch('getCountries')
                     this.showModal = false

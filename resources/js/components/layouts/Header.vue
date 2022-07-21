@@ -43,7 +43,7 @@ export default {
     name: "Layout",
     data() {
         return {
-            apiToken: [],
+            apiToken: '',
             role_id: null
         }
     },

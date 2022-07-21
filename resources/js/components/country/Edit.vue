@@ -19,6 +19,7 @@
 
 <script>
 import router from "../../router";
+import {axiosInstance} from "../../service/api";
 
 export default {
     name: "Edit",
@@ -33,7 +34,7 @@ export default {
     },
     methods:{
         getCountry() {
-            axios.get(`/api/countries/${this.$route.params.id}`)
+            axiosInstance.get(`countries/${this.$route.params.id}`)
                 .then(res=>{
                     this.name = res.data.name
                     this.image = res.data.image
@@ -51,7 +52,7 @@ export default {
                     if(this.image) {
                         formData.append('image', this.image)
                     }
-                    axios.post(`/api/countries/${this.$route.params.id}`, formData )
+                    axiosInstance.post(`countries/${this.$route.params.id}`, formData )
                         .then(res => {
                             router.push({name: 'country.index'})
                         })

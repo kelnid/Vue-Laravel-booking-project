@@ -32,7 +32,6 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::post('logout', [LoginController::class, 'logout']);
     Route::get('user', [LoginController::class, 'user']);
 });
-
 Route::group([
     'as' => 'countries.',
     'prefix' => 'countries',
@@ -42,25 +41,24 @@ Route::group([
     Route::group([
         'as' => 'store.',
         'prefix' => 'store',
+        'middleware' => 'auth:sanctum'
     ], function () {
         Route::post('/', [CountryController::class, 'store'])->name('store');
     });
-    Route::patch('/{country}', [CountryController::class, 'update'])->name('update');
-    Route::delete('{country}', [CountryController::class, 'destroy']);
+    Route::middleware('auth:sanctum')->patch('/{country}', [CountryController::class, 'update'])->name('update');
+    Route::middleware('auth:sanctum')->delete('{country}', [CountryController::class, 'destroy']);
 });
-
 Route::group([
     'as' => 'hotels.',
     'prefix' => 'hotels',
 ], function () {
-    Route::post('/', [HotelController::class, 'store'])->name('store');
+    Route::middleware('auth:sanctum')->post('/', [HotelController::class, 'store'])->name('store');
     Route::group([
         'as' => 'rate.',
         'prefix' => 'rate'
     ], function () {
         Route::get('/{hotel}', [RatingController::class, 'show']);
     });
-
     Route::group([
         'as' => 'post-rate.',
         'prefix' => 'post-rate'
@@ -77,6 +75,7 @@ Route::group([
     Route::group([
         'as' => 'delete.',
         'prefix' => 'delete',
+        'middleware' => 'auth:sanctum'
     ], function () {
         Route::delete('/{hotel}', [HotelController::class, 'destroy'])->name('destroy');
     });
@@ -98,7 +97,7 @@ Route::group([
     ], function () {
         Route::patch('/{id}', [CommentController::class, 'update']);
     });
-    Route::patch('/{hotel}', [HotelController::class, 'update'])->name('update');
+    Route::middleware('auth:sanctum')->patch('/{hotel}', [HotelController::class, 'update'])->name('update');
 });
 
 Route::prefix('countries/{id}')->group(function () {
@@ -115,11 +114,12 @@ Route::group([
     ], function () {
         Route::get('/{room}', [RoomController::class, 'show']);
     });
-    Route::patch('/{room}', [RoomController::class, 'update'])->name('update');
-    Route::post('/', [RoomController::class, 'store'])->name('store');
+    Route::middleware('auth:sanctum')->patch('/{room}', [RoomController::class, 'update'])->name('update');
+    Route::middleware('auth:sanctum')->post('/', [RoomController::class, 'store'])->name('store');
     Route::group([
         'as' => 'delete.',
         'prefix' => 'delete',
+        'middleware' => 'auth:sanctum'
     ], function () {
         Route::delete('/{room}', [RoomController::class, 'destroy'])->name('destroy');
     });
@@ -128,11 +128,11 @@ Route::group([
 Route::group([
     'as' => 'bookings.',
     'prefix' => 'bookings',
-    'middleware' => 'auth:sanctum'
 ], function () {
     Route::group([
         'as' => 'store.',
         'prefix' => 'store',
+        'middleware' => 'auth:sanctum'
     ], function () {
         Route::post('/', [BookingController::class, 'store']);
     });
@@ -148,5 +148,7 @@ Route::group([
     ], function () {
         Route::get('/{id}', [BookingController::class, 'bookings']);
     });
-    Route::delete('{booking}', [BookingController::class, 'destroy']);
+    Route::middleware('auth:sanctum')->delete('{booking}', [BookingController::class, 'destroy']);
 });
+
+

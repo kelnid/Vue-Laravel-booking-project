@@ -40,6 +40,7 @@
 
 <script>
 import router from "../../router";
+import {axiosInstance} from "../../service/api";
 
 export default {
     name: "Edit",
@@ -60,13 +61,13 @@ export default {
     },
     methods:{
         getHotels() {
-            axios.get('/api/hotels')
+            axiosInstance.get('hotels')
                 .then(res => {
                     this.hotels = res.data
                 })
         },
         getRoom() {
-            axios.get(`/api/rooms/show/${this.$route.params.id}`)
+            axiosInstance.get(`rooms/show/${this.$route.params.id}`)
                 .then(res => {
                     this.name = res.data.name
                     this.bed = res.data.bed
@@ -91,7 +92,7 @@ export default {
                     if(this.image) {
                         formData.append('image', this.image)
                     }
-                    axios.post(`/api/rooms/${this.$route.params.id}`, formData )
+                    axiosInstance.post(`rooms/${this.$route.params.id}`, formData )
                         .then(res => {
                             router.push({name: 'room.show', params: { id:this.$route.params.id }})
                         })

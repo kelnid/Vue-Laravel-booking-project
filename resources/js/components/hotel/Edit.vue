@@ -36,6 +36,7 @@
 
 <script>
 import router from "../../router";
+import {axiosInstance} from "../../service/api";
 
 export default {
     name: "Edit",
@@ -59,7 +60,7 @@ export default {
     },
     methods:{
         getHotel() {
-            axios.get(`/api/hotels/show/${this.$route.params.id}`)
+            axiosInstance.get(`hotels/show/${this.$route.params.id}`)
                 .then(res => {
                     this.name = res.data.name
                     this.address = res.data.address
@@ -82,7 +83,7 @@ export default {
                     if(this.image) {
                         formData.append('image', this.image)
                     }
-                    axios.post(`/api/hotels/${this.$route.params.id}`, formData )
+                    axiosInstance.post(`hotels/${this.$route.params.id}`, formData )
                         .then(res => {
                             router.push({name: 'hotel.show'})
                         })

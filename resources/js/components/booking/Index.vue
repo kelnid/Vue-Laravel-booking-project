@@ -35,6 +35,7 @@
 
 <script>
 import BookingsModal from "../modal/BookingsModal";
+import {axiosInstance} from "../../service/api";
 export default {
     name: "Index",
     components:{
@@ -52,13 +53,13 @@ export default {
     },
     methods: {
         getBookings() {
-            axios.get('/api/bookings/index')
+            axiosInstance.get('bookings/index')
                 .then(res => {
                     this.bookings = res.data
                 })
         },
         deleteBooking(id) {
-            axios.delete(`/api/bookings/${id}`)
+            axiosInstance.delete(`bookings/${id}`)
                 .then(res => {
                     this.getBookings()
                     this.showModal = false

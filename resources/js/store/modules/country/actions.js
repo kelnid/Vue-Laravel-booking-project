@@ -1,6 +1,8 @@
+import {axiosInstance} from "../../../service/api";
+
 export default {
     getCountries({commit}) {
-        axios.get('/api/countries')
+        axiosInstance.get('countries')
             .then(res => {
                 commit('setCountries', res.data)
             })

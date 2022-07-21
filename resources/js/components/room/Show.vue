@@ -80,6 +80,7 @@
 
 import HotelDatePicker from 'vue-hotel-datepicker'
 import 'vue-hotel-datepicker/dist/vueHotelDatepicker.css';
+import {axiosInstance} from "../../service/api";
 
 export default {
     components: {
@@ -106,7 +107,7 @@ export default {
     },
     methods: {
         getRoom() {
-            axios.get(`/api/rooms/show/${this.$route.params.id}`)
+            axiosInstance.get(`rooms/show/${this.$route.params.id}`)
                 .then(res => {
                     this.room = res.data
                 })
@@ -114,7 +115,7 @@ export default {
         booking() {
             this.$validator.validateAll().then((result) => {
                 if (result) {
-                    axios.post('/api/bookings/store', {
+                    axiosInstance.post('bookings/store', {
                         startDate: this.startDate,
                         endDate: this.endDate,
                         room_id: this.room_id,
@@ -132,7 +133,7 @@ export default {
             this.role_id = JSON.parse(localStorage.getItem('role_id'))
         },
         getBookings() {
-            axios.get(`/api/bookings/bookings/${this.$route.params.id}`)
+            axiosInstance.get(`bookings/bookings/${this.$route.params.id}`)
                 .then(res => {
                     this.bookings = res.data
                 })

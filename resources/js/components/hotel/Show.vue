@@ -4,7 +4,7 @@
         <div class="container">
             <div class="container" style="display: flex; width: 1140px">
                 <div class="card mb-3 mt-5 shadow" style="width: 1295px; height: auto; margin: 0 auto;">
-                    <img :src="`../../../storage/${hotel.image}`">
+                    <img :src="`../../../storage/${hotel.image}`" style="height:724px">
                     <span class="position-absolute" style="
                     margin-left: 1050px;
                     margin-top: 20px; font-size: 20px;
@@ -77,8 +77,7 @@
                                     </div>
                                 </template>
                                 <template v-if="role_id === 2 || role_id === 1">
-                                    <!--                                    <textarea v-model="description" class="form-control" name="description"></textarea>-->
-                                    <textarea v-validate="'required|min:8'" name="description" type="text"
+                                    <textarea v-validate="'min:8'" name="description" type="text"
                                               v-model="description" class="form-control" rows="3"></textarea>
                                     <div v-show="errors.has('description')" class="help-block alert alert-danger">
                                         {{ errors.first('description') }}
@@ -198,7 +197,7 @@
 import ShowComments from "../modal/ShowComments";
 import RoomDelete from "../modal/RoomDelete";
 import PaginationMixin from "../../mixins/pagination.mixin";
-import router from "../../router";
+import {axiosInstance} from "../../service/api";
 
 export default {
     name: "Show",
@@ -240,7 +239,7 @@ export default {
             this.showModal = false
         },
         getHotel() {
-            axios.get(`/api/hotels/show/${this.$route.params.id}`)
+            axiosInstance.get(`hotels/show/${this.$route.params.id}`)
                 .then(res => {
                     this.hotelCountry = res.data.country.name
                     this.hotel = res.data
@@ -250,7 +249,7 @@ export default {
             this.$validator.validateAll().then((result) => {
                 if (result) {
                     let hotel_id = this.$route.params.id
-                    axios.post(`/api/hotels/add-comment`, {
+                    axiosInstance.post(`hotels/add-comment`, {
                         description: this.description,
                         hotel_id: hotel_id,
                     })
@@ -262,21 +261,21 @@ export default {
             });
         },
         getComments() {
-            axios.get(`/api/hotels/show-comment/${this.$route.params.id}`)
+            axiosInstance.get(`hotels/show-comment/${this.$route.params.id}`)
                 .then(res => {
                     this.comments = res.data
                     this.setupPagination(this.comments)
                 })
         },
         getRate() {
-            axios.get(`/api/hotels/rate/${this.$route.params.id}`)
+            axiosInstance.get(`hotels/rate/${this.$route.params.id}`)
                 .then(res => {
                     this.rate = res.data
                 })
         },
         postRate(value) {
             let hotel = this.$route.params.id
-            axios.post(`/api/hotels/post-rate`, {
+            axiosInstance.post(`hotels/post-rate`, {
                 hotel_id: hotel,
                 points: value
             }).then(res => {
@@ -286,7 +285,7 @@ export default {
             })
         },
         deleteRoom(id) {
-            axios.delete(`/api/rooms/delete/${id}`)
+            axiosInstance.delete(`rooms/delete/${id}`)
                 .then(res => {
                     this.getHotel()
                     this.showModalRoom = false
@@ -307,7 +306,7 @@ export default {
             this.editCommentId = null
         },
         updateComment(id) {
-            axios.patch(`/api/hotels/update/${id}`, {
+            axiosInstance.patch(`hotels/update/${id}`, {
                 description: this.commentDescription,
                 hotel_id: this.$route.params.id
             }).then(res => {

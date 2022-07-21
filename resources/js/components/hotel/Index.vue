@@ -44,6 +44,7 @@
 
 <script>
 import HotelDelete from "../modal/HotelDelete";
+import {axiosInstance} from "../../service/api";
 
 export default {
     name: "Index",
@@ -71,13 +72,13 @@ export default {
             this.showModal = true
         },
         getHotels() {
-            axios.get(`/api/countries/${this.id}/hotels`)
+            axiosInstance.get(`countries/${this.id}/hotels`)
                 .then(res => {
                     this.hotels = res.data
                 })
         },
         deleteHotel(id) {
-            axios.delete(`/api/hotels/delete/${id}`)
+            axiosInstance.delete(`hotels/delete/${id}`)
                 .then(res => {
                     this.getHotels()
                     this.showModal = false

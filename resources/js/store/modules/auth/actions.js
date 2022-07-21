@@ -24,9 +24,7 @@ export default {
                 localStorage.setItem("user_id", response.data.user.id);
                 commit("setApiToken", response.data.token);
                 router.push({name: 'country.index'})
-            }).catch(err => {
-                console.log(err)
-            });
+            })
     },
     Register({ commit }, data) {
         return axiosInstance.post("register", data)
@@ -38,7 +36,6 @@ export default {
                 commit("setApiToken", response.data.token);
                 router.push({name: 'country.index'})
             })
-            .catch(err => console.log(err));
     },
     Logout({ commit }) {
         return axiosInstance.post("logout").then(() => {
